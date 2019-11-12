@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: rubbish-classification-web  #应用名称
+  #thymeleaf关闭缓存.
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    suffix: .html
+    prefix: classpath:/templates/
+    servlet:
+      content-type: text/html
