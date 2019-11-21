@@ -85,6 +85,19 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+        </dependency>
+        <!--dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </dependency>-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+
         <!-- Spring Security -->
         <!-- <dependency>
         <groupId>org.springframework.security</groupId>
@@ -116,7 +129,7 @@
                 <configuration>
                     <!--如果没有该项配置，devtools不会起作用，即应用不会restart &ndash;&gt;-->
                     <fork>true</fork>
-                    <mainClass>com.sd</mainClass>
+                    <mainClass>com.jdh.Application_start</mainClass>
                 </configuration>
                 <executions>
                     <execution>

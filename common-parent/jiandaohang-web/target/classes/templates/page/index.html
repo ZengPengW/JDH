@@ -1,10 +1,1216 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="shubiao  main_menu " lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta name=renderer content=webkit>
     <title>简导航-最个性的导航</title>
+
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- 鼠标右键菜单 -->
+    <link rel='StyleSheet' type='text/css' href='/css/class2context.css'>
+    <!--单选按钮-->
+    <link rel="stylesheet" href="/css/switch.css" />
+    <!--自定义css-->
+    <link rel="stylesheet" href="/css/myStyle.css" />
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!--三大按键-->
+    <script src="/js/TweenMax.min.js"></script>
+
+<style type="text/css" th:inline="css">
+body{
+    background-image: url("/material/img/bg/1c04d65b09b9dbec35d1ab928c7d6baaa63ffd4e.jpg");
+
+}
+a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a{
+    cursor: url("/material/img/mouse/hand/手指.ico"),default;
+}
+.shubiao{
+    cursor: url("/material/img/mouse/pointer/蓝色鼠标.ico"),default;
+}
+</style>
 </head>
-<body>
-hello word
+
+<body class="shubiao">
+
+
+<div id="wrapper" >
+    <div class="overlay"></div>
+    <!-- Sidebar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+        <ul class="nav sidebar-nav">
+            <li class="sidebar-brand">
+                <a href="javascript:void(0)">
+                    收藏夹
+                </a>
+            </li>
+
+
+
+            <li class="dropdown">
+                <a href="javascript:void(0)"  class="dropdown-toggle" data-toggle="dropdown" role="button" id="myTabDrop1">
+                    Dropdown <span class="caret"></span>
+                </a>
+
+            </li>
+            <div aria-labelledby="myTabDrop1" class="my_dropdown" >
+                <li>
+                    <a href="#"><img src="/material/img/webIco/bilibili.ico"  />
+                        <span>sssssssssssssssssssssssssssssssssaaaa</span>
+                    </a>
+
+                    <a href="#"><img src="/material/img/webIco/bilibili.ico"  />
+                        <span>sssssssssssssssssssssssssssssssssaaaa</span>
+                    </a>
+
+                    <a href="#"><img src="/material/img/webIco/bilibili.ico"  />
+                        <span>中文网a</span>
+                    </a>
+
+                    <a href="#"><img src="/material/img/webIco/bilibili.ico"  />
+                        <span>sssssssssssssssssssssssssssssssssaaaa</span>
+                    </a>
+                </li>
+            </div>
+
+            <li class="dropdown">
+                <a href="javascript:void(0)"  class="dropdown-toggle" data-toggle="dropdown" role="button" id="myTabDrop2">
+                    Dropdown2 <span class="caret"></span>
+                </a>
+
+            </li>
+            <div aria-labelledby="myTabDrop2" class="my_dropdown" >
+                <li>
+                    <a href="#"><img src="/material/img/webIco/bilibili.ico"  />
+                        <span>sssssssssssssssssssssssssssssssssaaaa</span>
+                    </a>
+
+                    <a href="#"><img src="/material/img/webIco/bilibili.ico"  />
+                        <span>sssssssssssssssssssssssssssssssssaaaa</span>
+                    </a>
+
+                    <a href="#"><img src="/material/img/webIco/bilibili.ico"  />
+                        <span>中文网a</span>
+                    </a>
+
+                    <a href="#"><img src="/material/img/webIco/bilibili.ico"  />
+                        <span>sssssssssssssssssssssssssssssssssaaaa</span>
+                    </a>
+                </li>
+            </div>
+
+
+
+
+        </ul>
+
+
+
+
+    </nav>
+
+    <div id="page-content-wrapper">
+        <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+            <span class="hamb-top"></span>
+            <span class="hamb-middle"></span>
+            <span class="hamb-bottom"></span>
+        </button>
+    </div>
+</div>
+<script type="text/javascript" th:inline ="javascript">
+
+    $(".dropdown a").click(function(){
+        var curID=$(this).attr("id");
+        var curContent=$("div[aria-labelledby='"+curID+"']");
+        if(curContent.css("display")=="none")
+            curContent.slideDown(100);
+        else
+            curContent.slideUp(100);
+    });
+    var isClosed = false;
+
+    var trigger = $('.hamburger'),
+        overlay = $('.overlay');
+
+        trigger.click(function () {
+            hamburger_cross();
+        });
+
+        function hamburger_cross(obj) {
+
+            if (isClosed === true||obj==="close") {
+                if (obj==="close") $('#wrapper').removeClass('toggled');
+                overlay.hide();
+                trigger.removeClass('is-open');
+                trigger.addClass('is-closed');
+                isClosed = false;
+            } else {
+                overlay.show();
+                trigger.removeClass('is-closed');
+                trigger.addClass('is-open');
+                isClosed = true;
+            }
+        }
+
+        $('[data-toggle="offcanvas"]').click(function () {
+            $('#wrapper').toggleClass('toggled');
+        });
+
+
+    $(".dropdown-menu li a").mouseenter(function(){
+        $(this).css("color","#222222");
+    });
+    $(".dropdown-menu li a").mouseleave(function(){
+        $(this).css("color","#ffffff");
+    });
+
+
+
+
+</script>
+
+<!--
+	描述：三个按钮
+-->
+
+<div style="position: fixed; z-index: 101; left: 0px; top: 29%; display: none; " id="BtnThree">
+    <a  href="javascript:void(0)" style="text-decoration: none;" ><div class="kongjianbnt" onclick="shouqi(this)">预览</div></a>
+    <a href="javascript:void(0)" style="text-decoration: none;"><div class="kongjianbnt"  onclick="exit_edit(this)">退出</div></a>
+    <a  href="javascript:void(0)" style="text-decoration: none;"><div class="kongjianbnt center-block"  onclick="threeBtn(this)">保存</div></a>
+</div>
+
+
+
+
+
+
+<div class="container" id="head-tab-content" style="display: none;">
+
+    <div class="row ">
+
+        <div class="col-lg-12 col-md-12 col-xs-12" style="background-color: rgba(44,49,53,1); border-radius:8px;">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist" >
+                <li  role="presentation" ><a href="#bjtp" aria-controls="" role="tab" data-toggle="tab">背景图片</a></li>
+                <li role="presentation"><a href="#bjtx" aria-controls="" role="tab" data-toggle="tab">背景特效</a></li>
+                <li role="presentation"><a href="#sskys" aria-controls="" role="tab" data-toggle="tab">搜索框颜色</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">鼠标样式</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">漂浮物</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">播放器</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">播放器</a></li>
+
+                <li  role="presentation" ><a href="#bjtp" aria-controls="" role="tab" data-toggle="tab">背景图片</a></li>
+                <li role="presentation"><a href="#bjtx" aria-controls="" role="tab" data-toggle="tab">背景特效</a></li>
+                <li role="presentation"><a href="#sskys" aria-controls="" role="tab" data-toggle="tab">搜索框颜色</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">鼠标样式</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">漂浮物</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">播放器</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">播放器</a></li>
+                <li  role="presentation" ><a href="#bjtp" aria-controls="" role="tab" data-toggle="tab">背景图片</a></li>
+                <li role="presentation"><a href="#bjtx" aria-controls="" role="tab" data-toggle="tab">背景特效</a></li>
+                <li role="presentation"><a href="#sskys" aria-controls="" role="tab" data-toggle="tab">搜索框颜色</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">鼠标样式</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">漂浮物</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">播放器</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">播放器</a></li>
+                <li  role="presentation" ><a href="#bjtp" aria-controls="" role="tab" data-toggle="tab">背景图片</a></li>
+                <li role="presentation"><a href="#bjtx" aria-controls="" role="tab" data-toggle="tab">背景特效</a></li>
+                <li role="presentation"><a href="#sskys" aria-controls="" role="tab" data-toggle="tab">搜索框颜色</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">鼠标样式</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">漂浮物</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">播放器</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">播放器</a></li>
+                <li  role="presentation" ><a href="#bjtp" aria-controls="" role="tab" data-toggle="tab">背景图片</a></li>
+                <li role="presentation"><a href="#bjtx" aria-controls="" role="tab" data-toggle="tab">背景特效</a></li>
+                <li role="presentation"><a href="#sskys" aria-controls="" role="tab" data-toggle="tab">搜索框颜色</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">鼠标样式</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">漂浮物</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">播放器</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">播放器</a></li>
+
+
+                <!--<li role="presentation"> </li>
+                 <li role="presentation"></li>-->
+
+
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content" >
+                <div role="tabpanel" class="tab-pane fade" id="bjtp">bjtpsaddddddddddddddddddddddd</div>
+                <div role="tabpanel" class="tab-pane fade" id="bjtx">bjtxadsssssssssssssssssssssss</div>
+                <div role="tabpanel" class="tab-pane fade" id="sskys">sskysadsssssssssssss</div>
+                <div role="tabpanel" class="tab-pane fade" id="settings">
+                    adssssssssssssssssss<br />
+                    adssssssssssssssssss<br />
+                    adssssssssssssssssss<br />
+                    adssssssssssssssssss<br />
+                    adssssssssssssssssss<br />
+                    adssssssssssssssssss<br />
+                    adssssssssssssssssss<br />
+                    adssssssssssssssssss<br />
+                    adssssssssssssssssss<br />
+                    adssssssssssssssssss<br />
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--装扮菜单-->
+<script type="text/javascript" th:inline ="javascript">
+
+    $(".tab-content").css("color","white");
+    $('.nav-tabs a').css("color","white"); //tab 标题改白色字
+
+    //var cur_head_tabs="null";
+    $('.nav-tabs a').click(function (e) {
+        $('.nav-tabs a').css("color","white");
+        e.preventDefault();
+        $(this).css('color',"rgba(44,49,53,1)");
+        $(this).tab('show');
+//cur_head_tabs=$(this).attr("href");
+//console.log(cur_head_tabs);
+    })
+
+    function shouqi(obj){
+        //console.log($(this).text());
+        if($(obj).text()=="预览"){
+            $('#head-tab-content').slideUp(300);
+            $(obj).text("菜单");
+        }else{
+            $('#head-tab-content').slideDown(300);
+            $(obj).text("预览");
+            //$(cur_head_tabs).tab("show");
+        }
+        threeBtn(obj);
+
+
+    }
+
+
+
+    //描述：空间感三个按钮
+
+    function threeBtn(obj){
+        var $button = $(obj);
+        var duration = 0.3,
+            delay = 0.08;
+        TweenMax.to($button, duration, {scaleY: 1.6, ease: Expo.easeOut});
+        TweenMax.to($button, duration, {scaleX: 1.2, scaleY: 1, ease: Back.easeOut, easeParams: [3], delay: delay});
+        TweenMax.to($button, duration * 1.25, {scaleX: 1, scaleY: 1, ease: Back.easeOut, easeParams: [6], delay: delay * 3 });
+    }
+
+
+</script>
+
+<!--背景特效-->
+<iframe  src="/material/special/transparent/10000.html"  name="iframe_a" frameborder="0" marginwidth="0px" scrolling="no" width="100%" height="110%" style="position: absolute; top: -10px; z-index: -999;">
+
+</iframe>
+
+<!--描述：播放器 -->
+<a id="tishi" tabindex="0" class=" music-player" role="button"
+   data-toggle="popover" data-placement="left" data-trigger="focus" title="提示"
+   data-content="点我播放背景音乐" >
+    <img src="/material/img/music/音乐.png"  class=""/>
+
+</a>
+<marquee behavior="scroll" direction="right" style="position: fixed; right: 10px; top: 56px;overflow: hidden;
+    		white-space: nowrap; width: 90px;" scrollamount='3' >
+    <p id="musicName">xxxxxxx</p>
+
+</marquee>
+
+
+
+<div class="container" style="margin-top: 3%;">
+
+
+    <!--描述：搜索框-->
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-xs-2"></div>
+        <div class="col-lg-8 col-md-8 col-xs-8 " style="" id="sousuokuan">
+            <div class="row " id="sousuobox" style="height: 50px; border-radius: 33px 33px 33px 33px; box-shadow:1px 0px 0px 5px rgba(0, 0, 0, 01), 1px 1px 20px 6px rgba(0, 0, 0, 01); background-color: rgba(0, 0, 0, 0.09); ">
+                <div class="col-lg-1 col-md-1 col-xs-1 shubiao2" style=" width: 6%; height: 50px; padding:0; padding-left: 10px; margin-top: 10px; text-align: center; " onclick="searchList()" >
+                    <a href="javascript:void(0)" style="width: 40px; height: 40px; " >
+                        <img id="searchIco" width="30px" height="30px" src="/material/img/search/icon_百度logo.png"  />
+                    </a>
+                </div>
+                <div class="col-lg-10 col-md-10 col-xs-10 ">
+                    <input type="text" class="form-control sousuo" placeholder="输入要搜索的内容" id="Jsosuo" oninput="oninputchange()"  style=" text-align:center"></input>
+                </div>
+                <div class="col-lg-1 col-md-1 col-xs-1 ">
+                    <a href="javascript:void(0)" style="width: 40px; height: 40px; " >
+                        <input type="checkbox" id="border-3">
+                        <label for="border-3" class="green" id="switchGroup"></label>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--
+        作者：简物语
+        描述：联想词列表
+    -->
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-xs-2"></div>
+
+        <div class="col-lg-6 col-md-6 col-xs-6 assUldiv ">
+            <ul id="assUl" class="assUl ">
+
+            </ul>
+        </div>
+    </div>
+
+
+    <!--
+        作者：简物语
+        描述：搜索引擎选择下拉框
+    -->
+    <div class="row">
+        <div class="col-lg-2 col-md-2 col-xs-2"></div>
+        <div class="col-lg-1 col-md-1 col-xs-1">
+            <ul class="search-menu">
+                <li>
+                    <a href="javascript:void(0)" class="so360" style="text-decoration: none;" onclick="changeSearch('360',this)"><img />360</a>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0)" class="google" style="text-decoration: none;" onclick="changeSearch('gg',this)"><img />谷歌</a>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0)" class="baidu" style="text-decoration: none;" onclick="changeSearch('bd',this)"><img />百度</a>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0)" class="bing" style="text-decoration: none;" onclick="changeSearch('bi',this)"><img />bing必应</a>
+                </li>
+
+                <li>
+                    <a href="javascript:void(0)" class="sogou" style="text-decoration: none;" onclick="changeSearch('sg',this)"><img />Sogou搜狗</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--
+        作者：简物语
+        描述：常用网站分组
+    -->
+
+    <div class="row" name="my_group">
+        <div class="col-lg-2 col-md-2 col-xs-2"></div>
+        <div class="col-lg-8 col-md-8 col-xs-8" >
+            <div class="panel panel-default my-panel" >
+                <ul class="webgroup" >
+                    <li class="my-heading my-panel-heading" role="tab" id="headingOne" >
+                        <div class="panel-title "  >
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"  >
+                                分组1
+                            </a>
+
+                        </div>
+
+                    </li>
+                    <li class="my-panel-heading my-heading" role="tab" id="headingOne" >
+                        <div class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse2" aria-expanded="true" aria-controls="collapseOne" >
+                                分组2
+                            </a>
+
+                        </div>
+
+                    </li>
+                    <li class="my-panel-heading my-heading" role="tab" id="headingOne" >
+                        <div class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse3" aria-expanded="true" aria-controls="collapseOne" >
+                                分组3
+                            </a>
+
+                        </div>
+
+                    </li>
+                    <li class="my-panel-heading my-heading" role="tab" id="headingOne" >
+                        <div class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse4" aria-expanded="true" aria-controls="collapseOne" >
+                                分组4
+                            </a>
+
+                        </div>
+
+                    </li>
+                    <li class="my-panel-heading my-heading" role="tab" id="headingOne" >
+                        <div class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse3" aria-expanded="true" aria-controls="collapseOne" >
+                                分组5
+                            </a>
+
+                        </div>
+
+                    </li>
+                </ul>
+
+
+
+
+                <div id="collapseOne" class="panel-collapse collapse my-collapse   " role="tabpanel" aria-labelledby="headingOne" aria-expanded="true" >
+
+                    <div class="panel-body maoboli  ">
+                        <a href="#" class="" ><img src="/material/img/webIco/bilibili.ico"  data-toggle="tooltip" data-placement="bottom" title="bilibil"/></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" /></a><a href="#" class=""><img src="/material/img/webIco/bilibili.ico" data-toggle="tooltip" data-placement="bottom" title="bilibil" /></a>
+
+
+
+
+                    </div>
+
+
+                </div>
+
+                <div id="collapse2" class="panel-collapse collapse my-collapse " role="tabpanel" aria-labelledby="headingOne" aria-expanded="true" >
+                    <div class="panel-body maoboli">
+                        2Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+                <div id="collapse3" class="panel-collapse collapse my-collapse " role="tabpanel" aria-labelledby="headingOne" aria-expanded="true" >
+                    <div class="panel-body maoboli">
+                        3Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+                <div id="collapse4" class="panel-collapse collapse my-collapse " role="tabpanel" aria-labelledby="headingOne" aria-expanded="true" >
+                    <div class="panel-body maoboli">
+                        3Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>
+
+    <div class="row" name="my_group">
+        <div class="col-lg-2 col-md-2 col-xs-2"></div>
+        <div class="col-lg-8 col-md-8 col-xs-8" >
+            <div class="panel panel-default my-panel" >
+                <ul class="webgroup" >
+                    <li class="my-panel-heading my-heading" role="tab" id="headingOne" >
+                        <div class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse5" aria-expanded="true" aria-controls="collapseOne" >
+                                分组1
+                            </a>
+
+                        </div>
+
+                    </li>
+                    <li class="my-panel-heading my-heading" role="tab" id="headingOne" >
+                        <div class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse5" aria-expanded="true" aria-controls="collapseOne" >
+                                分组2
+                            </a>
+
+                        </div>
+
+                    </li>
+                    <li class="my-panel-heading my-heading" role="tab" id="headingOne" >
+                        <div class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse6" aria-expanded="true" aria-controls="collapseOne" >
+                                分组3
+                            </a>
+
+                        </div>
+
+                    </li>
+                    <li class="my-panel-heading my-heading" role="tab" id="headingOne" >
+                        <div class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse7" aria-expanded="true" aria-controls="collapseOne" >
+                                分组4
+                            </a>
+
+                        </div>
+
+                    </li>
+                    <li class="my-panel-heading my-heading" role="tab" id="headingOne" >
+                        <div class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse5" aria-expanded="true" aria-controls="collapseOne" >
+                                分组5
+                            </a>
+
+                        </div>
+
+                    </li>
+                </ul>
+
+
+                <div id="collapse5" class="panel-collapse collapse my-collapse" role="tabpanel" aria-labelledby="headingOne" aria-expanded="true" >
+                    <div class="panel-body">
+                        5Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+                <div id="collapse7" class="panel-collapse collapse my-collapse" role="tabpanel" aria-labelledby="headingOne" aria-expanded="true" >
+                    <div class="panel-body">
+                        6Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+                <div id="collapse6" class="panel-collapse collapse my-collapse" role="tabpanel" aria-labelledby="headingOne" aria-expanded="true" >
+                    <div class="panel-body">
+                        7Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+</div>
+
+<!--*****************鼠标点击分组特效******************************-->
+<script type="text/javascript" th:inline ="javascript" >
+    //绑定鼠标点击分组特效
+    $(".my-panel-heading .panel-title").bind("click",function(){
+        threeBtn($(this));
+    });
+</script>
+<script type="text/javascript" th:inline ="javascript">
+
+    /*************************搜索框输入值改变颜色*********************/
+    function oninputchange(){
+        if($("#Jsosuo").val().trim().length<=0){
+            $("#sousuobox").css("box-shadow", "1px 0px 0px 5px rgba(0,0,0, 1), 1px 1px 20px 6px rgba(0,0,0, 1)");
+            $(".sousuo").css("color","black");
+            return;
+        }
+        var r = Math.floor(Math.random() * 256);
+        var b = Math.floor(Math.random() * 256);
+        var g = Math.floor(Math.random() * 256);
+        $("#sousuobox").css("box-shadow", "1px 0px 0px 5px rgba(" + r + ", " + b + ", " + g + ", 1), 1px 1px 20px 6px rgba(" + r + ", " + b + ", " + g + ", 1)");
+        $(".sousuo").css("color","rgba(" + r + ", " + b + ", " + g + ", 1)");
+    }
+    /*****************音乐播放器***************************/
+    var musicUrl="http://music.163.com/song/media/outer/url?id=1338355334.mp3"; //地址
+    var musicName="狂おしいほど僕には"; //名称
+    var author="majiko"; //作者
+    var angle = 0;//旋转角度初始化
+    //歌曲名
+    $("#musicName").text(musicName+"--"+author);
+    //播放器旋转
+    function xuanzhuang(){
+        angle+=3;
+        $(".music-player").css("transform","rotate("+angle+"deg)");
+        if (angle===360) angle=0;
+
+    }
+    var xz=null;//定时器
+    //播放器阴影
+    var audioShadow =setInterval(function(){
+        var r = Math.floor(Math.random() * 256);
+        var b = Math.floor(Math.random() * 256);
+        var g = Math.floor(Math.random() * 256);
+        $(".music-player").css("box-shadow", "4px 5px 8px rgba(" + r + ", " + b + ", " + g + ", 1), -4px -2px 8px rgba(" + r + ", " + b + ", " + g + ", 1)");
+        $(".music-player").css("border","2px solid "+ "rgba(" + r + ", " + b + ", " + g + ", 1)");
+        $("#musicName").css("color","rgba(" + r + ", " + b + ", " + g + ", 1)");
+    },500);
+    //失去焦点旋转
+    $(".music-player").mouseout(function() {
+        if(audioID==2){
+            clearInterval(xz);
+            xz=setInterval(xuanzhuang,30);
+            //	console.log("adasdasdasdasdasd")
+        }
+
+    });
+
+    //获得焦点不转
+    $(".music-player").mouseover(function() {
+        //	console.log("buzhuang")
+        clearInterval(xz);
+
+    });
+    //播放音乐
+    var audioClass="audio";
+    function playSound()
+    {
+        var borswer = window.navigator.userAgent.toLowerCase();
+        if ( borswer.indexOf( "ie" ) >= 0 )
+        {
+            //IE内核浏览器
+            var strEmbed = "<embed name='embedPlay' id='embedPlay' autostart=true loop=true src="+musicUrl+"></embed>";
+            if ( $( "body" ).find( "embed" ).length <= 0 )
+                $( "body" ).append( strEmbed );
+            var embed = document.embedPlay;
+
+            //浏览器不支持 audion，则使用 embed 播放
+            embed.volume = 100;
+            embed.play();//这个不需要
+            // console.log("embed")
+            audioClass="embed";
+        } else
+        {
+            //非IE内核浏览器
+            var strAudio = "<audio id='audioPlay' loop='loop'  src='"+musicUrl+"' hidden='true'>";
+            if ( $( "body" ).find( "audio" ).length <= 0 )
+                $( "body" ).append( strAudio );
+            var audio = document.getElementById( "audioPlay" );
+
+            //浏览器支持 audion
+            //   console.log("audio");
+            audioClass="audio";
+            audio.play();
+
+
+        }
+    }
+
+    var audioID=1;//1未 2ing
+    $(".music-player").click(function(){
+        if (audioID==1) {
+            playSound();
+            xz=setInterval(xuanzhuang,30);
+            audioID=2;
+        }else{
+            if (audioClass=="audio") {
+                $("#audioPlay")[0].pause();//暂停
+            }else{
+                $("#embedPlay")[0].pause();
+            }
+            clearInterval(xz);
+            audioID=1;
+        }
+
+    });
+    // setInterval(playSound,1);
+
+
+
+    /**************鼠标样式参数*****************/
+
+    // $(".shubiao").css("cursor", "url(/material/img/mouse/pointer/蓝色鼠标.ico),default");//鼠标
+    // $("a,.shubiao2,.music-player,label,.hamburger,img").css("cursor", "url(/material/img/mouse/hand/手指.ico),default");//手指
+
+
+
+    /**********************初始化参数**************************/
+    var startLiId = 1; //li联想词起始值
+    var searchClassName = "http://www.baidu.com/s?wd="; //默认百度搜索
+    $(".so360 img").prop("src", "/material/img/search/360.png");
+    $(".google img").attr("src", "/material/img/search/谷歌搜索.png");
+    $(".baidu img").attr("src", "/material/img/search/icon_百度logo.png");
+    $(".bing img").attr("src", "/material/img/search/bing.png");
+    $(".sogou img").attr("src", "/material/img/search/搜狗搜索ico-18px.png");
+
+    /*****************鼠标移入变大图标******************************/
+    var iocwidth;
+    var iocheight;
+    var magintop;
+    $("#searchIco").mouseenter(function(){
+        iocwidth=$(this).width()+10;
+        iocheight=$(this).height()+10;
+        magintop=$(this).css("margin-top").replace("px","")-10;
+        //console.log(magintop);
+        $(this).width(iocwidth+"px");
+        $(this).height(iocheight+"px");
+        $("#searchIco").css("margin-top",magintop+"px");
+    });
+    $("#searchIco").mouseleave(function(){
+        iocwidth-=10;
+        iocheight-=10;
+        magintop+=10;
+        //console.log(magintop);
+        $(this).width(iocwidth+"px");
+        $(this).height(iocheight+"px");
+        $("#searchIco").css("margin-top",magintop+"px");
+    });
+
+
+    /********************JQQQQQQQQQQQQQ*******************************/
+    $(function() {
+
+        /********************播放器提示语*******************************/
+        $('[data-toggle="popover"]').popover();
+        $("#tishi").popover("show");
+        setTimeout(function(){
+            $("#tishi").popover("hide");
+            $('#tishi').popover('destroy');
+        },3000);
+
+
+        /**************调用百度联想词*****************************/
+        //失去焦点关闭联想词
+        $("#Jsosuo").blur(function() {
+            //$(".assUldiv").hide();
+            $(".assUldiv").slideUp(300);
+        });
+
+        //获得焦点展示联想词
+        $("#Jsosuo").focus(function() {
+            $("#Jsosuo").keyup();
+        });
+        /**************监控鼠标*********************/
+            //点击空白收回ul
+        var shifouzaiUlLi=false;//是否在ul里
+        $('.search-menu').mouseenter(function() { shifouzaiUlLi = true; }).mouseleave(function() { shifouzaiUlLi = false; });
+        $(document).mousedown(function(event){
+            if(event.button===0){//左键
+                if($(".search-menu").css("display")!="none"&&shifouzaiUlLi===false){
+                    $(".search-menu").slideUp(300);
+                    //console.log("asdd")
+                }
+            }
+        });
+        //监控键盘
+        $(document).keydown(function(event) {
+
+            if(event.keyCode === 38) {
+
+                if($(".assUldiv").css("display") != 'none') {
+                    //	console.log('按下了上方向键');
+                    startLiId -= 1;
+                    if(startLiId <= 0) {
+                        startLiId = $("#assUl li").length;
+                    }
+                    $("#assUl li").css("background-color", "");
+                    $("#assUl li:nth-child(" + startLiId + ")").css("background-color", "rgba(14, 5, 5, 0.5)");
+                    console.log(startLiId);
+                    var searchText = $("#assUl li:nth-child(" + startLiId + ") a").text();
+                    $("#Jsosuo").val(searchText);
+                }
+            } else if(event.keyCode === 40) {
+                if($(".assUldiv").css("display") != 'none') {
+                    //	console.log('按下了下方向键');
+                    startLiId += 1;
+                    if(startLiId > $("#assUl li").length) {
+                        startLiId = 1;
+                    }
+                    $("#assUl li").css("background-color", "");
+                    $("#assUl li:nth-child(" + startLiId + ")").css("background-color", "rgba(14, 5, 5, 0.5)");
+                    console.log(startLiId);
+                    var searchText = $("#assUl li:nth-child(" + startLiId + ") a").text();
+                    $("#Jsosuo").val(searchText);
+                }
+            } else if(event.keyCode === 13 && $("#Jsosuo").is(":focus")) {
+                //console.log("按下回车");
+                var mtext = $("#Jsosuo").val();
+                var str = searchClassName + mtext;
+                window.open(str,'_blank');
+                //window.location.href = str;
+            } else {
+
+            }
+        });
+
+
+        $("#Jsosuo").keyup(function() {
+            if(event.keyCode === 38 || event.keyCode === 40 || event.keyCode === 13) return;
+            var mtext = $("#Jsosuo").val();
+
+            $.ajax({
+                url: "https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&wd=" + mtext + "&req=2&csor=1&pwd=1&cb=associational",
+                type: "GET",
+                dataType: "jsonp", //指定服务器返回的数据类型
+                success: function(data) {
+                    //调用回调函数
+                }
+            });
+
+        });
+
+    });
+    //回调函数
+    function associational(data) {
+
+        //console.log("daying Q:"+data.q)
+        var mtext = $("#Jsosuo").val();
+        var str = "<li style='display:none;'><a href=" + searchClassName + mtext + ">" + mtext + "</a></li>";
+        var temp = str;
+        $.each(data.g, function(index, c) {
+            str += "<li><a href=" + searchClassName + c.q + ">" + c.q + "</a></li>";
+            if(index == 6) {
+                return false;
+            }
+        });
+        $("#assUl").children().filter("li").remove();
+        if(str != "" && str.trim().length > 0 && str != temp) {
+            //$(".assUldiv").show();
+            $("#assUl").append(str);
+            $(".assUldiv").slideDown(300);
+        } else {
+            //$(".assUldiv").hide();
+            $(".assUldiv").slideUp(400);
+        }
+        startLiId = 1; //li索引归1
+    }
+
+    /**************调用百度联想词结束*****************************/
+
+    /****************切换搜索引擎*************************************/
+    function changeSearch(searchClass, obj) {
+        if(searchClass == "gg") {
+            searchClassName = "https://www.google.com/search?q=";
+            var className = "." + $(obj).prop("className");
+            var imgurl = $(className + " img").attr("src");
+            $("#searchIco").attr("src", imgurl);
+
+        } else if(searchClass == "bd") {
+            searchClassName = "http://www.baidu.com/s?wd=";
+            var className = "." + $(obj).prop("className");
+            var imgurl = $(className + " img").attr("src");
+            $("#searchIco").attr("src", imgurl);
+        } else if(searchClass == "bi") {
+            searchClassName = "https://cn.bing.com/search?q=";
+            var className = "." + $(obj).prop("className");
+            var imgurl = $(className + " img").attr("src");
+            $("#searchIco").attr("src", imgurl);
+        } else if(searchClass == "sg") {
+            searchClassName = "https://www.sogou.com/web?query=";
+            var className = "." + $(obj).prop("className");
+            var imgurl = $(className + " img").attr("src");
+            $("#searchIco").attr("src", imgurl);
+        } else if(searchClass == "360") {
+            searchClassName = "https://www.so.com/s?ie=utf-8&q=";
+            var className = "." + $(obj).prop("className");
+            var imgurl = $(className + " img").attr("src");
+            $("#searchIco").attr("src", imgurl);
+        }
+        $(".search-menu").slideUp(300);
+        //console.log(searchClassName);
+    }
+    //展示搜索引擎列表
+    function searchList() {
+        if($(".search-menu").css("display") == 'none') {
+            $(".search-menu").slideDown(300);
+        } else {
+            $(".search-menu").slideUp(300);
+        }
+
+    }
+
+
+</script>
+
+<!--*****************漂浮物******************************-->
+<div id="floatImg">
+    <img src="/material/img/float/10000/pfw.gif" style="position: absolute; top: 100.5px; left: 308.6px;">
+    <img src="/material/img/float/10000/pfw3.gif" style="position: absolute; top: 100.5px; left: 308.6px;">
+    <img src="/material/img/float/10000/pfw.gif" style="position: absolute; top: 166.5px; left: 208.6px;">
+    <img src="/material/img/float/10000/pfw2.gif" style="position: absolute; top: 146.5px; left: 508.6px;">
+    <img src="/material/img/float/10000/pfw.gif" style="position: absolute; top: 160.5px; left: 408.6px;">
+    <img src="/material/img/float/10000/pfw3.gif" style="position: absolute; top: 168.5px; left: 708.6px;">
+    <img src="/material/img/float/10000/pfw.gif" style="position: absolute; top: 160.5px; left: 408.6px;">
+    <img src="/material/img/float/10000/pfw2.gif" style="position: absolute; top: 168.5px; left: 708.6px;">
+</div>
+<script type="text/javascript" th:inline ="javascript">
+
+    var winH=$(window).height();
+    var winW=$(window).width();
+
+    $(window).resize(function() {
+        winH=$(window).height();
+        winW=$(window).width();
+    });
+
+    var imgs=$("#floatImg").children("img");
+    //初始化随机排序
+    function randomRanking(){
+        $.each(imgs,function(index,im){
+            var randomH=Math.random() * winH;
+            $(im).css("top",randomH+"px");
+            var randomW=Math.random() * winW;
+            $(im).css("left",randomW+"px");
+        });
+    }
+    randomRanking();//调用初始
+    //漂浮
+    function floatImg(){
+
+        var imgTop,imgLeft,randomW,randomH;
+        var isChangeW;//是否改变宽
+        $.each(imgs,function(index,im){
+            //console.log($(im).attr("src"))
+            randomW=0;//随机宽
+            randomH=Math.random();//随机高
+            isChangeW=Math.round(Math.random());//是否改变宽
+            if(isChangeW==0){//0改变 1不改变
+                randomW=Math.random();//随机宽
+            }
+            isChangeW=Math.random();//60%向左 40%向右
+            if(isChangeW<0.6){
+                imgLeft=parseFloat($(im).css("left").replace("px",""))-randomW;
+            }else{
+                imgLeft=parseFloat($(im).css("left").replace("px",""))+randomW;
+            }
+
+            imgTop =parseFloat($(im).css("top").replace("px",""))+randomH;
+            //console.log($(im).css("top").replace("px","")+" and "+imgTop);
+
+            $(im).css("top",imgTop+"px");
+            $(im).css("left",imgLeft+"px");
+            if(imgLeft<=0||imgTop>winH||imgLeft>winW-32){
+                $(im).css("top","-1px");
+                randomW=Math.random() * winW;
+                $(im).css("left",randomW+"px");
+            }
+            //console.log(imgTop+" and "+imgLeft);
+            //console.log($(window).height()+" and "+$(window).width());
+        });
+    }
+
+    var MyfloatImg=setInterval(floatImg,60);
+</script>
+<!--****************右键菜单******************************-->
+<div id='contextMenus1'></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
+
+
+
+<!--******************常用网站悬浮特效******************************-->
+<script type="text/javascript" th:inline ="javascript">
+    var isOnImg=false;	//是否在图上
+    var curImgId=null;//当前图片id
+    $(".maoboli img").mouseenter(function(){
+        isOnImg=true;
+        $(this).css("box-shadow","0px 0px 9px 2px rgba(0,235,255,1)");
+        //$(this).css("border","2px solid  rgba(0,235,255,1)");
+    });
+    $(".maoboli img").mouseleave(function(){
+
+        isOnImg=false;
+        $(this).css("box-shadow","0px 0px 9px 2px rgba(0,0,0,1)");
+        $(this).css("border","0px solid  rgba(0,235,255,1)");
+    });
+
+
+    $(".maoboli img").mousedown(function(event){
+        if(event.button===2){//右键
+            $(this).css("box-shadow","0px 0px 9px 2px rgba(0,0,0,0)");
+            $(this).css("border","2px solid  red");
+            curImgId= $(this);
+
+            return;
+        }
+        $(this).css("box-shadow","0px 0px 9px 2px rgba(0,0,0,0)");
+        $(this).css("border","2px solid  rgba(0,235,255,1)");
+    });
+    $(".maoboli img").mouseup(function(event){
+
+        if (isOnImg===false) {
+            $(this).css("box-shadow","0px 0px 9px 2px rgba(0,0,0,1)");
+            $(this).css("border","0px solid  rgba(0,235,255,1)");
+        }else{
+            $(this).css("box-shadow","0px 0px 9px 2px rgba(0,235,255,1)");
+            $(this).css("border","0px solid  rgba(0,235,255,1)");
+        }
+    });
+    //随机开灯
+    function randomLight(){
+        var imgs=$(".maoboli a").children("img");
+        var rdm,obj;
+        rdm=Math.round(Math.random()*imgs.length);
+        obj=imgs.eq(rdm);
+        if($(obj).parent().parent().parent().hasClass("in")){
+            var r = Math.floor(Math.random() * 256);
+            var b = Math.floor(Math.random() * 256);
+            var g = Math.floor(Math.random() * 256);
+            if (isOnImg===false) {
+                $(obj).css("box-shadow","0px 0px 9px 2px rgba("+r+","+b+","+g+",1)");
+            }
+        }
+
+
+    }
+    //关灯
+    function closeLight(){
+        var imgs=$(".maoboli a").children("img");
+        var rdm;
+        $.each(imgs, function(index,obj) {
+            if ($(obj).parent().parent().parent().hasClass("in")&&isOnImg===false) {
+                $(obj).css("box-shadow","0px 0px 9px 2px rgba(0,0,0,1)");
+            }
+        });
+    }
+    var openLight=setInterval(randomLight,600);//随机开灯
+    var closeLight=setInterval(closeLight,1200);//随机关灯
+</script>
+
+
+
+<!--调整位置-->
+<script th:inline ="javascript">
+    //联想词位置
+    var sousuokuanOffLeft=$("#sousuokuan").offset().left;//获取搜索框距离左边多少
+    var sousuokuanOffRight=$("#sousuokuan").width()+sousuokuanOffLeft;//获取搜索框距离右边多少
+    //console.log(sousuokuanOffLeft);
+    //console.log(sousuokuanOffRight);
+    $(".assUldiv").css("left",sousuokuanOffLeft+"px");
+    //拉杆位置
+    //  $("#lagan").css("left",sousuokuanOffRight+"px");
+
+    //窗口改变触发
+    $(window).resize(function() {
+        var sousuokuanOffLeft=$("#sousuokuan").offset().left;//获取搜索框距离左边多少
+        var sousuokuanOffRight=$("#sousuokuan").width()+sousuokuanOffLeft;//获取搜索框距离右边多少
+
+        //联想词位置
+        $(".assUldiv").css("left",sousuokuanOffLeft+"px");
+
+        //拉杆位置
+        // $("#lagan").css("left",sousuokuanOffRight+"px");
+
+
+
+    });
+
+
+
+</script>
+
+<!--分组收起特效-->
+<script th:inline ="javascript" type="text/javascript">
+    //隐藏和显示分组
+    var is_my_group_none=false; //默认是否隐藏分组
+    //初始化
+    if(is_my_group_none==true||is_my_group_none=="true"){
+        $("div[name='my_group']").css("display","none");
+        //$("div[name='my_group']").slideUp(300);
+    }
+
+    $("#border-3").click(function(){
+        //$("div[name='my_group']").css("display","none");
+        if(is_my_group_none==true||is_my_group_none=="true")
+            $("div[name='my_group']").toggle(300);
+        else{
+            //$(".my-collapse").collapse('hide');
+            var dsq=setInterval(function(){
+                var flag=true;
+                $.each($(".my-collapse"), function(index,obj) {
+                    if($(obj).hasClass("in")){
+                        $(obj).collapse('hide');
+                        flag=false;
+                        return false;
+                    }else if($(obj).hasClass("collapsing")){
+                        flag=false;
+                        return true;
+                    }
+
+                });
+                if (flag) {
+                    $("div[name='my_group']").toggle(600);
+                    clearInterval(dsq);
+                }
+                //setTimeout(function(){console.log("1s")},1000);
+
+
+            },100);
+
+        }
+
+        is_my_group_none=!is_my_group_none;
+    });
+</script>
+
+<!--分组网站鼠标悬停提示标签 -->
+<script type="text/javascript" th:inline ="javascript">
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script>
+
+<!-- 鼠标右键菜单 -->
+<script src='/js/class2context.js'></script>
+<script type="text/javascript" th:inline ="javascript">
+
+    //主菜单
+    class2context('main_menu', "主菜单",
+        [
+            [
+                "<img src='/material/img/rightMenu/个性化.png' width='25px' /> 编辑", "edit_page()"
+            ]
+        ]);
+
+    //分组菜单
+    $(".maoboli a").addClass("www_menu");//导航网站
+    class2context('www_menu', "导航管理",
+        [
+            [
+                "<img src='/material/img/rightMenu/修改.png' width='25px' /> 编辑此网站", "edit_page()"
+            ],
+            [
+                "<img src='/material/img/rightMenu/删除.png' width='25px' /> 删除此网站 ", "del_www()"
+            ]
+        ]);
+
+    $(".maoboli ").addClass("group_menu");
+    class2context('group_menu', "导航管理",
+        [
+            [
+                "<img src='/material/img/rightMenu/ie.png' width='25px' /> 添加网站", "edit_page()"
+            ],
+            [
+                "<img src='/material/img/rightMenu/分组.png' width='25px' /> 添加分组", "edit_page()"
+            ]
+        ]);
+
+    // 编辑显示菜单
+    function edit_page(){
+        if($("#head-tab-content").css("display")==="none"){
+            hamburger_cross("close");
+            $("#head-tab-content").slideDown(300);
+            $("#BtnThree").slideDown(300);
+            $("#page-content-wrapper").hide();
+        }
+    }
+    //退出按钮
+    function exit_edit(obj){
+        $("#head-tab-content").slideUp(300);
+        $("#BtnThree").slideUp(300);
+        setTimeout(function () {
+            $("#page-content-wrapper").show();
+        },300);
+    }
+    //删除当前网站
+    function del_www(){
+      //  console.log(curImgId)
+        if(curImgId!=null){
+            $(curImgId).remove();
+        }
+    }
+
+
+</script>
+
 </html>

@@ -1,6 +1,10 @@
 server:
   port: 8080
 
+myparameter:
+  uploadPath: d:/zp/material/
+
+
 spring:
   application:
     name: rubbish-classification-web  #应用名称
