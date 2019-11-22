@@ -1,0 +1,73 @@
+server:
+  port: 2705
+
+myparameter:
+  uploadPath: d:/zp/material/
+
+
+spring:
+  application:
+    name: jiandaohang-api  #应用名称
+  #thymeleaf关闭缓存.
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
+    suffix: .html
+    prefix: classpath:/templates/
+    servlet:
+      content-type: text/html
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql://localhost:3306/jdh?useSSL=false
+      #platform: mysql
+      username: root
+      password: 147258
+      driver-class-name: com.mysql.jdbc.Driver #或者org.gjt.mm.mysql.Driver
+      #druid连接池配置
+      initialSize: 5 #初始化个数
+      minIdle: 5    #最小空闲数
+      maxActive: 20 #最大连接数
+      maxWait: 60000 #获取连接的最大等待时间
+      timeBetweenEvictionRunsMillis: 60000 #空闲连接的检查时间间隔
+      minEvictableIdleTimeMillis: 300000 #空闲连接最小空闲时间
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      # 配置连接池监控统计拦截的filters,去掉监控界面sql无法统计，‘wall’用于防火墙
+      #http://ip:port/ 项目名/druid/或http://ip:port/ 项目名/druid/index.html即可访问
+      filters: stat,wall,log4j
+      maxPoolPreparedStatementPerConnectionSize: 20 # 打开PSCache，并且指定每个连接上PSCache的大小
+      #userGlobalDataSourceStat: true # 合并多个DruidDataSource的监控数据
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000 #慢SQL记录
+  jmx:
+    default-domain: jiandaohang-api-01
+
+  #Mybatis配置
+mybatis:
+    mapper-locations: classpath:mybatis/mapper/**/*.xml
+    #  config-location: classpath:mybatis/mybatis.cfg.xml
+    type-aliases-package: com.jdh.pojo #设置别名 扫描包
+    configuration:
+      map-underscore-to-camel-case: true #开启驼峰命名 使得属性字段驼峰处变成下划线 user_name
+      # cache-enabled: true #开启二级缓存 也可在配置文件开启
+
+  #客户端注册进eureka服务列表
+eureka:
+    client:
+      service-url:
+        defaultZone: http://localhost:7001/eureka/
+    instance:
+      #    #服务实例名称修改
+      instance-id: jiandaohang-api-01
+      #    #访问路径显示IP地址 默认已经开启
+      prefer-ip-address: true
+  #
+info:  #配置info信息内容
+  app.name: rjiandaohang-api-01
+  company.name: www.zp.com
+#endpoints:
+#  jmx:
+#    domain: jiandaohang-api-01

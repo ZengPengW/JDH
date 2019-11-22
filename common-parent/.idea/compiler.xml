@@ -7,6 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="jiandaohang-web" />
+        <module name="jioandaohang_eureka01" />
+        <module name="jiandaohang-utils" />
+        <module name="jiandaohangapi" />
       </profile>
     </annotationProcessing>
   </component>

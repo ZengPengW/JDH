@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html >
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>登录</title>
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+</head>
+<body>
+<h1>登录页面</h1>
+<h3 ><font color="red" id="info" style="display: none" ></font></h3>
+<form  id="loginFrom" method="post">
+用户名:<input type="text" name="username"><br/>
+密   码: <input type="password" name="password"><br/>
+记住我:<input type="checkbox" name="remember-me" value="true" checked="checked" /><br/>
+验证码:<input type="text" name="imgCode"> <img alt="验证码" th:src="@{/imgCode}" id="getimgcode">
+<input type="button" value="登录" id="loginBut">
+</form>
+
+<!-- 异步登录 -->
+
+<script>
+$(function(){
+	$("#loginBut").click(function(){
+		$.post("[[@{/securityLogin}]]",
+				$("#loginFrom").serialize(),
+				function(data){
+				if(data.status==1){
+					//alert("成功");
+					//alert(data.status);
+					window.location.href="/index"
+				}else if(data.status==2){
+					$("#info").text("用户名或密码错误").show();
+				}else{
+					$("#info").text(data.errorMsg).show();
+					//alert(data.status);
+				}
+			
+		  },"json");
+		
+		
+	});
+	
+	
+	$("#getimgcode").click(function(){
+		var url="/imgCode";
+		$("#getimgcode").attr("src",url+"?"+new Date().getTime());
+		
+	});
+	
+	
+});
+
+
+</script>
+
+
+
+</body>
+</html>
