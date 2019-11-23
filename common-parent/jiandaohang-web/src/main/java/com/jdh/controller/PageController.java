@@ -1,8 +1,12 @@
 package com.jdh.controller;
 
+import com.jdh.pojo.MyUser;
 import com.jdh.utils.CheckImgServlet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.ServletException;
@@ -17,13 +21,22 @@ public class PageController {
     private CheckImgServlet checkImgServlet;
 
     @RequestMapping(value = {"/index","/"})
-    public String openIndex(){
-
+    public String openIndex(Model model){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof UserDetails) {
+			MyUser userDetails=(MyUser) principal;
+			String username=userDetails.getUsername();
+			model.addAttribute("username", username);
+//            System.out.println(username);
+//            System.out.println(userDetails.getPassword());
+//            System.out.println(userDetails.getEmail());
+//            System.out.println(userDetails.getId());
+		}
         return "page/index";
     }
 
 
-    @RequestMapping("/loginAjax")
+    @RequestMapping("/login")
     public String loginAjax() {
         return "page/loginAjax";
     }

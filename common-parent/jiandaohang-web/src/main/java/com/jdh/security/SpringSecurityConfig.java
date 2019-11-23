@@ -51,18 +51,19 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
         http.headers().frameOptions().sameOrigin();//使得frame可以成功加载
 		http.authorizeRequests()
 		.antMatchers("/js/**","/css/**","/material/**").permitAll()//静态资源放行
-		.antMatchers("/imgCode","/loginAjax","/index","/").permitAll()
+		.antMatchers("/imgCode","/login","/index","/").permitAll()
 //		.antMatchers("/product/add").hasAuthority("ROLE_ADD")
 //		.antMatchers("/product/update").hasAuthority("ROLE_UPDATE")
 //		.antMatchers("/product/delete").hasAuthority("ROLE_DELETE")
 //		.antMatchers("/product/list").hasAuthority("ROLE_LIST")
 		.antMatchers("/**").fullyAuthenticated()//拦截所有
-		.and().formLogin().loginPage("/loginAjax").loginProcessingUrl("/securityLogin")//表单模式
+		.and().formLogin().loginPage("/login").loginProcessingUrl("/securityLogin")//表单模式
 		.successHandler(myAuthenticationSuccessHandler)//成功后
 		.failureHandler(myAuthenticationFailHandler) //失败后
 		//.defaultSuccessUrl("/index")
 		.and().rememberMe().tokenRepository(tokenRepository).tokenValiditySeconds(86400)//记住我
 		.and().csrf().disable()//关闭esrt
+        .logout().logoutSuccessUrl("/index").and()
 		.addFilterBefore(imageCodeAuthenticationFilter,UsernamePasswordAuthenticationFilter.class);//验证码过滤器
 		
 	}

@@ -27,6 +27,8 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
+	    //登录成功修改登录时间
+
 		Map<Object, Object> map=new HashMap<Object, Object>();
 		map.put("status", 1); //1成功 2失败
 		request.getSession().removeAttribute("imgCode"); //登录成功后删除验证码

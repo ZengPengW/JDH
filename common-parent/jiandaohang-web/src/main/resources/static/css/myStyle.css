@@ -576,3 +576,40 @@ ul li {
 	height: 20px;
 	
 }
+#loginFrom input{
+    height: 41px;
+    width: 260px;
+    font-size: 21px;
+ }
+
+/*个人信息*/
+.search-menu-info {
+    position: absolute;
+    z-index: 50;
+    padding: 2px 19px;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, .3);
+    overflow: hidden;
+    white-space: nowrap;
+    border-radius: 6px 6px 6px 6px;
+    background-color: rgba(0, 0, 0, 0.73);
+    color: #5bc0de;
+    margin-top: -8%;
+    top: 53px;
+    display: none;
+}
+
+.search-menu-info li {
+    margin-bottom: 10px;
+    text-align: center;
+    border-radius: 2px;
+
+}
+.search-menu-info a{
+    color: white;
+}
+
+hr {
+    margin-top: 1px;
+    margin-bottom: 16px;
+    border-top: 2px solid #eee;
+}

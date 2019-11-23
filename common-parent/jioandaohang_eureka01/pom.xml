@@ -16,5 +16,27 @@
         <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
     </dependency>
 </dependencies>
-
+    <build>
+        <plugins>
+            <!-- 用于将应用打成可直接运行的jar（该jar就是用于生产环境中的jar） 值得注意的是，如果没有引用spring-boot-starter-parent做parent，
+               且采用了上述的第二种方式，这里也要做出相应的改动 -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>1.5.9.RELEASE</version>
+                <configuration>
+                    <!--如果没有该项配置，devtools不会起作用，即应用不会restart &ndash;&gt;-->
+                    <fork>true</fork>
+                    <mainClass>com.jdh.eureka.EurekaServer7001_App</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

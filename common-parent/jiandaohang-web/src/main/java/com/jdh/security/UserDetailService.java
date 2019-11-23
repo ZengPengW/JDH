@@ -56,7 +56,7 @@ public class UserDetailService implements UserDetailsService{
 
 
 		//查询权限
-		List<Permission> permissions = userService.findPermissionByUsername(username);
+		List<Permission> permissions = userService.findPermissionByUsername(myUser.getUsername());
 		
 		List<GrantedAuthority> authorities=new ArrayList<GrantedAuthority>();
 

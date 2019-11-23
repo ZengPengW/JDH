@@ -42,7 +42,7 @@ public class ImageCodeAuthenticationFilter extends OncePerRequestFilter {
 					throw new ImageCodeException("验证码未填写");
 				}
 				
-				if(!imgCode.toLowerCase().equals(imgCodeSession.toLowerCase())){
+				if(imgCodeSession==null||!imgCode.toLowerCase().equals(imgCodeSession.toLowerCase())){
 					throw new ImageCodeException("验证码错误");
 				}
 			} catch (AuthenticationException e) {

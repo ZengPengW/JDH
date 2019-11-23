@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.jdh.mapper.UserMapper">
 
 <select id="findByUserName" parameterType="string" resultType="user">
-select * from sys_user where username=#{username};
+select * from sys_user where username=#{username} or email=#{username}
 </select>
 
 
