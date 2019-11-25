@@ -23,6 +23,7 @@ body {
 	background-position: center 8%;
 	width: 100%;
 	height: 100%;
+    overflow-y:scroll; overflow-x:hidden;
 }
 
 ul li {
@@ -612,4 +613,59 @@ hr {
     margin-top: 1px;
     margin-bottom: 16px;
     border-top: 2px solid #eee;
+}
+/*装扮菜单*/
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    color: #555;
+    cursor: default;
+    background-color: #000;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+    text-decoration: none;
+    background-color: rgba(70, 70, 69,1);
+}
+.my-tab-pane{
+    padding: 10px;
+}
+/*加载中*/
+.my-load-div{
+    position: absolute;
+    z-index: 2002;
+    top: 40%;
+    width: 100%;
+    text-align: center;
+    display: none;
+}
+
+.scene {
+    width: 100%;
+    height: 100%;
+    -webkit-perspective: 600;
+    perspective: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.scene svg {
+    width: 240px;
+    height: 240px;
+}
+
+/*遮罩*/
+.zhezhao{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    top: 0;
+    left: 0;
+    z-index: 2001;
+    opacity: 1;
+    background: rgba(0,0,0,0.6);
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
 }

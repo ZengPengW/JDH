@@ -3,9 +3,17 @@ server:
 
 myparameter:
   uploadPath: d:/zp/material/
+  materialVersion: 1.1
+
 
 
 spring:
+#  resources:
+#    chain:
+#      cache: false
+#      gzipped: true
+#    cache:
+#      period: 3600
   application:
     name: jiandaohang-web  #应用名称
   #thymeleaf关闭缓存.

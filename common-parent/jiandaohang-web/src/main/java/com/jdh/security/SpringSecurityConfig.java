@@ -2,6 +2,7 @@ package com.jdh.security;
 
 import javax.sql.DataSource;
 
+import com.jdh.security.filter.StaticFileFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,9 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 @Configuration
 @EnableWebSecurity //启动Security过滤器链
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
+
+    @Autowired
+    private StaticFileFilter staticFileFilter;
 
 	@Autowired
 	private PersistentTokenRepository tokenRepository;
@@ -64,7 +68,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 		.and().rememberMe().tokenRepository(tokenRepository).tokenValiditySeconds(86400)//记住我
 		.and().csrf().disable()//关闭esrt
         .logout().logoutSuccessUrl("/index").and()
-		.addFilterBefore(imageCodeAuthenticationFilter,UsernamePasswordAuthenticationFilter.class);//验证码过滤器
+		.addFilterBefore(imageCodeAuthenticationFilter,UsernamePasswordAuthenticationFilter.class)//验证码过滤器
+        .addFilterBefore(staticFileFilter,ImageCodeAuthenticationFilter.class);
 		
 	}
 	

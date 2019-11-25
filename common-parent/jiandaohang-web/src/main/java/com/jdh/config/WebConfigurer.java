@@ -16,7 +16,7 @@ public class WebConfigurer implements WebMvcConfigurer {
        // System.out.println(materialPath+" 66666666666666666666666666666666666666666");
         //配置server虚拟路径，handler为访问的目录
         registry.addResourceHandler("/material/**").addResourceLocations("file:///"+materialPath);
-       // registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
+        //registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
     }
 
 

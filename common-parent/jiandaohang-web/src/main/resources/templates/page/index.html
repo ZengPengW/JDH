@@ -12,11 +12,11 @@
     <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <!-- 鼠标右键菜单 -->
-    <link rel='StyleSheet' type='text/css' href='/css/class2context.css'>
+    <link rel='StyleSheet' type='text/css' href="/css/class2context.css">
     <!--单选按钮-->
     <link rel="stylesheet" href="/css/switch.css" />
     <!--自定义css-->
-    <link rel="stylesheet" href="/css/myStyle.css" />
+    <link rel="stylesheet" th:href="'/css/myStyle.css?v='+${application.v}" />
     <!--弹窗-->
     <link rel="stylesheet" type="text/css" href="/css/default.css" />
     <link rel="stylesheet" type="text/css" href="/css/component.css" />
@@ -57,12 +57,13 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
                 <a href="javascript:void(0)" class="" style="text-decoration: none; " ><img />个人信息</a>
             </li>
             <li >
-                <a href="/logout" class="" style="text-decoration: none;" ><img />账户登出</a>
+                <a href="javascript:void(0)" class="" style="text-decoration: none;" onclick="logout()"><img />账户登出</a>
             </li>
 
         </ul>
     </div>
 </div>
+
 
 
 
@@ -210,10 +211,10 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
 	描述：三个按钮
 -->
 
-<div style="position: fixed; z-index: 101; left: 0px; top: 29%; display: none; " id="BtnThree">
-    <a  href="javascript:void(0)" style="text-decoration: none;" ><div class="kongjianbnt" onclick="shouqi(this)">预览</div></a>
+<div style="position: fixed; z-index: 101; left: 0px; top: 29%; display: none; " id="BtnThree" th:if="${username!=null}">
+    <a  href="javascript:void(0)" style="text-decoration: none;" ><div class="kongjianbnt" onclick="shouqi(this)" >预览</div></a>
     <a href="javascript:void(0)" style="text-decoration: none;"><div class="kongjianbnt"  onclick="exit_edit(this)">退出</div></a>
-    <a  href="javascript:void(0)" style="text-decoration: none;"><div class="kongjianbnt center-block"  onclick="threeBtn(this)">保存</div></a>
+    <a  href="javascript:void(0)" style="text-decoration: none;"><div class="kongjianbnt center-block"  onclick="savedeck(this)">保存</div></a>
 </div>
 
 
@@ -221,7 +222,7 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
 
 
 
-<div class="container" id="head-tab-content" style="display: none;">
+<div class="container" id="head-tab-content" style="display: none;" th:if="${username!=null}">
 
     <div class="row ">
 
@@ -238,7 +239,45 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
 
             <!-- Tab panes -->
             <div class="tab-content" >
-                <div role="tabpanel" class="tab-pane fade" id="bjtp">bjtpsaddddddddddddddddddddddd</div>
+                <!--背景图片-->
+                <div role="tabpanel" class="tab-pane fade" id="bjtp">
+
+                    <ul class="nav nav-tabs" role="tablist" >
+                        <li  role="presentation" ><a href="#kxtp" aria-controls="" role="tab" data-toggle="tab">可选图片</a></li>
+                        <li role="presentation"><a href="#sctp" aria-controls="" role="tab" data-toggle="tab">上传图片</a></li>
+                    </ul>
+
+                    <div class="tab-content"  >
+                        <div role="tabpanel" class="tab-pane fade" id="kxtp">kxtpkxtpkxtpkxtpkxtpkxtp</div>
+                        <!--上传图片-->
+                        <div role="tabpanel" class="tab-pane fade my-tab-pane" id="sctp">
+                            <p style="color: red; margin-top: 6px; font-weight: 900;">为保证背景清晰,请上传高清宽屏图片</p>
+                            <form id="sctpform" method="post">
+                                <input type="file" id="picFileUp" style="display: none;" />
+                            </form>
+
+                            <img id="picUp" src="/img/上传图片.png" alt="cscscs" class="img-thumbnail" style="width: 182px; height: 100px; margin-top: 29px;">
+                            <br />
+
+                            <a  href="javascript:void(0)" style="text-decoration: none;" ><div class="kongjianbnt" onclick="rollback_background(this)">还原</div></a>
+                            <div >是否公开此图供其他用户使用:
+                                <input type="checkbox" id="flex-3">
+                                <label for="flex-3" class="green" style="margin-bottom: -4px;" id="isPublic" ></label>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+                </div>
                 <div role="tabpanel" class="tab-pane fade" id="bjtx">bjtxadsssssssssssssssssssssss</div>
                 <div role="tabpanel" class="tab-pane fade" id="sskys">sskysadsssssssssssss</div>
                 <div role="tabpanel" class="tab-pane fade" id="settings">
@@ -259,31 +298,122 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
     </div>
 </div>
 
+
+<!--加载-->
+<div class="my-load-div" >
+    <!--<span class="whirly-loader">Loading…</span>	-->
+    <div class="scene">
+        <svg version="1.1" id="dc-spinner" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width:"38"="" height:"38"="" viewBox="0 0 38 38" preserveAspectRatio="xMinYMin meet">
+        <text x="14" y="21" font-family="Monaco" font-size="2px" style="letter-spacing:0.6" fill="grey">LOADING
+            <animate attributeName="opacity" values="0;1;0" dur="1.8s" repeatCount="indefinite">
+            </animate></text>
+        <path fill="#373a42" d="M20,35c-8.271,0-15-6.729-15-15S11.729,5,20,5s15,6.729,15,15S28.271,35,20,35z M20,5.203
+    C11.841,5.203,5.203,11.841,5.203,20c0,8.159,6.638,14.797,14.797,14.797S34.797,28.159,34.797,20
+    C34.797,11.841,28.159,5.203,20,5.203z">
+        </path>
+
+        <path fill="#373a42" d="M20,33.125c-7.237,0-13.125-5.888-13.125-13.125S12.763,6.875,20,6.875S33.125,12.763,33.125,20
+    S27.237,33.125,20,33.125z M20,7.078C12.875,7.078,7.078,12.875,7.078,20c0,7.125,5.797,12.922,12.922,12.922
+    S32.922,27.125,32.922,20C32.922,12.875,27.125,7.078,20,7.078z">
+        </path>
+
+        <path fill="#2AA198" stroke="#2AA198" stroke-width="0.6027" stroke-miterlimit="10" d="M5.203,20
+			c0-8.159,6.638-14.797,14.797-14.797V5C11.729,5,5,11.729,5,20s6.729,15,15,15v-0.203C11.841,34.797,5.203,28.159,5.203,20z" transform="rotate(269.286 20 20)">
+            <animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" calcMode="spline" keySplines="0.4, 0, 0.2, 1" keyTimes="0;1" dur="2s" repeatCount="indefinite"></animateTransform>
+        </path>
+
+        <path fill="#859900" stroke="#859900" stroke-width="0.2027" stroke-miterlimit="10" d="M7.078,20
+  c0-7.125,5.797-12.922,12.922-12.922V6.875C12.763,6.875,6.875,12.763,6.875,20S12.763,33.125,20,33.125v-0.203
+  C12.875,32.922,7.078,27.125,7.078,20z" transform="rotate(351.693 20 20)">
+            <animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="1.8s" repeatCount="indefinite"></animateTransform>
+        </path>
+        </svg>
+    </div>
+</div>
+<!--遮罩-->
+<div class="zhezhao" ></div>
+<!--背景图片-->
+<script type="text/javascript" th:inline ="javascript" th:if="${username!=null}">
+    //上传
+    $("#picUp").click(function(){
+        $("#picFileUp").click();
+    });
+
+    var isPicPublic=false;//图片默认不共享
+    $("#isPublic").click(function(){
+        isPicPublic=!isPicPublic;
+        //console.log(isPicPublic);
+    });
+
+    var default_background=$("body").css("background-image");
+    $("#picFileUp").change(function(){
+        if($(this).val()!=""&&$(this).val().trim()!=""){
+
+            var filePath = $(this).val();
+            var fileformat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
+            if(!fileformat.match(/.png|.jpg|jpeg|.gif/)) {
+                alert('上传错误,文件格式必须为：png/jpg/jpeg/gif');
+                $(this).val("");
+                return;
+            }
+
+            if(((this.files[0].size).toFixed(2))<(1024*1024*0.5)){
+
+                alert("上传图片太模糊");
+                $(this).val("");
+                return;
+            }
+
+            var src = window.URL.createObjectURL(this.files[0]);
+            $("#picUp").prop("src", src);
+            $("body").css("background-image","url("+src+")");
+        }
+    });
+
+    //回滚背景
+    function rollback_background(obj){
+        $("body").css("background-image",default_background);
+        $("#picFileUp").val("");
+        $("#picUp").prop("src", "img/上传图片.png");
+        threeBtn(obj);
+    }
+
+    //保存装饰
+    function savedeck(obj){
+        threeBtn(obj);
+        $(".zhezhao").css("visibility","visible");
+        $(".my-load-div").show();
+        if($("#picFileUp").val().trim()!=""){
+            console.log("保存背景图片成功");
+            $("#picFileUp").val("");//置空防止重复提交
+        }
+
+
+
+    }
+
+</script>
+
+
+
+
 <!--装扮菜单-->
 <script type="text/javascript" th:inline ="javascript">
 
     $(".tab-content").css("color","white");
     $('.nav-tabs a').css("color","white"); //tab 标题改白色字
-
-    //var cur_head_tabs="null";
     $('.nav-tabs a').click(function (e) {
-        $('.nav-tabs a').css("color","white");
         e.preventDefault();
-        $(this).css('color',"rgba(44,49,53,1)");
         $(this).tab('show');
-//cur_head_tabs=$(this).attr("href");
-//console.log(cur_head_tabs);
     })
 
     function shouqi(obj){
-        //console.log($(this).text());
         if($(obj).text()=="预览"){
             $('#head-tab-content').slideUp(300);
             $(obj).text("菜单");
         }else{
             $('#head-tab-content').slideDown(300);
             $(obj).text("预览");
-            //$(cur_head_tabs).tab("show");
         }
         threeBtn(obj);
 
@@ -902,7 +1032,7 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
 </script>
 
 <!--*****************漂浮物******************************-->
-<div id="floatImg">
+<div id="floatImg" style="display: none">
     <img src="/material/img/float/10000/pfw.gif" style="position: absolute; top: 100.5px; left: 308.6px;">
     <img src="/material/img/float/10000/pfw3.gif" style="position: absolute; top: 100.5px; left: 308.6px;">
     <img src="/material/img/float/10000/pfw.gif" style="position: absolute; top: 166.5px; left: 208.6px;">
@@ -931,6 +1061,7 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
             var randomW=Math.random() * winW;
             $(im).css("left",randomW+"px");
         });
+        $("#floatImg").show();
     }
     randomRanking();//调用初始
     //漂浮
@@ -1068,12 +1199,7 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
     //联想词位置
     var sousuokuanOffLeft=$("#sousuokuan").offset().left;//获取搜索框距离左边多少
     var sousuokuanOffRight=$("#sousuokuan").width()+sousuokuanOffLeft;//获取搜索框距离右边多少
-    //console.log(sousuokuanOffLeft);
-    //console.log(sousuokuanOffRight);
     $(".assUldiv").css("left",sousuokuanOffLeft+"px");
-    //拉杆位置
-    //  $("#lagan").css("left",sousuokuanOffRight+"px");
-
     //窗口改变触发
     $(window).resize(function() {
         var sousuokuanOffLeft=$("#sousuokuan").offset().left;//获取搜索框距离左边多少
@@ -1081,11 +1207,6 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
 
         //联想词位置
         $(".assUldiv").css("left",sousuokuanOffLeft+"px");
-
-        //拉杆位置
-        // $("#lagan").css("left",sousuokuanOffRight+"px");
-
-
 
     });
 
@@ -1145,8 +1266,21 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
 </script>
 
 <!-- 鼠标右键菜单 -->
-<script src='/js/class2context.js'></script>
-<script type="text/javascript" th:inline ="javascript">
+<script  src="/js/class2context.js"></script>
+<script type="text/javascript" th:inline ="javascript" th:if="${username==null}">
+    //主菜单
+    class2context('main_menu', "主菜单",
+        [
+            [
+                "<img src='/material/img/rightMenu/个性化.png' width='25px' /> 编辑", "edit_page2()"
+            ]
+        ]);
+   function edit_page2() {
+       alert("请登录后操作！！！")
+
+   }
+</script>
+<script type="text/javascript" th:inline ="javascript" th:if="${username!=null}">
 
     //主菜单
     class2context('main_menu', "主菜单",
@@ -1182,7 +1316,8 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
     // 编辑显示菜单
     function edit_page(){
         if($("#head-tab-content").css("display")==="none"){
-            hamburger_cross("close");
+            hamburger_cross("close");//关闭收藏夹
+
             $("#head-tab-content").slideDown(300);
             $("#BtnThree").slideDown(300);
             $("#page-content-wrapper").hide();
@@ -1238,20 +1373,36 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
 <script th:inline ="javascript" type="text/javascript" th:if="${username==null}">
     $("#password").focus(function () {
         $(this).attr("type","password");
+        $("#minfo").text("");
     });
-
+    $("#username,#imgCode").focus(function () {
+        $("#minfo").text("");
+    });
     //登录
    $("#loginSubmit").click(function(){
        $("#minfo").text("");
 		$.post("/securityLogin",
 				$("#loginFrom").serialize(),
 				function(data){
+		      //  console.log(data.errorMsg);
 				if(data.status==1){
-					//alert("成功");
-					//alert(data.status);
-					window.location.href="/index"
+                    $(".zhezhao").css("visibility","visible");
+                    $(".my-load-div").show();
+                    setTimeout(function () {
+                        window.location.href="/index"
+                    },1000) ;
+
 				}else if(data.status==2){
-					$("#minfo").text("用户名或密码错误");
+				    var ErrorMessage=data.errorMsg;
+				    if (ErrorMessage.indexOf("disabled")!=-1){
+                        $("#minfo").text("账户被禁用");
+                    }else if (ErrorMessage.indexOf("locked")!=-1){
+                        $("#minfo").text("账户被锁定或用户不存在");
+                    }else if (ErrorMessage.indexOf("expired")!=-1){
+                        $("#minfo").text("账户已过期");
+                    }else {
+                        $("#minfo").text("用户名或密码错误");
+                    }
 				}else{
 					$("#minfo").text(data.errorMsg);
 				}
@@ -1300,11 +1451,20 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
         $(this).slideUp(100);
     });
 </script>
+<script th:inline ="javascript" type="text/javascript" th:if="${username!=null}">
+    function  logout() {
+        $(".zhezhao").css("visibility","visible");
+        $(".my-load-div").show();
+       setTimeout(function () {
+           window.location="/logout";
+       },1000) ;
+    }
+</script>
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<!--三大按键-->
-<script src="/js/TweenMax.min.js"></script>
-<!--弹窗-->
+<!--三大按键0-->
+<script th:src="@{/js/TweenMax.min.js}"></script>
+<!--弹窗1-->
 <script src="/js/modernizr.custom.js"></script>
 </body>
 </html>

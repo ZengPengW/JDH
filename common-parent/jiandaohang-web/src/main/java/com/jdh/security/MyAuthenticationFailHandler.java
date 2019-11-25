@@ -27,9 +27,9 @@ public class MyAuthenticationFailHandler implements AuthenticationFailureHandler
 		
 		//验证码
 		String message = exception.getMessage();
+		map.put("errorMsg", message);
 		if(message!=null&&message.contains("验证码")){
 			map.put("status",3);
-			map.put("errorMsg", message);
 		}else {
 			map.put("status", 2); //1成功 2失败 3验证码错误
 		}
