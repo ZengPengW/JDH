@@ -2,7 +2,9 @@ package com.jdh.pojo;
 
 import java.io.Serializable;
 
-
+/*
+权限表
+ */
 
 public class Permission implements Serializable{
 	private Integer id;//int(11) NOT NULL权限id

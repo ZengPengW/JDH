@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
+/*
+用户表
+ */
 
 public class User implements Serializable{
 	private Integer id; //int(10) NOT NULL用户id

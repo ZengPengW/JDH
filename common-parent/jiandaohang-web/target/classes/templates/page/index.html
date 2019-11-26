@@ -20,7 +20,7 @@
     <!--弹窗-->
     <link rel="stylesheet" type="text/css" href="/css/default.css" />
     <link rel="stylesheet" type="text/css" href="/css/component.css" />
-
+    <link rel="stylesheet" type="text/css" href="/css/sweetalert.css" />
 
 <style type="text/css" th:inline="css">
 body{
@@ -30,7 +30,7 @@ body{
 a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info li{
     cursor: url("/material/img/mouse/hand/手指.ico"),default;
 }
-.shubiao{
+.shubiao,.nav-tabs>li.active>a:hover {
     cursor: url("/material/img/mouse/pointer/蓝色鼠标.ico"),default;
 }
 </style>
@@ -243,7 +243,7 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
                 <div role="tabpanel" class="tab-pane fade" id="bjtp">
 
                     <ul class="nav nav-tabs" role="tablist" >
-                        <li  role="presentation" ><a href="#kxtp" aria-controls="" role="tab" data-toggle="tab">可选图片</a></li>
+                        <li  role="presentation" ><a  href="#kxtp" aria-controls="" role="tab" data-toggle="tab">可选图片</a></li>
                         <li role="presentation"><a href="#sctp" aria-controls="" role="tab" data-toggle="tab">上传图片</a></li>
                     </ul>
 
@@ -352,14 +352,14 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
             var filePath = $(this).val();
             var fileformat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
             if(!fileformat.match(/.png|.jpg|jpeg|.gif/)) {
-                alert('上传错误,文件格式必须为：png/jpg/jpeg/gif');
+                swal("格式错误",'文件格式必须为：png/jpg/jpeg/gif',"error");
                 $(this).val("");
                 return;
             }
 
-            if(((this.files[0].size).toFixed(2))<(1024*1024*0.5)){
+            if(((this.files[0].size).toFixed(2))<(1024*1024*0.3)){
 
-                alert("上传图片太模糊");
+                swal("图片模糊","上传图片太模糊","error");
                 $(this).val("");
                 return;
             }
@@ -1276,7 +1276,7 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
             ]
         ]);
    function edit_page2() {
-       alert("请登录后操作！！！")
+       swal("未登陆","请登录后操作！！！","info")
 
    }
 </script>
@@ -1365,7 +1365,7 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
 
 
 <!-- 弹窗 -->
-<div class="md-overlay" th:if="${username==null}"></div><!-- the overlay element -->
+<div class="md-overlay" th:if="${username==null}"></div><!-- the overlay zhezhao -->
 <script src="/js/classie.js" th:if="${username==null}"></script>
 <script src="/js/modalEffects.js" th:if="${username==null}"></script>
 <script src="/js/cssParser.js" th:if="${username==null}"></script>
@@ -1466,5 +1466,9 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
 <script th:src="@{/js/TweenMax.min.js}"></script>
 <!--弹窗1-->
 <script src="/js/modernizr.custom.js"></script>
+<script src="/js/sweetalert-dev.js"></script>
+
+
+<h1 th:text="${username}"></h1>
 </body>
 </html>

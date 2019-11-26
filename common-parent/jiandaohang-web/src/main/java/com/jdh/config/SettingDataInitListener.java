@@ -21,7 +21,7 @@ public class SettingDataInitListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServletContext servletContext = servletContextEvent.getServletContext();
-        System.out.println(materialVersion+"sssss");
+      //  System.out.println(materialVersion+"sssss");
         servletContext.setAttribute("v", materialVersion);
     }
 

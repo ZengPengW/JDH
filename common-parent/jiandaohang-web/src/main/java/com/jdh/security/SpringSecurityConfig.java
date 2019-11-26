@@ -54,7 +54,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
         http.headers().frameOptions().sameOrigin();//使得frame可以成功加载
 		http.authorizeRequests()
-		.antMatchers("/js/**","/css/**","/material/**").permitAll()//静态资源放行
+		.antMatchers("/js/**","/css/**","/material/**","/img/**").permitAll()//静态资源放行
 		.antMatchers("/imgCode","/login","/index","/").permitAll()
 //		.antMatchers("/product/add").hasAuthority("ROLE_ADD")
 //		.antMatchers("/product/update").hasAuthority("ROLE_UPDATE")
@@ -65,7 +65,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 		.successHandler(myAuthenticationSuccessHandler)//成功后
 		.failureHandler(myAuthenticationFailHandler) //失败后
 		//.defaultSuccessUrl("/index")
-		.and().rememberMe().tokenRepository(tokenRepository).tokenValiditySeconds(86400)//记住我
+		.and().rememberMe().tokenRepository(tokenRepository).tokenValiditySeconds(31536000)//记住我
 		.and().csrf().disable()//关闭esrt
         .logout().logoutSuccessUrl("/index").and()
 		.addFilterBefore(imageCodeAuthenticationFilter,UsernamePasswordAuthenticationFilter.class)//验证码过滤器

@@ -66,7 +66,7 @@ eureka:
       prefer-ip-address: true
   #
 info:  #配置info信息内容
-  app.name: rjiandaohang-api-01
+  app.name: jiandaohang-api-01
   company.name: www.zp.com
 #endpoints:
 #  jmx:

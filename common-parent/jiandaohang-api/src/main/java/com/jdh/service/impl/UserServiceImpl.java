@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -30,6 +33,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+    @Transactional(isolation=Isolation.READ_COMMITTED,propagation = Propagation.REQUIRED)
 	public void updatePassword(User user) {
 		String password=user.getPassword();
 		//哈希算法+加变量 加密密码

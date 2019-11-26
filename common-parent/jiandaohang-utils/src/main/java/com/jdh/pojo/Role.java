@@ -3,7 +3,9 @@ package com.jdh.pojo;
 import java.io.Serializable;
 
 
-
+/*
+角色表
+ */
 
 public class Role implements Serializable {
 	private Integer id;//int(11) NOT NULL角色id
