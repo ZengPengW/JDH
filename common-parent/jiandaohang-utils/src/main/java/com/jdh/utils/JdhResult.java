@@ -38,6 +38,9 @@ public class JdhResult {
     public static JdhResult fail(Object data){
         return  new JdhResult(2,null,data);
     }
+    public static JdhResult fail(Integer status,String msg,Object data){
+        return  new JdhResult(3,msg,data);
+    }
 
     public Integer getStatus() {
         return status;

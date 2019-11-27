@@ -60,7 +60,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 //		.antMatchers("/product/update").hasAuthority("ROLE_UPDATE")
 //		.antMatchers("/product/delete").hasAuthority("ROLE_DELETE")
 //		.antMatchers("/product/list").hasAuthority("ROLE_LIST")
-		.antMatchers("/**").fullyAuthenticated()//拦截所有
+		//.antMatchers("/**").fullyAuthenticated()//拦截所有包括记住我自动登录的用户
+        .antMatchers("/**").authenticated()//拦截所以不包括记住我用户
 		.and().formLogin().loginPage("/login").loginProcessingUrl("/securityLogin")//表单模式
 		.successHandler(myAuthenticationSuccessHandler)//成功后
 		.failureHandler(myAuthenticationFailHandler) //失败后
@@ -72,8 +73,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
         .addFilterBefore(staticFileFilter,ImageCodeAuthenticationFilter.class);
 		
 	}
-	
-	
+
+
 	//记住我数据源
 	@Bean
 	public PersistentTokenRepository tokenRepository(DataSource dataSource){

@@ -29,9 +29,10 @@ public class ImageCodeAuthenticationFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
+       // System.out.println("验证码验证");
 		//判断当前请求是否为登录请求
 		if (request.getRequestURI().contains("securityLogin")) {
-			
+          //  System.out.println("验证码验证213123");
 			try {
 				//校验验证码 imgCode
 				String imgCode = (String) request.getParameter("imgCode");				

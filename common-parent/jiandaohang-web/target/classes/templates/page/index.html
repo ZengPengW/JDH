@@ -27,7 +27,7 @@ body{
     background-image: url("/material/img/bg/1c04d65b09b9dbec35d1ab928c7d6baaa63ffd4e.jpg");
 
 }
-a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info li{
+a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search-menu-info li{
     cursor: url("/material/img/mouse/hand/手指.ico"),default;
 }
 .shubiao,.nav-tabs>li.active>a:hover {
@@ -253,7 +253,7 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
                         <div role="tabpanel" class="tab-pane fade my-tab-pane" id="sctp">
                             <p style="color: red; margin-top: 6px; font-weight: 900;">为保证背景清晰,请上传高清宽屏图片</p>
                             <form id="sctpform" method="post">
-                                <input type="file" id="picFileUp" style="display: none;" />
+                                <input type="file" name="picFileUp" id="picFileUp" style="display: none;" />
                             </form>
 
                             <img id="picUp" src="/img/上传图片.png" alt="cscscs" class="img-thumbnail" style="width: 182px; height: 100px; margin-top: 29px;">
@@ -381,12 +381,74 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
     //保存装饰
     function savedeck(obj){
         threeBtn(obj);
-        $(".zhezhao").css("visibility","visible");
-        $(".my-load-div").show();
-        if($("#picFileUp").val().trim()!=""){
-            console.log("保存背景图片成功");
+        $(".zhezhao").css("visibility","visible");//显示遮罩
+        $(".my-load-div").show();//显示加载div
+
+        if($("#picFileUp").val().trim()!==""){
+            //console.log("保存背景图片成功");
+            var form = new FormData(document.getElementById("sctpform"));
+            $.ajax({
+                url: "/upload/bgImg",
+                type: "post",
+                data: form,
+                cache:false,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    if (data.status===1){
+                       // swal(data.msg,"","success");
+
+                        swal({
+                            title: data.msg,
+                            text: "",
+                            type: "success",
+                            confirmButtonColor:"#1aad19",
+                            confirmButtonText: "确定"
+                    },function(isConfirm){
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 100);
+
+                        });
+
+
+                    }else if(data.status===2) {
+                       // swal(data.msg,"","error");
+                        swal({
+                            title: data.msg,
+                            text: "",
+                            type: "error",
+                            confirmButtonColor:"#ad1d11",
+                            confirmButtonText: "确定"
+                        },function(isConfirm){
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 100);
+
+                        });
+                    }
+                   // console.log(data);
+                },
+                error: function(e) {
+                  //  swal("保存失败","服务器错误","error");
+                    swal({
+                        title: "保存失败:服务器错误",
+                        text: "",
+                        type: "error",
+                        confirmButtonColor:"#ad1d11",
+                        confirmButtonText: "确定"
+                    },function(isConfirm){
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 100);
+
+                    });
+                 //   console.log(e);
+                }
+            });
             $("#picFileUp").val("");//置空防止重复提交
         }
+
 
 
 
@@ -1434,21 +1496,21 @@ a,.shubiao2,.music-player,label,.hamburger,img,.panel-title a,.search-menu-info 
         $(this).css("background-color","transparent");
     });
     $("#userinfo").mouseenter(function(){
-        $(".search-menu-info").slideDown(100);
+        if($(".search-menu-info").css("display")==="none")  $(".search-menu-info").slideDown(100);
     });
     $("#userinfo").mouseleave(function(){
         setTimeout(function(){
             if(isOnSearchMenu===true)return;
-            $(".search-menu-info").slideUp(100);
+            if($(".search-menu-info").css("display")==="block")  $(".search-menu-info").slideUp(500);
         },500);
     });
     $(".search-menu-info").mouseenter(function(){
         isOnSearchMenu=true;
-        $(this).slideDown(100);
+       if($(".search-menu-info").css("display")==="none") $(this).slideDown(100);
     });
     $(".search-menu-info").mouseleave(function(){
         isOnSearchMenu=false;
-        $(this).slideUp(100);
+        if($(".search-menu-info").css("display")==="block") $(this).slideUp(500);
     });
 </script>
 <script th:inline ="javascript" type="text/javascript" th:if="${username!=null}">

@@ -17,7 +17,7 @@ public class StaticFileFilter extends OncePerRequestFilter {
         String url=request.getRequestURI();
         if (url.lastIndexOf(".js")!=-1
             ||url.lastIndexOf(".css")!=-1
-            || url.contains("material")||url.contains("/img")){
+            || url.contains("material")||url.contains("/img/")){
             response.setHeader("cache-control","public, max-age=31536000, s-maxage=31536000, immutable");
 
         }

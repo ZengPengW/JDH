@@ -4,7 +4,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jdh.mapper.BackgroundMapper">
 
-
+<insert id="addBackgroundImg" parameterType="com.jdh.pojo.BackgroundImgDo">
+    insert into `background_img`(`pid`,`pic`,`authorId`)
+    values (null,#{pic},#{authorId})
+</insert>
 
 
 

@@ -24,7 +24,7 @@ public class MyAuthenticationFailHandler implements AuthenticationFailureHandler
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
 		Map<Object, Object> map=new HashMap<Object, Object>();
-		
+      //  System.out.println("失败登录");
 		//验证码
 		String message = exception.getMessage();
 		map.put("errorMsg", message);

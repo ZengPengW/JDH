@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -32,10 +34,17 @@ public class PageController {
             MyUser userDetails = (MyUser) principal;
             String username = userDetails.getUsername();
             model.addAttribute("username", username);
-//            System.out.println(username);
-//            System.out.println(userDetails.getPassword());
-//            System.out.println(userDetails.getEmail());
-//            System.out.println(userDetails.getId());
+            System.out.println(username);
+            System.out.println(userDetails.getPassword());
+            System.out.println(userDetails.getEmail());
+            System.out.println(userDetails.getId());
+        }
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            System.out.println("登录了");
+        }else {
+            System.out.println("未登录");
         }
         return "page/index";
     }
