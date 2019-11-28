@@ -1,6 +1,7 @@
 package com.jdh.controller;
 
 import com.jdh.feign.BackgroundService;
+import com.jdh.pojo.Background;
 import com.jdh.pojo.BackgroundImgDo;
 import com.jdh.pojo.MyUser;
 import com.jdh.utils.FileUtil;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -28,32 +30,90 @@ public class UploadController {
     public BackgroundService backgroundService;
 
 
-    @PostMapping("/upload/bgImg")
-    public JdhResult upload(@RequestParam("picFileUp") MultipartFile file) {
-
+    @PostMapping("/bgImg/upload")
+    public JdhResult upload(@RequestParam("picFileUp") MultipartFile file,@RequestParam Boolean isPublic) {
+            // System.out.println(isPublic);
             MyUser currUser = UserContext.getCurrUser();
-
+            JdhResult result=null;
             String filePath=null;
             try {
-                String fileName = file.getOriginalFilename();
-                fileName = FileUtil.renameToUUID(fileName);//获取唯一名称
-                //\img\bg 目录分级算法
-                String dir=FileUtil.getDir(fileName);
-                String savePath=materialPath+"img"+ File.separator+"bg"+dir;
-                FileUtil.uploadFile(file.getBytes(),savePath , fileName);//保存到磁盘
-                String pic=File.separator+"material"+File.separator+"img"+File.separator+"bg"+dir+fileName;//图片地址
-                filePath=savePath+fileName;//文件路劲
+                String fileMd5=FileUtil.getFileMd5(file.getBytes());//获取文件MD5
+                List<BackgroundImgDo> lists = backgroundService.getBackgroundImgByMd5(fileMd5);
+                //文件不存在
+                if (lists==null||lists.size()<=0){
+                 //   System.out.println("文件不存在");
+                    String fileName = file.getOriginalFilename();
+                    fileName = FileUtil.renameToUUID(fileName);//获取唯一名称
+                    //\img\bg 目录分级算法
+                    String dir=FileUtil.getDir(fileName);
+                    String savePath=materialPath+"img"+ File.separator+"bg"+dir;
+                    FileUtil.uploadFile(file.getBytes(),savePath , fileName);//保存到磁盘
+                    String pic="/material/img/bg"+dir.replace("\\","/")+fileName;//图片地址
+                    filePath=savePath+fileName;//文件路劲
 
 
-                BackgroundImgDo backgroundImgDo=new BackgroundImgDo();
-                backgroundImgDo.setAuthorId(currUser.getId());
-                backgroundImgDo.setPic(pic);
+                    BackgroundImgDo backgroundImgDo=new BackgroundImgDo();
+                    backgroundImgDo.setAuthorId(currUser.getId());
+                    backgroundImgDo.setPic(pic);
+                    backgroundImgDo.setIspublic(isPublic);
+                    backgroundImgDo.setExpire(false);//不过期
+                    backgroundImgDo.setMd5(fileMd5);
 
-                return  backgroundService.saveBackgroundImg(backgroundImgDo);
+                    result = backgroundService.saveBackgroundImg(backgroundImgDo);
+
+                    //保存图片成功后 设置用户背景
+                    if (result.getData()!=null&&result.getStatus()==1){
+                        //获取用户背景信息
+                        Background background = backgroundService.getUserBackgroundById(currUser.getId());
+                        //没有就添加 有就修改
+                        if (background==null){
+                     //       System.out.println("没有背景信息 保存一个");
+                            background=new Background();
+                            background.setPid(Long.valueOf( result.getData().toString()) );
+                            background.setUid(currUser.getId());
+                            background.setSid(null);
+                            backgroundService.saveBackground(background);
+                        }else {
+                      //      System.out.println("有背景信息 更新");
+                            background.setPid(Long.valueOf( result.getData().toString()));
+                            backgroundService.updateBackground(background);
+                        }
+                    }
+
+
+
+                    return  result;
+                }else {
+                //    System.out.println("文件存在");
+                    BackgroundImgDo backgroundImgDo = lists.get(0);
+                        //获取用户背景信息
+                    Background background = backgroundService.getUserBackgroundById(currUser.getId());
+                        //没有就添加 有就修改
+                        if (background==null){
+                        //    System.out.println("没有背景信息 保存一个");
+                            background=new Background();
+                            background.setPid(backgroundImgDo.getPid());
+                            background.setUid(currUser.getId());
+                            background.setSid(null);
+                            backgroundService.saveBackground(background);
+                        }else {
+                       //     System.out.println("有背景信息 更新");
+                            background.setPid(backgroundImgDo.getPid());
+                            backgroundService.updateBackground(background);
+                        }
+                    return JdhResult.success("已有其他用户上传此图,无需再次上传,直接调用！！！");
+                }
+
+
+
 
             } catch (Exception e) {
                 e.printStackTrace();
-                FileUtil.deleteFile(filePath);
+                //此处还需要删除数据库
+                if (result!=null&&result.getStatus()==1){
+                    //删除数据库
+                }
+               if (filePath!=null)FileUtil.deleteFile(filePath);
                 return JdhResult.fail("背景图片:系统错误操作失败！！！");
             }
 

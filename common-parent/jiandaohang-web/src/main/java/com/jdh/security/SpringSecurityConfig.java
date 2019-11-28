@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 
 import com.jdh.security.filter.StaticFileFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -19,6 +20,10 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 @Configuration
 @EnableWebSecurity //启动Security过滤器链
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
+
+    @Autowired
+    @Qualifier("dataSource")
+    DataSource dataSource;
 
     @Autowired
     private StaticFileFilter staticFileFilter;
@@ -66,18 +71,20 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 		.successHandler(myAuthenticationSuccessHandler)//成功后
 		.failureHandler(myAuthenticationFailHandler) //失败后
 		//.defaultSuccessUrl("/index")
-		.and().rememberMe().tokenRepository(tokenRepository).tokenValiditySeconds(31536000)//记住我
+		.and().rememberMe().tokenRepository(tokenRepository()).tokenValiditySeconds(31536000)
+                .userDetailsService(userDetailService)//记住我
 		.and().csrf().disable()//关闭esrt
         .logout().logoutSuccessUrl("/index").and()
 		.addFilterBefore(imageCodeAuthenticationFilter,UsernamePasswordAuthenticationFilter.class)//验证码过滤器
         .addFilterBefore(staticFileFilter,ImageCodeAuthenticationFilter.class);
-		
+
+        //http.sessionManagement().maximumSessions(5).expiredUrl("/login");
 	}
 
 
 	//记住我数据源
 	@Bean
-	public PersistentTokenRepository tokenRepository(DataSource dataSource){
+	public PersistentTokenRepository tokenRepository(){
 		JdbcTokenRepositoryImpl tokenRepositoryImpl=new JdbcTokenRepositoryImpl();
 		tokenRepositoryImpl.setDataSource(dataSource);
 		//tokenRepositoryImpl.setCreateTableOnStartup(true); // 第一次启动时可使用此功能自动创建表，第二次要关闭，否则表已存在会启动报错

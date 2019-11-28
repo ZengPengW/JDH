@@ -7,8 +7,8 @@ import java.io.Serializable;
  */
 public class Background implements Serializable {
     private Integer uid;//用户id
-    private String pic;//背景图地址
-    private String special;//背景特效地址
+    private Long pid;//背景图地址
+    private Long sid;//背景特效地址
 
     public Integer getUid() {
         return uid;
@@ -18,19 +18,19 @@ public class Background implements Serializable {
         this.uid = uid;
     }
 
-    public String getPic() {
-        return pic;
+    public Long getPid() {
+        return pid;
     }
 
-    public void setPic(String pic) {
-        this.pic = pic;
+    public void setPid(Long pid) {
+        this.pid = pid;
     }
 
-    public String getSpecial() {
-        return special;
+    public Long getSid() {
+        return sid;
     }
 
-    public void setSpecial(String special) {
-        this.special = special;
+    public void setSid(Long sid) {
+        this.sid = sid;
     }
 }

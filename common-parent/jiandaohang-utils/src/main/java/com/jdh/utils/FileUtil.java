@@ -1,8 +1,8 @@
 package com.jdh.utils;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import org.apache.commons.codec.digest.DigestUtils;
+
+import java.io.*;
 import java.util.UUID;
 
 public class FileUtil {
@@ -21,6 +21,7 @@ public class FileUtil {
 	}
 
 	public static boolean deleteFile(String fileName) {
+	    fileName=fileName.replace("/",File.separator);
 		File file = new File(fileName);
 		// 如果文件路径所对应的文件存在，并且是一个文件，则直接删除
 		if (file.exists() && file.isFile()) {
@@ -32,8 +33,8 @@ public class FileUtil {
 
 	public static String renameToUUID(String fileName) {
 		String filename= UUID.randomUUID() + "." + fileName.substring(fileName.lastIndexOf(".") + 1);
-        filename=fileName.replace("-","");
-		return fileName;
+        filename=filename.replace("-","");
+		return filename;
 	}
 
     /**
@@ -51,4 +52,15 @@ public class FileUtil {
         }
         return File.separator + hex.charAt(0) + File.separator + hex.charAt(1)+File.separator;
     }
+
+    /**
+     * 获取文件MD5
+     * @param file
+     * @return md5
+     */
+    public static String getFileMd5(byte[] file) throws IOException {
+        return DigestUtils.md5Hex(file);
+    }
+
+
 }

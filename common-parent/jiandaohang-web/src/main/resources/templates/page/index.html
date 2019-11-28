@@ -23,10 +23,7 @@
     <link rel="stylesheet" type="text/css" href="/css/sweetalert.css" />
 
 <style type="text/css" th:inline="css">
-body{
-    background-image: url("/material/img/bg/1c04d65b09b9dbec35d1ab928c7d6baaa63ffd4e.jpg");
 
-}
 a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search-menu-info li{
     cursor: url("/material/img/mouse/hand/手指.ico"),default;
 }
@@ -387,8 +384,9 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
         if($("#picFileUp").val().trim()!==""){
             //console.log("保存背景图片成功");
             var form = new FormData(document.getElementById("sctpform"));
+            form.append("isPublic",isPicPublic);
             $.ajax({
-                url: "/upload/bgImg",
+                url: "/bgImg/upload",
                 type: "post",
                 data: form,
                 cache:false,
@@ -1531,6 +1529,14 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 <script src="/js/sweetalert-dev.js"></script>
 
 
-<h1 th:text="${username}"></h1>
+<!--背景-->
+<script th:inline ="javascript" type="text/javascript">
+
+    var bgpath=[[${bgImg}]];
+    console.log(bgpath!=null);
+   if(bgpath!==null&&bgpath.trim() !== "") $("body").css("background-image","url('"+bgpath+"')");
+
+</script>
+
 </body>
 </html>

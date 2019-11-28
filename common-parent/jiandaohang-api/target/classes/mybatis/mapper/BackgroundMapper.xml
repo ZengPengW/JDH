@@ -4,11 +4,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jdh.mapper.BackgroundMapper">
 
-<insert id="addBackgroundImg" parameterType="com.jdh.pojo.BackgroundImgDo">
-    insert into `background_img`(`pid`,`pic`,`authorId`)
-    values (null,#{pic},#{authorId})
+<insert id="addBackgroundImg" parameterType="com.jdh.pojo.BackgroundImgDo" useGeneratedKeys="true" keyProperty="pid" keyColumn="pid">
+    insert into `background_img`(`pid`,`pic`,`author_id`,`expire`,`ispublic`,`md5`)
+    values (null,#{pic},#{authorId},#{expire},#{ispublic},#{md5})
 </insert>
 
+<select id="getBackgroundImgByMd5" parameterType="string" resultType="com.jdh.pojo.BackgroundImgDo">
+    select * from `background_img` where `md5`=#{md5}
+</select>
 
 
+<select id="getUserBackgroundById" parameterType="integer" resultType="com.jdh.pojo.Background">
+select * from `background` where `uid`=#{uid}
+</select>
+
+<insert id="addBackground" parameterType="com.jdh.pojo.Background" >
+     insert into `background`(`uid`,`pid`,`sid`)
+     values (#{uid},#{pid},#{sid})
+</insert>
+
+<update id="updateBackground" parameterType="com.jdh.pojo.Background" >
+    UPDATE `background` SET  `pid`=#{pid},`sid`=#{sid} where `uid`=#{uid}
+</update>
+
+<select id="getUserBackgroundImgByPid" parameterType="long" resultType="com.jdh.pojo.BackgroundImgDo">
+    select * from `background_img` where `pid`=#{pid}
+</select>
 </mapper>

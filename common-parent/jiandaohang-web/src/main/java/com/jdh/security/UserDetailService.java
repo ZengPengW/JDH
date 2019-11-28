@@ -38,7 +38,7 @@ public class UserDetailService implements UserDetailsService{
 //    private boolean credentialsNonExpired;//int(5) NULL证书是否过期
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-     //   System.out.println("调用登录"+username);
+        System.out.println("调用登录"+username);
 		//查询用户
 		User user =  userService.findByUserName(username);
 		MyUser myUser=null;
