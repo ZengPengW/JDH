@@ -15,16 +15,20 @@ public class UserServiceFallbackFactory implements FallbackFactory<UserService> 
         return new UserService() {
             @Override
             public User findByUserName(String username) {
+                System.out.println("findByUserName调用服务熔断");
                 return null;
             }
 
             @Override
             public List<Permission> findPermissionByUsername(String username) {
+                System.out.println("findPermissionByUsername调用服务熔断");
                 return null;
             }
 
             @Override
-            public Map updatePassword(User user) {
+            public Map updatePassword(User user)
+            {
+                System.out.println("updatePassword调用服务熔断");
                 return null;
             }
         };

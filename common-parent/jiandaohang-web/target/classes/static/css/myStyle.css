@@ -1,7 +1,7 @@
 .form-control:focus {
 	border-color: #ccc;
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075)'
+	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.75);
 
 }
 
@@ -23,7 +23,7 @@ body {
 	background-position: center 8%;
 	width: 100%;
 	height: 100%;
-    overflow-y:scroll; overflow-x:hidden;
+    overflow-y:auto; overflow-x:hidden;
 }
 
 ul li {
@@ -669,3 +669,7 @@ hr {
     -moz-transition: all 0.3s;
     transition: all 0.3s;
 }
+/*隐藏滚动条 不支持ie和火狐*/
+::-webkit-scrollbar { width: 1px; background-color: rgba(255,255,255,.1);}
+::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, .30); border-radius: 50px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, .40); }

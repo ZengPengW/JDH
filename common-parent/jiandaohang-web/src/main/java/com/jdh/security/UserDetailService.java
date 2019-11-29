@@ -66,7 +66,9 @@ public class UserDetailService implements UserDetailsService{
 			authorities.add(new SimpleGrantedAuthority(permission.getPermTag()));
 		}
             myUser.setAuthorities(authorities);
-		}
+		}else {
+            System.out.println("没查询到： "+username);
+        }
 		
 		return myUser;
 	}

@@ -13,7 +13,7 @@ import java.io.IOException;
 public class StaticFileFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-       // System.out.println(request.getRequestURI()+" :请求地址");
+       // System.out.println(request.getRequestURI()+" :请求地址缓存");
         String url=request.getRequestURI();
         if (url.lastIndexOf(".js")!=-1
             ||url.lastIndexOf(".css")!=-1

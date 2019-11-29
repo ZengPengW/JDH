@@ -25,6 +25,7 @@ public class UserController {
     @GetMapping("/user/{username}")
     public User findByUserName(@PathVariable(name = "username",required = true ) String username){
         User user = userService.findByUserName(username);
+
         if (user!=null)return  user;
         else {
             user =new User();

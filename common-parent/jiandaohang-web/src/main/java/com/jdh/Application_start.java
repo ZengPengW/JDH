@@ -3,8 +3,10 @@ package com.jdh;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+
+import com.jdh.utils.BingBgImgBean;
+import com.jdh.utils.BingBgImgFactory;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
@@ -12,10 +14,11 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.web.context.ContextLoader;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-import javax.servlet.ServletContext;
 
+
+@EnableScheduling //定时器
 @SpringBootApplication
 @EnableEurekaClient
 @EnableFeignClients(basePackages={"com.jdh.feign"})
@@ -32,6 +35,7 @@ public class Application_start {
                 "| |_) )| |_| |             / __/ | | | |\n" +
                 "|____/  \\__  |            (_____)| ||_/ \n" +
                 "       (____/                    |_|    ");
+
     }
 
 
@@ -47,5 +51,11 @@ public class Application_start {
         fastJsonConverter.setFastJsonConfig(fastJsonConfig);
         HttpMessageConverter<?> converter=fastJsonConverter;
         return new HttpMessageConverters(converter);
+    }
+
+    //单例BingBgImgBean
+    @Bean
+    public BingBgImgBean bingBgImgBean(){
+      return  BingBgImgFactory.getBingBgImgBean();
     }
 }

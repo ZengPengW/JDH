@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -59,8 +60,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
         http.headers().frameOptions().sameOrigin();//使得frame可以成功加载
 		http.authorizeRequests()
-		.antMatchers("/js/**","/css/**","/material/**","/img/**").permitAll()//静态资源放行
-		.antMatchers("/imgCode","/login","/index","/").permitAll()
+		//.antMatchers("/imgCode","/js/**","/css/**","/material/**","/img/**").permitAll()//静态资源放行
+		.antMatchers("/login","/index","/").permitAll()
 //		.antMatchers("/product/add").hasAuthority("ROLE_ADD")
 //		.antMatchers("/product/update").hasAuthority("ROLE_UPDATE")
 //		.antMatchers("/product/delete").hasAuthority("ROLE_DELETE")
@@ -79,10 +80,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
         .addFilterBefore(staticFileFilter,ImageCodeAuthenticationFilter.class);
 
         //http.sessionManagement().maximumSessions(5).expiredUrl("/login");
+
 	}
 
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring()
+                .antMatchers("/imgCode","/js/**","/css/**","/material/**","/img/**","/favicon.ico");
+    }
 
-	//记住我数据源
+    //记住我数据源
 	@Bean
 	public PersistentTokenRepository tokenRepository(){
 		JdbcTokenRepositoryImpl tokenRepositoryImpl=new JdbcTokenRepositoryImpl();
