@@ -30,4 +30,9 @@ select * from `background` where `uid`=#{uid}
 <select id="getUserBackgroundImgByPid" parameterType="long" resultType="com.jdh.pojo.BackgroundImgDo">
     select * from `background_img` where `pid`=#{pid}
 </select>
+
+<select id="getUserBackgroundImgByUid" parameterType="integer" resultType="com.jdh.pojo.BackgroundImgDo">
+    select * from `background_img` where `author_id`=#{author_id}
+</select>
+
 </mapper>

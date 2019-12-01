@@ -682,3 +682,7 @@ hr {
 .pageIndexBtn span {
     margin-left: 10px;
 }
+/*缩略图大小*/
+.min-img{
+    width: 182px; height: 100px; margin-top: 29px;
+}

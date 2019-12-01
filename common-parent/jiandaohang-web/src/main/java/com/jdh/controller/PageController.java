@@ -47,7 +47,7 @@ public class PageController {
             //获取用户
             MyUser userDetails = (MyUser) principal;
             String username = userDetails.getUsername();
-            model.addAttribute("username", username);
+            model.addAttribute("user", userDetails);
 
             //获取背景信息
             Background background = backgroundService.getUserBackgroundById(userDetails.getId());

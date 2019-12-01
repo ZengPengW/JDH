@@ -35,18 +35,18 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 
 <body class="shubiao">
 <!-- 弹窗 -->
-<a  id="userinfo" class="md-trigger" th:attr="data-modal=${username==null?'modal-13':'null'}" data-modal="modal-13" style="text-decoration: none;    background-color: white;
-    border-radius: 20px;"><img src="/material/img/head/登录.png" /><span th:text="${username==null?'登陆':''}"></span></a>
+<a  id="userinfo" class="md-trigger" th:attr="data-modal=${user.username==null?'modal-13':'null'}" data-modal="modal-13" style="text-decoration: none;    background-color: white;
+    border-radius: 20px;"><img src="/material/img/head/登录.png" /><span th:text="${user.username==null?'登陆':''}"></span></a>
 
 
 
 <!--个人资料-->
-<div class="row" th:if="${username!=null}">
+<div class="row" th:if="${user.username!=null}">
     <div class="col-lg-1 col-md-1 col-xs-1">
         <ul class="search-menu-info">
 
             <li name="user_name">
-                <a href="javascript:void(0)" class="" style="text-decoration: none; color: #fb7299;font-weight: 600;font-size: 16px;" th:text="${username==null?'null':username}"></a>
+                <a href="javascript:void(0)" class="" style="text-decoration: none; color: #fb7299;font-weight: 600;font-size: 16px;" th:text="${user.username==null?'null':user.username}"></a>
             </li>
             <hr />
 
@@ -208,7 +208,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 	描述：三个按钮
 -->
 
-<div style="position: fixed; z-index: 101; left: 0px; top: 29%; display: none; " id="BtnThree" th:if="${username!=null}">
+<div style="position: fixed; z-index: 101; left: 0px; top: 29%; display: none; " id="BtnThree" th:if="${user.username!=null}">
     <a  href="javascript:void(0)" style="text-decoration: none;" ><div class="kongjianbnt" onclick="shouqi(this)" >预览</div></a>
     <a href="javascript:void(0)" style="text-decoration: none;"><div class="kongjianbnt"  onclick="exit_edit(this)">退出</div></a>
     <a  href="javascript:void(0)" style="text-decoration: none;"><div class="kongjianbnt center-block"  onclick="savedeck(this)">保存</div></a>
@@ -219,7 +219,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 
 
 
-<div class="container" id="head-tab-content" style="display: none;" th:if="${username!=null}">
+<div class="container" id="head-tab-content" style="display: none;" th:if="${user.username!=null}">
 
     <div class="row ">
 
@@ -242,7 +242,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                     <ul class="nav nav-tabs" role="tablist" >
                         <li  role="presentation" ><a  href="#kxtp" aria-controls="" role="tab" data-toggle="tab">可选图片</a></li>
                         <li role="presentation"><a href="#sctp" aria-controls="" role="tab" data-toggle="tab">上传图片</a></li>
-                        <li role="presentation"><a href="#wdsc" aria-controls="" role="tab" data-toggle="tab">我的上传</a></li>
+                        <li role="presentation" onclick="load_wdsc(this)"><a href="#wdsc" aria-controls="" role="tab" data-toggle="tab">我的上传</a></li>
 
                     </ul>
 
@@ -250,7 +250,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                         <div role="tabpanel" class="tab-pane fade" id="kxtp">kxtpkxtpkxtpkxtpkxtpkxtp</div>
                         <!--上传图片-->
                         <div role="tabpanel" class="tab-pane fade my-tab-pane" id="sctp">
-                            <p style="color: red; margin-top: 6px; font-weight: 900;">为保证背景清晰,请上传高清宽屏图片</p>
+                            <span  class="label label-danger" style="margin-top: 6px;">为保证背景清晰,请上传高清宽屏图片</span>
                             <form id="sctpform" method="post">
                                 <input type="file" name="picFileUp" id="picFileUp" style="display: none;" />
                             </form>
@@ -269,20 +269,14 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                         </div>
                         <!--我的上传-->
                         <div role="tabpanel" class="tab-pane fade" id="wdsc">
+                            <span class="label label-warning">鼠标左键可选择，右键可删除</span>
                             <ul class="row">
-                                <li class=" col-sm-3 col-xs-4"><img  src="img/上传图片.png" alt="cscscs" class="img-thumbnail" style="width: 182px; height: 100px; margin-top: 29px;"></li>
-                                <li class=" col-sm-3 col-xs-4"><img  src="img/上传图片.png" alt="cscscs" class="img-thumbnail" style="width: 182px; height: 100px; margin-top: 29px;"></li>
-                                <li class=" col-sm-3 col-xs-4"><img  src="img/上传图片.png" alt="cscscs" class="img-thumbnail" style="width: 182px; height: 100px; margin-top: 29px;"></li>
-                                <li class=" col-sm-3 col-xs-4"><img  src="img/上传图片.png" alt="cscscs" class="img-thumbnail" style="width: 182px; height: 100px; margin-top: 29px;"></li>
-                                <li class=" col-sm-3 col-xs-4"><img  src="img/上传图片.png" alt="cscscs" class="img-thumbnail" style="width: 182px; height: 100px; margin-top: 29px;"></li>
-                                <li class=" col-sm-3 col-xs-4"><img  src="img/上传图片.png" alt="cscscs" class="img-thumbnail" style="width: 182px; height: 100px; margin-top: 29px;"></li>
-                                <li class=" col-sm-3 col-xs-4"><img  src="img/上传图片.png" alt="cscscs" class="img-thumbnail" style="width: 182px; height: 100px; margin-top: 29px;"></li>
-                                <li class=" col-sm-3 col-xs-4"><img  src="img/上传图片.png" alt="cscscs" class="img-thumbnail" style="width: 182px; height: 100px; margin-top: 29px;"></li>
+                                <!--我的上传缩略图列表-->
                             </ul>
 
                             <!--上一页 下一页-->
                             <nav aria-label="...">
-                                <ul class="pager">
+                                <ul class="pager wdscpager">
                                     <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
 
                                     <li class="next"><a href="#">下一页 <span aria-hidden="true">&rarr;</span></a></li>
@@ -293,8 +287,9 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                             <div class="pageIndexBtn row ">
 
                             <span>
-                                第<input type="number"  value="1" style="width:41px ;color: black; border-radius: 4px;"/>/20页
-                                <a  href="javascript:void(0)" style="text-decoration: none;" ><span class="kongjianbnt" onclick="">GO!</span></a>
+                                第<input type="number" id="wdscCurrPage"  value="0" style="width:41px ;color: black; border-radius: 4px;"/>
+                                /<span id="wdscPageTotal">0</span>页
+                                <a  href="javascript:void(0)" style="text-decoration: none;" ><span class="kongjianbnt" onclick="gotoWdscPage()">GO!</span></a>
                             </span>
 
                             </div>
@@ -302,12 +297,6 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                         </div>	<!--我的上传-->
 
                     </div>
-
-
-
-
-
-
 
 
                 </div>
@@ -365,8 +354,121 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 </div>
 <!--遮罩-->
 <div class="zhezhao" ></div>
+<!--我的上传分页-->
+<script type="text/javascript" th:inline ="javascript" th:if="${user.username!=null}">
+    //加载我的上传缩略图列表
+    var pageNumb=-1;//页码
+    var totalPage=0 //总页数
+    function load_wdsc(obj){
+        var aTab= $(obj).children("a");
+        var aHref=$(aTab).attr("href");
+        var imgul=$(aHref).children("ul");
+        var liList=$(imgul).children("li");
+        //  console.log(liList.length);
+        if(liList.length===0){
+            $.get("/bgImg/myUpLoad?page=1",function(data){
+                pageNumb=data.page;//获取当前页码
+                $("#wdscCurrPage").val(pageNumb);
+
+                totalPage=Math.ceil(data.total/8);//总页数
+                $("#wdscPageTotal").text(totalPage);
+                if(!data.hasNextPage){
+                    $(".wdscpager .next").hide();
+                }else {
+                    $(".wdscpager .next").show();
+                }
+                if(!data.hasPreviousPage){
+                    $(".wdscpager .previous").hide();
+                }else {
+                    $(".wdscpager .previous").show();
+                }
+                $.each(data.rows, function(index,c) {
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4'><img id='picUp' src='"+c.pic+"' class='img-thumbnail min-img' ></li>");
+                });
+            },"json");
+        }
+
+    }
+    $(".wdscpager .next").click(function () {
+        if(pageNumb+1<=totalPage){
+            $.get("/bgImg/myUpLoad?page="+(pageNumb+1),function(data){
+                pageNumb=data.page;//获取当前页码
+                $("#wdscCurrPage").val(pageNumb);
+                if(!data.hasNextPage){
+                    $(".wdscpager .next").hide();
+                }else {
+                    $(".wdscpager .next").show();
+                }
+                if(!data.hasPreviousPage){
+                    $(".wdscpager .previous").hide();
+                }else {
+                    $(".wdscpager .previous").show();
+                }
+
+                var imgul=$("#wdsc").children("ul");
+                $(imgul).children("li").remove();
+                $.each(data.rows, function(index,c) {
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4'><img id='picUp' src='"+c.pic+"' class='img-thumbnail min-img' ></li>");
+                });
+            },"json");
+        }
+    });
+
+    $(".wdscpager .previous").click(function () {
+
+        if((pageNumb-1)>0){
+            $.get("/bgImg/myUpLoad?page="+(pageNumb-1),function(data){
+                pageNumb=data.page;//获取当前页码
+                $("#wdscCurrPage").val(pageNumb);
+                if(!data.hasNextPage){
+                    $(".wdscpager .next").hide();
+                }else {
+                    $(".wdscpager .next").show();
+                }
+                if(!data.hasPreviousPage){
+                    $(".wdscpager .previous").hide();
+                }else {
+                    $(".wdscpager .previous").show();
+                }
+
+                var imgul=$("#wdsc").children("ul");
+                $(imgul).children("li").remove();
+                $.each(data.rows, function(index,c) {
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4'><img id='picUp' src='"+c.pic+"' class='img-thumbnail min-img' ></li>");
+                });
+            },"json");
+        }
+    });
+    function gotoWdscPage() {
+       var page= $("#wdscCurrPage").val();
+       page=Math.floor(page);
+       if (page===pageNumb||page<1||page>totalPage)return;
+        $.get("/bgImg/myUpLoad?page="+page,function(data){
+            pageNumb=data.page;//获取当前页码
+            $("#wdscCurrPage").val(pageNumb);
+            if(!data.hasNextPage){
+                $(".wdscpager .next").hide();
+            }else {
+                $(".wdscpager .next").show();
+            }
+            if(!data.hasPreviousPage){
+                $(".wdscpager .previous").hide();
+            }else {
+                $(".wdscpager .previous").show();
+            }
+
+            var imgul=$("#wdsc").children("ul");
+            $(imgul).children("li").remove();
+            $.each(data.rows, function(index,c) {
+                $(imgul).append("<li class=' col-sm-3 col-xs-4'><img id='picUp' src='"+c.pic+"' class='img-thumbnail min-img' ></li>");
+            });
+        },"json");
+
+
+    }
+</script>
 <!--背景图片-->
-<script type="text/javascript" th:inline ="javascript" th:if="${username!=null}">
+<script type="text/javascript" th:inline ="javascript" th:if="${user.username!=null}">
     //上传
     $("#picUp").click(function(){
         $("#picFileUp").click();
@@ -1363,7 +1465,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 
 <!-- 鼠标右键菜单 -->
 <script  src="/js/class2context.js"></script>
-<script type="text/javascript" th:inline ="javascript" th:if="${username==null}">
+<script type="text/javascript" th:inline ="javascript" th:if="${user.username==null}">
     //主菜单
     class2context('main_menu', "主菜单",
         [
@@ -1376,7 +1478,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 
    }
 </script>
-<script type="text/javascript" th:inline ="javascript" th:if="${username!=null}">
+<script type="text/javascript" th:inline ="javascript" th:if="${user.username!=null}">
 
     //主菜单
     class2context('main_menu', "主菜单",
@@ -1439,7 +1541,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 </script>
 
 <!-- 弹窗 -->
-<div class="md-modal md-effect-13" id="modal-13" th:if="${username==null}">
+<div class="md-modal md-effect-13" id="modal-13" th:if="${user.username==null}">
     <div class="md-content">
         <h3>login</h3>
         <div>
@@ -1447,7 +1549,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
             <form id="loginFrom" method="post">
                 <input type="checkbox" name="remember-me" value="true" checked="checked" style="display:none;" />
             <ul>
-                <li><td><strong >USER_NAME:</strong></td> <td><input type="text" name="username"  id="username" autocomplete="off"  placeholder="用户名/邮箱"  /></td></li>
+                <li><td><strong >USER_NAME:</strong></td> <td><input type="text" name="user.username"  id="user.username" autocomplete="off"  placeholder="用户名/邮箱"  /></td></li>
                 <li><td><strong >PASSWORD :</strong></td> <td><input type="text"  name="password" id="password" autocomplete="off"   placeholder="密码" /></td></li>
                 <li><td><strong >CAPTCHA  :</strong></td> <td><input type="text"  name="imgCode" id="imgCode" autocomplete="off"   placeholder="图片验证码" /></td></li>
                 <li><td><strong ></strong><td><img id="getimgcode" src="/imgCode" /></td></li>
@@ -1461,17 +1563,17 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 
 
 <!-- 弹窗 -->
-<div class="md-overlay" th:if="${username==null}"></div><!-- the overlay zhezhao -->
-<script src="/js/classie.js" th:if="${username==null}"></script>
-<script src="/js/modalEffects.js" th:if="${username==null}"></script>
-<script src="/js/cssParser.js" th:if="${username==null}"></script>
-<script src="/js/css-filters-polyfill.js" th:if="${username==null}"></script>
-<script th:inline ="javascript" type="text/javascript" th:if="${username==null}">
+<div class="md-overlay" th:if="${user.username==null}"></div><!-- the overlay zhezhao -->
+<script src="/js/classie.js" th:if="${user.username==null}"></script>
+<script src="/js/modalEffects.js" th:if="${user.username==null}"></script>
+<script src="/js/cssParser.js" th:if="${user.username==null}"></script>
+<script src="/js/css-filters-polyfill.js" th:if="${user.username==null}"></script>
+<script th:inline ="javascript" type="text/javascript" th:if="${user.username==null}">
     $("#password").focus(function () {
         $(this).attr("type","password");
         $("#minfo").text("");
     });
-    $("#username,#imgCode").focus(function () {
+    $("#user.username,#imgCode").focus(function () {
         $("#minfo").text("");
     });
     //登录
@@ -1518,7 +1620,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 
 </script>
 <!--用户-->
-<script th:inline ="javascript" type="text/javascript" th:if="${username!=null}">
+<script th:inline ="javascript" type="text/javascript" th:if="${user.username!=null}">
     var isOnSearchMenu=false;
     $(".search-menu-info li").mouseenter(function(){
         if($(this).attr("name")=="user_name")return;
@@ -1547,7 +1649,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
         if($(".search-menu-info").css("display")==="block") $(this).slideUp(500);
     });
 </script>
-<script th:inline ="javascript" type="text/javascript" th:if="${username!=null}">
+<script th:inline ="javascript" type="text/javascript" th:if="${user.username!=null}">
     function  logout() {
         $(".zhezhao").css("visibility","visible");
         $(".my-load-div").show();

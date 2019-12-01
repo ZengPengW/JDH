@@ -15,12 +15,6 @@ spring:
     multipart:
       max-request-size: 50Mb
       max-file-size: 10Mb
-#  resources:
-#    chain:
-#      cache: false
-#      gzipped: true
-#    cache:
-#      period: 3600
   application:
     name: jiandaohang-web  #应用名称
   #thymeleaf关闭缓存.

@@ -1,10 +1,12 @@
 package com.jdh.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.jdh.pojo.Background;
 import com.jdh.pojo.BackgroundImgDo;
 import com.jdh.service.BackgroundService;
 import com.jdh.utils.FileUtil;
 import com.jdh.utils.JdhResult;
+import com.jdh.utils.PageDataGridResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -87,6 +89,16 @@ public class BackgroundController {
         backgroundService.updateBackground(background);
     }
 
-
+    /**
+     * 根据用户id获取上传的背景图片
+     * @param author_id
+     * @return
+     */
+    @GetMapping("/bgImg/authorId/{author_id}")
+    public PageDataGridResult getUserBackgroundImgByUid(@PathVariable Integer author_id, @RequestParam(required = false) Integer page, @RequestParam(required = false )Integer size){
+        if (size==null)size=8;
+        if (page==null||page==0)page=1;
+        return backgroundService.getUserBackgroundImgByUid(author_id,page,size);
+    }
 
 }

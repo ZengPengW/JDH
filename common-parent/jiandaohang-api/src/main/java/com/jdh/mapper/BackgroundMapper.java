@@ -48,4 +48,12 @@ public interface BackgroundMapper {
      * @return
      */
     public BackgroundImgDo getUserBackgroundImgByPid(Long pid);
+
+
+    /**
+     * 根据用户id获取上传的背景图片
+     * @param author_id
+     * @return
+     */
+    public List<BackgroundImgDo> getUserBackgroundImgByUid(Integer author_id);
 }

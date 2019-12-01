@@ -7,8 +7,8 @@ import java.io.Serializable;
  */
 public class Background implements Serializable {
     private Integer uid;//用户id
-    private Long pid;//背景图地址
-    private Long sid;//背景特效地址
+    private Long pid;//背景图id
+    private Long sid;//背景特效id
 
     public Integer getUid() {
         return uid;

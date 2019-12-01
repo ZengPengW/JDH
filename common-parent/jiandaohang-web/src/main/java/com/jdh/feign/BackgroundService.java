@@ -3,6 +3,7 @@ package com.jdh.feign;
 import com.jdh.pojo.Background;
 import com.jdh.pojo.BackgroundImgDo;
 import com.jdh.utils.JdhResult;
+import com.jdh.utils.PageDataGridResult;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,4 +55,12 @@ public interface BackgroundService {
      */
     @GetMapping("/bgImg/pid/{pid}")
     public BackgroundImgDo getUserBackgroundImgByPid(@PathVariable(name = "pid") Long pid);
+
+    /**
+     * 根据用户id获取上传的背景图片
+     * @param author_id
+     * @return
+     */
+    @GetMapping("/bgImg/authorId/{author_id}")
+    public PageDataGridResult getUserBackgroundImgByUid(@PathVariable(name = "author_id") Integer author_id, @RequestParam(name = "page",required = false) Integer page, @RequestParam(name = "size",required = false )Integer size);
 }

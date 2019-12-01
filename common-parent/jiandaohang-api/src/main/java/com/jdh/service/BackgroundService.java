@@ -3,6 +3,7 @@ package com.jdh.service;
 import com.jdh.pojo.Background;
 import com.jdh.pojo.BackgroundImgDo;
 import com.jdh.pojo.BackgroundInfo;
+import com.jdh.utils.PageDataGridResult;
 
 import java.util.List;
 
@@ -42,4 +43,11 @@ public interface BackgroundService {
      * @return
      */
     public BackgroundImgDo getUserBackgroundImgByPid(Long pid);
+
+    /**
+     * 根据用户id获取上传的背景图片
+     * @param author_id
+     * @return
+     */
+    public PageDataGridResult getUserBackgroundImgByUid(Integer author_id, Integer page, Integer size);
 }
