@@ -63,4 +63,14 @@ public interface BackgroundService {
      */
     @GetMapping("/bgImg/authorId/{author_id}")
     public PageDataGridResult getUserBackgroundImgByUid(@PathVariable(name = "author_id") Integer author_id, @RequestParam(name = "page",required = false) Integer page, @RequestParam(name = "size",required = false )Integer size);
+
+
+    /**
+     * 根据pid背景图删除记录
+     * @param pid
+     * @return
+     */
+    @PostMapping("/bgImg/delete/{pid}")
+    public Integer deleteBackgroundImgByPid(@PathVariable(name = "pid") Long pid);
+
 }

@@ -9,6 +9,15 @@ public class BackgroundImgDo implements Serializable {
     private boolean expire; //是否过期
     private boolean ispublic;//是否公开
     private String md5;
+    private String thumbnail;//缩略图
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
 
     public String getMd5() {
         return md5;

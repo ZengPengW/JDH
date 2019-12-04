@@ -70,5 +70,10 @@ public class BackgroundServiceImpl implements BackgroundService {
         return dataGridResult;
     }
 
+    @Override
+    public Integer deleteBackgroundImgByPid(Long pid) {
+        return backgroundMapper.deleteBackgroundImgByPid(pid);
+    }
+
 
 }

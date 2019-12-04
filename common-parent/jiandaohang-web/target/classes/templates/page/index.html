@@ -354,7 +354,19 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 </div>
 <!--遮罩-->
 <div class="zhezhao" ></div>
-<!--我的上传分页-->
+
+
+<!--背景-->
+<script th:inline ="javascript" type="text/javascript">
+    var bgpath=[[${bgImg}]];
+    // console.log(bgpath!=null);
+    if(bgpath!==null&&bgpath.trim() !== "") $("body").css("background-image","url('"+bgpath+"')");
+    var default_background=$("body").css("background-image");//初始背景图
+    var currBgImg=null;//当前背景图
+</script>
+
+
+<!--我的背景上传分页-->
 <script type="text/javascript" th:inline ="javascript" th:if="${user.username!=null}">
     //加载我的上传缩略图列表
     var pageNumb=-1;//页码
@@ -383,7 +395,10 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                     $(".wdscpager .previous").show();
                 }
                 $.each(data.rows, function(index,c) {
-                    $(imgul).append("<li class=' col-sm-3 col-xs-4'><img id='picUp' src='"+c.pic+"' class='img-thumbnail min-img' ></li>");
+                    if(currBgImg!=null&&currBgImg==c.md5){
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img min-img-active' ></li>");
+                    }else
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img' ></li>");
                 });
             },"json");
         }
@@ -408,8 +423,10 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                 var imgul=$("#wdsc").children("ul");
                 $(imgul).children("li").remove();
                 $.each(data.rows, function(index,c) {
-                    $(imgul).append("<li class=' col-sm-3 col-xs-4'><img id='picUp' src='"+c.pic+"' class='img-thumbnail min-img' ></li>");
-                });
+                    if(currBgImg!=null&&currBgImg==c.md5){
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img min-img-active' ></li>");
+                    }else
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img' ></li>");                });
             },"json");
         }
     });
@@ -434,8 +451,10 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                 var imgul=$("#wdsc").children("ul");
                 $(imgul).children("li").remove();
                 $.each(data.rows, function(index,c) {
-                    $(imgul).append("<li class=' col-sm-3 col-xs-4'><img id='picUp' src='"+c.pic+"' class='img-thumbnail min-img' ></li>");
-                });
+                    if(currBgImg!=null&&currBgImg==c.md5){
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img min-img-active' ></li>");
+                    }else
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img' ></li>");                });
             },"json");
         }
     });
@@ -460,12 +479,33 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
             var imgul=$("#wdsc").children("ul");
             $(imgul).children("li").remove();
             $.each(data.rows, function(index,c) {
-                $(imgul).append("<li class=' col-sm-3 col-xs-4'><img id='picUp' src='"+c.pic+"' class='img-thumbnail min-img' ></li>");
-            });
+                if(currBgImg!=null&&currBgImg==c.md5){
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img min-img-active' ></li>");
+                }else
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img' ></li>");            });
         },"json");
 
 
     }
+//选中缩略图
+$(function () {
+    var min_reg = new RegExp("min_","g");
+    $("#wdsc").on("click",".min-img",function () {
+        $("#wdsc .min-img").removeClass("min-img-active");
+        $(this).addClass("min-img-active");
+        currBgImg=$(this).attr("md5");//获取选中的md5
+        var path=$(this).prop("src").replace(min_reg,"");
+        $("body").css("background-image","url('"+path+"')");
+
+        //清空上传背景图表单
+       if ($("#picFileUp").val().trim()!==""){
+           $("#picFileUp").val("");
+           $("#picUp").prop("src", "img/上传图片.png");
+       }
+
+    });
+});
+
 </script>
 <!--背景图片-->
 <script type="text/javascript" th:inline ="javascript" th:if="${user.username!=null}">
@@ -480,9 +520,9 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
         //console.log(isPicPublic);
     });
 
-    var default_background=$("body").css("background-image");
+
     $("#picFileUp").change(function(){
-        if($(this).val()!=""&&$(this).val().trim()!=""){
+        if($(this).val().trim()!==""){
 
             var filePath = $(this).val();
             var fileformat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
@@ -502,6 +542,10 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
             var src = window.URL.createObjectURL(this.files[0]);
             $("#picUp").prop("src", src);
             $("body").css("background-image","url("+src+")");
+
+            currBgImg=null;//清空选中图md5
+            $("#wdsc .min-img").removeClass("min-img-active");
+
         }
     });
 
@@ -510,6 +554,8 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
         $("body").css("background-image",default_background);
         $("#picFileUp").val("");
         $("#picUp").prop("src", "img/上传图片.png");
+        currBgImg=null;//清空选中图pid
+        $("#wdsc .min-img").removeClass("min-img-active");
         threeBtn(obj);
     }
 
@@ -583,6 +629,37 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                 }
             });
             $("#picFileUp").val("");//置空防止重复提交
+        }else if(currBgImg!=null){
+            //此处通过MD5值保存图片背景 无需上传
+            $.post("/bgImg/change/md5/"+currBgImg,"",function (data) {
+                if (data.status===1){
+                    swal({
+                        title: data.msg,
+                        text: "",
+                        type: "success",
+                        confirmButtonColor:"#ad1d11",
+                        confirmButtonText: "确定"
+                    },function(isConfirm){
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 100);
+                       });
+                    }else if (data.status===2){
+                    swal({
+                        title: data.msg,
+                        text: "",
+                        type: "error",
+                        confirmButtonColor:"#ad1d11",
+                        confirmButtonText: "确定"
+                    },function(isConfirm){
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 100);
+
+                    });
+                }
+            },"json");
+
         }
 
 
@@ -1667,14 +1744,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 <script src="/js/sweetalert-dev.js"></script>
 
 
-<!--背景-->
-<script th:inline ="javascript" type="text/javascript">
 
-    var bgpath=[[${bgImg}]];
-   // console.log(bgpath!=null);
-   if(bgpath!==null&&bgpath.trim() !== "") $("body").css("background-image","url('"+bgpath+"')");
-
-</script>
 
 </body>
 </html>

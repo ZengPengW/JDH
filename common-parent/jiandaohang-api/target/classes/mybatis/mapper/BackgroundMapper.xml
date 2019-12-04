@@ -5,8 +5,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.jdh.mapper.BackgroundMapper">
 
 <insert id="addBackgroundImg" parameterType="com.jdh.pojo.BackgroundImgDo" useGeneratedKeys="true" keyProperty="pid" keyColumn="pid">
-    insert into `background_img`(`pid`,`pic`,`author_id`,`expire`,`ispublic`,`md5`)
-    values (null,#{pic},#{authorId},#{expire},#{ispublic},#{md5})
+    insert into `background_img`(`pid`,`pic`,`author_id`,`expire`,`ispublic`,`md5`,`thumbnail`)
+    values (null,#{pic},#{authorId},#{expire},#{ispublic},#{md5},#{thumbnail})
 </insert>
 
 <select id="getBackgroundImgByMd5" parameterType="string" resultType="com.jdh.pojo.BackgroundImgDo">
@@ -35,4 +35,7 @@ select * from `background` where `uid`=#{uid}
     select * from `background_img` where `author_id`=#{author_id}
 </select>
 
+<delete id="deleteBackgroundImgByPid" parameterType="long">
+    DELETE FROM `background_img` WHERE `pid`=#{pid}
+</delete>
 </mapper>

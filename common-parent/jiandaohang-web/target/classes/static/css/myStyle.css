@@ -686,3 +686,8 @@ hr {
 .min-img{
     width: 182px; height: 100px; margin-top: 29px;
 }
+/*选中缩略图背景边框颜色*/
+.min-img-active{
+    background-color: red;
+    border:1px solid #cfec14;
+}

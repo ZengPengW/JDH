@@ -56,4 +56,12 @@ public interface BackgroundMapper {
      * @return
      */
     public List<BackgroundImgDo> getUserBackgroundImgByUid(Integer author_id);
+
+
+    /**
+     * 根据pid背景图删除记录
+     * @param pid
+     * @return
+     */
+    public Integer deleteBackgroundImgByPid(Long pid);
 }

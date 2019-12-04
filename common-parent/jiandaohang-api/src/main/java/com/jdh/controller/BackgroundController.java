@@ -101,4 +101,13 @@ public class BackgroundController {
         return backgroundService.getUserBackgroundImgByUid(author_id,page,size);
     }
 
+    /**
+     * 根据pid背景图删除记录
+     * @param pid
+     * @return
+     */
+    @PostMapping("/bgImg/delete/{pid}")
+    public Integer deleteBackgroundImgByPid(@PathVariable Long pid){
+        return backgroundService.deleteBackgroundImgByPid(pid);
+    }
 }
