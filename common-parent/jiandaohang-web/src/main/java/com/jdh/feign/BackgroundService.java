@@ -73,4 +73,11 @@ public interface BackgroundService {
     @PostMapping("/bgImg/delete/{pid}")
     public Integer deleteBackgroundImgByPid(@PathVariable(name = "pid") Long pid);
 
+    /**
+     * 根据pid获取使用此背景图的用户信息
+     * @param pid
+     * @return
+     */
+    @GetMapping("/bg/pid/{pid}")
+    public List<Background> getUserBackgroundByPid(@PathVariable(name = "pid") Long pid);
 }

@@ -25,8 +25,24 @@ public class FileUtil {
 		File file = new File(fileName);
 		// 如果文件路径所对应的文件存在，并且是一个文件，则直接删除
 		if (file.exists() && file.isFile()) {
-            return file.delete();
-		} else {
+            boolean b = file.delete();//删除文件
+            if(b){
+                fileName=fileName.substring(0,fileName.lastIndexOf(File.separator));
+                File file2 = new File(fileName);
+                // File[] listFiles = file.listFiles();
+                if (file2.isDirectory()&&file2.listFiles().length<=0){
+                    boolean b1 = file2.delete();
+                    if (b1){
+                        fileName=fileName.substring(0,fileName.lastIndexOf(File.separator));
+                        file2 = new File(fileName);
+                        if (file2.isDirectory()&&file2.listFiles().length<=0)
+                            file2.delete();
+                    }
+                }
+            }
+
+            return b;
+        } else {
 			return false;
 		}
 	}

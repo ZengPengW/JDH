@@ -110,4 +110,16 @@ public class BackgroundController {
     public Integer deleteBackgroundImgByPid(@PathVariable Long pid){
         return backgroundService.deleteBackgroundImgByPid(pid);
     }
+
+
+    /**
+     * 根据pid获取使用此背景图的用户信息
+     * @param pid
+     * @return
+     */
+    @GetMapping("/bg/pid/{pid}")
+    public List<Background> getUserBackgroundByPid(@PathVariable Long pid){
+      //  System.out.println(pid);
+        return backgroundService.getUserBackgroundByPid(pid);
+    }
 }

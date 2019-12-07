@@ -22,45 +22,45 @@ public class UserController {
      * 查询当前用户
      * @return
      */
-    @GetMapping("/user/{username}")
-    public User findByUserName(@PathVariable(name = "username",required = true ) String username){
-        User user = userService.findByUserName(username);
-        if (user!=null)return  user;
-        else {
-            user =new User();
-            user.setUsername("null");
-            return  user;
-        }
-    }
+//    @GetMapping("/user/{username}")
+//    public User findByUserName(@PathVariable(name = "username",required = true ) String username){
+//        User user = userService.findByUserName(username);
+//        if (user!=null)return  user;
+//        else {
+//            user =new User();
+//            user.setUsername("null");
+//            return  user;
+//        }
+//    }
 
     /**
      * 通过名字查询用户权限
      * @param username
      * @return
      */
-    @GetMapping("/permission/{username}")
-    public List<Permission> findPermissionByUsername(@PathVariable(name = "username",required = true)String username){
-
-       return userService.findPermissionByUsername(username);
-    }
+//    @GetMapping("/permission/{username}")
+//    public List<Permission> findPermissionByUsername(@PathVariable(name = "username",required = true)String username){
+//
+//       return userService.findPermissionByUsername(username);
+//    }
 
     /**
      * 修改密码
      * @param user
      */
-    @PostMapping("/change/password")
-    public Map updatePassword(User user) {
-        Map map= new HashMap();
-        try {
-            userService.updatePassword(user);
-            map.put("code",1);
-            map.put("message","修改成功");
-        }catch (Exception ignored){
-            map.put("code",2);
-            map.put("message","修改失败");
-        }finally {
-            return map;
-        }
-
-    }
+//    @PostMapping("/change/password")
+//    public Map updatePassword(User user) {
+//        Map map= new HashMap();
+//        try {
+//            userService.updatePassword(user);
+//            map.put("code",1);
+//            map.put("message","修改成功");
+//        }catch (Exception ignored){
+//            map.put("code",2);
+//            map.put("message","修改失败");
+//        }finally {
+//            return map;
+//        }
+//
+//    }
 }

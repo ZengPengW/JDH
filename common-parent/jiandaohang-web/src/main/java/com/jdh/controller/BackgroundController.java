@@ -4,11 +4,13 @@ import com.jdh.feign.BackgroundService;
 import com.jdh.pojo.Background;
 import com.jdh.pojo.BackgroundImgDo;
 import com.jdh.pojo.MyUser;
+import com.jdh.utils.FileUtil;
 import com.jdh.utils.JdhResult;
 import com.jdh.utils.PageDataGridResult;
 import com.jdh.utils.UserContext;
 import jdk.nashorn.internal.scripts.JD;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +21,8 @@ public class BackgroundController {
     @Autowired
     private BackgroundService backgroundService;
 
+    @Value("${myparameter.uploadPath}")
+    public String materialPath;//d:/zp/material/
     /**
      * 我的背景图上传分页
      * @param page
@@ -65,6 +69,55 @@ public class BackgroundController {
             return  JdhResult.fail("服务器错误: 背景图片设置失败！");
         }
 
+
+    }
+
+    /**
+     * 根据md5删除背景图片
+     * @param md5
+     * @return
+     */
+
+    @PostMapping("/bgImg/del/md5/{md5}")
+    public JdhResult deleteBackgroundImgByMd5(@PathVariable String md5){
+        try {
+            MyUser user=UserContext.getCurrUser();
+            if(user==null||user.getId()==null)return JdhResult.fail("操作失败，用户此无权限！！！");
+            List<BackgroundImgDo> imgByMd5 = backgroundService.getBackgroundImgByMd5(md5);
+            //如果查无此图
+            if (imgByMd5==null||imgByMd5.size()<1){
+                return JdhResult.fail("此背景图不存在,删除失败!!!");
+            }else {
+                BackgroundImgDo imgDo = imgByMd5.get(0);
+                //如果是此用户上传的就可以删除
+                if (user.getId()==imgDo.getAuthorId()){
+                    //获得使用此背景图的所有用户
+                    List<Background> background = backgroundService.getUserBackgroundByPid(imgDo.getPid());
+                    //如果无人使用此图就可以删除
+                    if (background==null||background.size()<=0){
+                        backgroundService.deleteBackgroundImgByPid(imgDo.getPid());
+                        String pic = imgDo.getPic();//图片地址
+                        String minpic=imgDo.getThumbnail();//缩略图
+                        pic=materialPath+pic.substring(10);
+                        minpic=materialPath+minpic.substring(10);
+                      //  System.out.println(pic);
+                       // System.out.println(minpic);
+                        FileUtil.deleteFile(pic);
+                        FileUtil.deleteFile(minpic);
+                        return JdhResult.success("删除成功！！！");
+                    }else {
+                        return JdhResult.fail("此图有用户正在使用，暂时无法删除！！！");
+                    }
+
+                }else {
+                    return JdhResult.fail("此背景图不是你上传的,删除失败!!!");
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return JdhResult.fail("服务器错误,删除失败!!!");
+
+        }
 
     }
 

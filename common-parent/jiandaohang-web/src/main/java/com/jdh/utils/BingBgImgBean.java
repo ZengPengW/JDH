@@ -9,12 +9,12 @@ public class BingBgImgBean {
 
 
     public void setImgPath(String imgPath) {
-        System.out.println("设置图片值");
+       // System.out.println("设置图片值");
         this.imgPath = imgPath;
     }
 
     public String getImgPath() {
-        System.out.println("获取图片值"+imgPath);
+      //  System.out.println("获取图片值"+imgPath);
         return imgPath;
     }
     public  void updateImgPath()  {

@@ -75,5 +75,10 @@ public class BackgroundServiceImpl implements BackgroundService {
         return backgroundMapper.deleteBackgroundImgByPid(pid);
     }
 
+    @Override
+    public List<Background> getUserBackgroundByPid(Long pid) {
+        return backgroundMapper.getUserBackgroundByPid(pid);
+    }
+
 
 }

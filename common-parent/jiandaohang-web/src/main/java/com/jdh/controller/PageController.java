@@ -66,6 +66,8 @@ public class PageController {
 
 
         } else { //不存在用户 用bing图片
+            MyUser userDetails=new MyUser();
+            model.addAttribute("user", userDetails);
              model.addAttribute("bgImg", bingBgImgBean.getImgPath());
         }
 

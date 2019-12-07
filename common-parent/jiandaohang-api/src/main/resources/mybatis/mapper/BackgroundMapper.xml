@@ -38,4 +38,8 @@ select * from `background` where `uid`=#{uid}
 <delete id="deleteBackgroundImgByPid" parameterType="long">
     DELETE FROM `background_img` WHERE `pid`=#{pid}
 </delete>
+
+<select id="getUserBackgroundByPid" parameterType="long" resultType="com.jdh.pojo.Background">
+    select * from `background` where `pid`=#{pid}
+</select>
 </mapper>

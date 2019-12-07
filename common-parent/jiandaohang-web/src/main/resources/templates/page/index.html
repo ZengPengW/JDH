@@ -20,7 +20,7 @@
     <!--弹窗-->
     <link rel="stylesheet" type="text/css" href="/css/default.css" />
     <link rel="stylesheet" type="text/css" href="/css/component.css" />
-    <link rel="stylesheet" type="text/css" href="/css/sweetalert.css" />
+    <link rel="stylesheet" type="text/css" href="/css/sweetalert2.css" />
 
 <style type="text/css" th:inline="css">
 
@@ -30,6 +30,8 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 .shubiao,.nav-tabs>li.active>a:hover {
     cursor: url("/material/img/mouse/pointer/蓝色鼠标.ico"),default;
 }
+
+
 </style>
 </head>
 
@@ -368,9 +370,109 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 
 <!--我的背景上传分页-->
 <script type="text/javascript" th:inline ="javascript" th:if="${user.username!=null}">
+
+
+    //右键删除此上传
+    var curRightWdscImg=null;//当前右键选择的图片md5
+    function wdscRightKey() {
+        $("#wdsc .min-img").addClass("wdsc-min-img");
+        class2context('wdsc-min-img', "菜单",
+            [
+                [
+                    "<img src='/material/img/rightMenu/个性化.png' width='25px' /> 删除此图", "deleteWdscImg()"
+                ]
+            ]);
+    }
+    //删除此上传图片
+    function deleteWdscImg() {
+        if(curRightWdscImg!==null&&curRightWdscImg==currBgImg){
+
+            Swal.fire({
+                title: "无法删除已预设为背景图的图片",
+                text: "",
+                type: "error",
+                confirmButtonColor:"#ad1d11",
+                allowOutsideClick: false,
+                confirmButtonText: "确定"
+            });
+            return;
+        }
+
+        //ajax请求删除
+       if(curRightWdscImg!==null){
+
+
+           Swal.fire({
+               title: "是否删除此上传图片",
+               text: "",
+               type: "warning",
+               showCancelButton: true,
+               confirmButtonColor: '#3085d6',
+               cancelButtonColor: '#d33',
+               cancelButtonText:"点错了",
+               confirmButtonText: "确认删除!"
+           }).then((isConfirm) => {
+                if(isConfirm.value){
+                    //Swal.fire({text:"点了确定",title:"das", type:'success'});
+               $.post("/bgImg/del/md5/"+curRightWdscImg,function (data) {
+                   if (data.status===1){
+                       Swal.fire({
+                           title: data.msg,
+                           text: "",
+                           type: "success",
+                           confirmButtonColor:"#1aad19",
+                           allowOutsideClick: false,
+                           confirmButtonText: "确定"
+                       }).then((isConfirm) => {
+                           $("#wdsc .wdsc-min-img[md5='"+curRightWdscImg+"']").remove();
+                           console.log(curRightWdscImg);
+                           curRightWdscImg=null;//置空
+                       });
+
+                   }else if(data.status===2){
+                       Swal.fire({
+                           title: data.msg,
+                           text: "",
+                           type: "error",
+                           confirmButtonColor:"#ad1d11",
+                           allowOutsideClick: false,
+                           confirmButtonText: "确定"
+                       });
+                   }
+               },"json");
+
+             }
+
+
+           });
+
+
+       }
+
+
+
+    }
+
+    $("#wdsc").on("mousedown",".wdsc-min-img",function(event){
+        if(event.button===2){//右键
+            curRightWdscImg=$(this).attr("md5");
+        }
+
+    });
+   //鼠标移入
+    $("#wdsc").on("mouseenter",".wdsc-min-img",function(){
+        $(this).addClass("min-img-active");
+    });
+    //鼠标移出
+    $("#wdsc").on("mouseleave",".wdsc-min-img",function(){
+       if(currBgImg==null||currBgImg!==$(this).attr("md5"))
+           $(this).removeClass("min-img-active");
+    });
+    //*********************************************************************************
     //加载我的上传缩略图列表
     var pageNumb=-1;//页码
     var totalPage=0 //总页数
+
     function load_wdsc(obj){
         var aTab= $(obj).children("a");
         var aHref=$(aTab).attr("href");
@@ -400,7 +502,11 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                     }else
                         $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img' ></li>");
                 });
+
+                wdscRightKey();//添加右键删除菜单
             },"json");
+
+
         }
 
     }
@@ -426,8 +532,12 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                     if(currBgImg!=null&&currBgImg==c.md5){
                         $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img min-img-active' ></li>");
                     }else
-                        $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img' ></li>");                });
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img' ></li>");
+
+                });
+                wdscRightKey();//添加右键删除菜单
             },"json");
+
         }
     });
 
@@ -455,7 +565,10 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                         $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img min-img-active' ></li>");
                     }else
                         $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img' ></li>");                });
-            },"json");
+
+                wdscRightKey();//添加右键删除菜单
+                },"json");
+
         }
     });
     function gotoWdscPage() {
@@ -482,7 +595,10 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                 if(currBgImg!=null&&currBgImg==c.md5){
                     $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img min-img-active' ></li>");
                 }else
-                    $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img' ></li>");            });
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img' ></li>");
+
+            });
+            wdscRightKey();//添加右键删除菜单
         },"json");
 
 
@@ -490,7 +606,9 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 //选中缩略图
 $(function () {
     var min_reg = new RegExp("min_","g");
-    $("#wdsc").on("click",".min-img",function () {
+    $("#wdsc").on("click",".min-img",function (event) {
+
+
         $("#wdsc .min-img").removeClass("min-img-active");
         $(this).addClass("min-img-active");
         currBgImg=$(this).attr("md5");//获取选中的md5
@@ -527,14 +645,14 @@ $(function () {
             var filePath = $(this).val();
             var fileformat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
             if(!fileformat.match(/.png|.jpg|jpeg|.gif/)) {
-                swal("格式错误",'文件格式必须为：png/jpg/jpeg/gif',"error");
+                Swal.fire("图片格式错误",'文件格式必须为：png/jpg/jpeg/gif',"error");
                 $(this).val("");
                 return;
             }
 
             if(((this.files[0].size).toFixed(2))<(1024*1024*0.3)){
 
-                swal("图片模糊","上传图片太模糊","error");
+                Swal.fire("图片模糊","上传图片太模糊","error");
                 $(this).val("");
                 return;
             }
@@ -580,13 +698,15 @@ $(function () {
                     if (data.status===1){
                        // swal(data.msg,"","success");
 
-                        swal({
+                        Swal.fire({
                             title: data.msg,
                             text: "",
                             type: "success",
                             confirmButtonColor:"#1aad19",
+                            allowOutsideClick: false,
                             confirmButtonText: "确定"
-                    },function(isConfirm){
+                    }).then((isConfirm) => {
+
                             setTimeout(function () {
                                 window.location.reload();
                             }, 100);
@@ -596,13 +716,14 @@ $(function () {
 
                     }else if(data.status===2) {
                        // swal(data.msg,"","error");
-                        swal({
+                        Swal.fire({
                             title: data.msg,
                             text: "",
                             type: "error",
                             confirmButtonColor:"#ad1d11",
+                            allowOutsideClick: false,
                             confirmButtonText: "确定"
-                        },function(isConfirm){
+                        }).then((isConfirm) => {
                             setTimeout(function () {
                                 window.location.reload();
                             }, 100);
@@ -613,13 +734,14 @@ $(function () {
                 },
                 error: function(e) {
                   //  swal("保存失败","服务器错误","error");
-                    swal({
+                    Swal.fire({
                         title: "保存失败:服务器错误",
                         text: "",
                         type: "error",
                         confirmButtonColor:"#ad1d11",
+                        allowOutsideClick: false,
                         confirmButtonText: "确定"
-                    },function(isConfirm){
+                    }).then((isConfirm) => {
                         setTimeout(function () {
                             window.location.reload();
                         }, 100);
@@ -633,25 +755,27 @@ $(function () {
             //此处通过MD5值保存图片背景 无需上传
             $.post("/bgImg/change/md5/"+currBgImg,"",function (data) {
                 if (data.status===1){
-                    swal({
+                    Swal.fire({
                         title: data.msg,
                         text: "",
                         type: "success",
                         confirmButtonColor:"#ad1d11",
+                        allowOutsideClick: false,
                         confirmButtonText: "确定"
-                    },function(isConfirm){
+                    }).then((isConfirm) => {
                         setTimeout(function () {
                             window.location.reload();
                         }, 100);
                        });
                     }else if (data.status===2){
-                    swal({
+                    Swal.fire({
                         title: data.msg,
                         text: "",
                         type: "error",
                         confirmButtonColor:"#ad1d11",
+                        allowOutsideClick: false,
                         confirmButtonText: "确定"
-                    },function(isConfirm){
+                    }).then((isConfirm) => {
                         setTimeout(function () {
                             window.location.reload();
                         }, 100);
@@ -660,6 +784,10 @@ $(function () {
                 }
             },"json");
 
+        }else {
+            setTimeout(function () {
+                window.location.reload();
+            }, 100);
         }
 
 
@@ -1551,7 +1679,7 @@ $(function () {
             ]
         ]);
    function edit_page2() {
-       swal("未登陆","请登录后操作！！！","info")
+       Swal.fire("未登陆","请登录后操作！！！","info")
 
    }
 </script>
@@ -1587,6 +1715,7 @@ $(function () {
                 "<img src='/material/img/rightMenu/分组.png' width='25px' /> 添加分组", "edit_page()"
             ]
         ]);
+
 
     // 编辑显示菜单
     function edit_page(){
@@ -1626,7 +1755,7 @@ $(function () {
             <form id="loginFrom" method="post">
                 <input type="checkbox" name="remember-me" value="true" checked="checked" style="display:none;" />
             <ul>
-                <li><td><strong >USER_NAME:</strong></td> <td><input type="text" name="user.username"  id="user.username" autocomplete="off"  placeholder="用户名/邮箱"  /></td></li>
+                <li><td><strong >USER_NAME:</strong></td> <td><input type="text" name="username"  id="username" autocomplete="off"  placeholder="用户名/邮箱"  /></td></li>
                 <li><td><strong >PASSWORD :</strong></td> <td><input type="text"  name="password" id="password" autocomplete="off"   placeholder="密码" /></td></li>
                 <li><td><strong >CAPTCHA  :</strong></td> <td><input type="text"  name="imgCode" id="imgCode" autocomplete="off"   placeholder="图片验证码" /></td></li>
                 <li><td><strong ></strong><td><img id="getimgcode" src="/imgCode" /></td></li>
@@ -1650,7 +1779,7 @@ $(function () {
         $(this).attr("type","password");
         $("#minfo").text("");
     });
-    $("#user.username,#imgCode").focus(function () {
+    $("#username,#imgCode").focus(function () {
         $("#minfo").text("");
     });
     //登录
@@ -1741,7 +1870,7 @@ $(function () {
 <script th:src="@{/js/TweenMax.min.js}"></script>
 <!--弹窗1-->
 <script src="/js/modernizr.custom.js"></script>
-<script src="/js/sweetalert-dev.js"></script>
+<script src="/js/sweetalert2.all.min.js"></script>
 
 
 

@@ -64,4 +64,11 @@ public interface BackgroundMapper {
      * @return
      */
     public Integer deleteBackgroundImgByPid(Long pid);
+
+    /**
+     * 根据pid获取使用此背景图的用户信息
+     * @param pid
+     * @return
+     */
+    public List<Background> getUserBackgroundByPid(Long pid);
 }
