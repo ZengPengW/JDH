@@ -6,6 +6,7 @@ import com.jdh.pojo.BackgroundInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface BackgroundMapper {
@@ -71,4 +72,19 @@ public interface BackgroundMapper {
      * @return
      */
     public List<Background> getUserBackgroundByPid(Long pid);
+
+    /**
+     *根据是否公开查询背景图片 和 按时间 热度排序
+     * @param
+     * @return
+     */
+    public List<BackgroundImgDo> getBackgroundImgByIsPublic(Map map);
+
+
+    /**
+     * 根据pid增加背景图片使用次数
+     * @param pid
+     * @return
+     */
+    public Integer addBackgroundImgUseCountByPid(Long pid);
 }

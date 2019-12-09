@@ -5,8 +5,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.jdh.mapper.BackgroundMapper">
 
 <insert id="addBackgroundImg" parameterType="com.jdh.pojo.BackgroundImgDo" useGeneratedKeys="true" keyProperty="pid" keyColumn="pid">
-    insert into `background_img`(`pid`,`pic`,`author_id`,`expire`,`ispublic`,`md5`,`thumbnail`)
-    values (null,#{pic},#{authorId},#{expire},#{ispublic},#{md5},#{thumbnail})
+    insert into `background_img`(`pid`,`pic`,`author_id`,`expire`,`ispublic`,`md5`,`thumbnail`,`up_date`)
+    values (null,#{pic},#{authorId},#{expire},#{ispublic},#{md5},#{thumbnail},#{upDate})
 </insert>
 
 <select id="getBackgroundImgByMd5" parameterType="string" resultType="com.jdh.pojo.BackgroundImgDo">
@@ -42,4 +42,25 @@ select * from `background` where `uid`=#{uid}
 <select id="getUserBackgroundByPid" parameterType="long" resultType="com.jdh.pojo.Background">
     select * from `background` where `pid`=#{pid}
 </select>
+
+<!--<select id="getBackgroundImgByIsPublic" parameterType="boolean" resultType="com.jdh.pojo.BackgroundImgDo" >-->
+<!--     SELECT * FROM background_img WHERE `ispublic`=#{ispublic}-->
+<!--</select>-->
+
+<update id="addBackgroundImgUseCountByPid" parameterType="long">
+    UPDATE `background_img` SET  `use_count`=`use_count`+1 where `pid`=#{pid}
+</update>
+
+<select id="getBackgroundImgByIsPublic" parameterType="map" resultType="com.jdh.pojo.BackgroundImgDo" >
+     SELECT * FROM background_img
+     WHERE `ispublic`=#{ispublic}
+      <if test="up_date != null and up_date != '' ">
+            ORDER BY `up_date` ${up_date}
+      </if>
+    <if test="use_count != null and use_count != '' ">
+        ORDER BY `use_count` ${use_count}
+    </if>
+
+</select>
+
 </mapper>

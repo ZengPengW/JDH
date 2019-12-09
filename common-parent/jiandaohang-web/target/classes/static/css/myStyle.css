@@ -46,6 +46,8 @@ ul li {
 	font-size: 19px;
 	font-weight: 900;
 	color: black;
+    border: none !important;
+    box-shadow: none !important;
 	
 }
 

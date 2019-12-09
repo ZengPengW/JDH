@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -91,6 +92,7 @@ public class UploadController {
                     backgroundImgDo.setExpire(false);//不过期
                     backgroundImgDo.setMd5(fileMd5);
                     backgroundImgDo.setThumbnail(thumbnailPath);
+                    backgroundImgDo.setUpDate(new Date());
                     result = backgroundService.saveBackgroundImg(backgroundImgDo);
 
                     //保存图片成功后 设置用户背景

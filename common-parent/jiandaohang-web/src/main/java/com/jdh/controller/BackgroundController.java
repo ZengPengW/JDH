@@ -9,6 +9,7 @@ import com.jdh.utils.JdhResult;
 import com.jdh.utils.PageDataGridResult;
 import com.jdh.utils.UserContext;
 import jdk.nashorn.internal.scripts.JD;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -119,6 +120,62 @@ public class BackgroundController {
 
         }
 
+    }
+
+
+    /**
+     * 根据是否公开查询背景图片
+     * @param ispublic 是否公开
+     * @param page 第几页
+     * @param size 每页几条
+     * @param field 字段名 1==up_date 2==use_count
+     * @param order 排序 1==asc 2==desc
+     * @return
+     */
+    @GetMapping ("/bgImg/ispublic/{ispublic}")
+    public PageDataGridResult getBackgroundImgByIsPublic(@PathVariable(name = "ispublic") Boolean ispublic,@RequestParam(required = false) Integer page, @RequestParam(required = false )Integer size, @RequestParam(required = false,name = "field")String field, @RequestParam(required = false,name = "order")String order){
+       //两个值必须同时存在 否则不排序
+        if(isEmpty(field)||isEmpty(order)){
+            field=null;
+            order=null;
+        }else {
+            field=field.trim();
+            order=order.trim();
+
+            if(!field.equals("1")&&!field.equals("2")){
+                field=null;
+                order=null;
+            }else {
+                //1.根据上传时间排序 2.根据热度排序
+                if(field.equals("1"))field="up_date";
+                else field="use_count";
+            }
+
+            if(!order.equals("1")&&!order.equals("2")){
+                field=null;
+                order=null;
+            }else {
+                //1.asc 2.desc
+                if(order.equals("1"))order="asc";
+                else order="desc";
+            }
+        }
+
+
+
+        return backgroundService.getBackgroundImgByIsPublic(ispublic,page,size,field,order);
+    }
+
+
+    /**
+     * 是否为空
+     * @param str
+     * @return 是true 否 false
+     */
+    public boolean isEmpty(String str){
+        if(str==null)return true;
+        if(str.trim().length()<=0)return true;
+        return false;
     }
 
 }

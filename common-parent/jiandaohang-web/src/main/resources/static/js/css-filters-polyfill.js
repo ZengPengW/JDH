@@ -68,7 +68,7 @@
 				return true;
 			}
 			if(window.console) console.log('Caching of stylesheets is enabled. You need to refresh twice to see any changes.');
-			return false;
+			return true;
 		})(),
 		
 		process_stylesheets: function(){

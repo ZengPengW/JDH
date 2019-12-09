@@ -1,6 +1,7 @@
 package com.jdh.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class BackgroundImgDo implements Serializable {
     private Long pid; //图片id
@@ -10,6 +11,25 @@ public class BackgroundImgDo implements Serializable {
     private boolean ispublic;//是否公开
     private String md5;
     private String thumbnail;//缩略图
+    private Date upDate; //上传时间
+    private Long useCount; //使用次数
+
+
+    public Long getUseCount() {
+        return useCount;
+    }
+
+    public void setUseCount(Long useCount) {
+        this.useCount = useCount;
+    }
+
+    public Date getUpDate() {
+        return upDate;
+    }
+
+    public void setUpDate(Date upDate) {
+        this.upDate = upDate;
+    }
 
     public String getThumbnail() {
         return thumbnail;

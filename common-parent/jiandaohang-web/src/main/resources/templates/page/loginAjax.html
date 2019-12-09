@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>登陆</title>
 	<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
 		<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
@@ -132,6 +134,12 @@ img{
 <script th:src="'/js/classie.js?v='+${application.v}"></script>
 <script th:src="'/js/modalEffects.js?v='+${application.v}"></script>
 <script th:inline ="javascript" type="text/javascript">
+
+
+    console.log(document.compatMode);
+
+
+
 	var modal = document.querySelector( '#modal-13'),
 		close = modal.querySelector( '.md-close' );
 	classie.add( modal, 'md-show' );

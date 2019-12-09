@@ -4,6 +4,10 @@ server:
 myparameter:
   uploadPath: d:/zp/material/
 
+logging:
+  level:
+    root: info
+    com.jdh: info
 
 spring:
   application:

@@ -3,7 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name=renderer content=webkit>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0.75">
+    <meta name="renderer" content="webkit" />
     <title>简导航-最个性的导航</title>
   <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
@@ -23,16 +25,46 @@
     <link rel="stylesheet" type="text/css" href="/css/sweetalert2.css" />
 
 <style type="text/css" th:inline="css">
-
 a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search-menu-info li{
     cursor: url("/material/img/mouse/hand/手指.ico"),default;
 }
 .shubiao,.nav-tabs>li.active>a:hover {
     cursor: url("/material/img/mouse/pointer/蓝色鼠标.ico"),default;
 }
-
-
+/*html{*/
+/*    zoom: .9;*/
+/*}*/
 </style>
+<script>
+
+    function myBrowser() {
+        var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+        console.log(userAgent);
+        var isOpera = userAgent.indexOf("Opera") > -1;
+        if (isOpera) { //判断是否Opera浏览器
+            return "Opera"
+        }
+        ;
+        if (userAgent.indexOf("Firefox") > -1) { //判断是否Firefox浏览器
+            return "FF";
+        }
+        ;
+        if (userAgent.indexOf("Chrome") > -1) {
+            return "Chrome";
+        }
+        ;
+        if (userAgent.indexOf("Safari") > -1) { //判断是否Safari浏览器
+            return "Safari";
+        }
+        ;
+        if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera) { //判断是否IE浏览器
+            return "IE";
+        }
+        ;
+    }
+    myBrowser();
+
+</script>
 </head>
 
 <body class="shubiao">
@@ -242,14 +274,51 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                 <div role="tabpanel" class="tab-pane fade" id="bjtp">
 
                     <ul class="nav nav-tabs" role="tablist" >
-                        <li  role="presentation" ><a  href="#kxtp" aria-controls="" role="tab" data-toggle="tab">可选图片</a></li>
+                        <li  role="presentation" onclick="load_gxbj(this)" ><a  href="#gxbj" aria-controls="" role="tab" data-toggle="tab">共享图片</a></li>
                         <li role="presentation"><a href="#sctp" aria-controls="" role="tab" data-toggle="tab">上传图片</a></li>
                         <li role="presentation" onclick="load_wdsc(this)"><a href="#wdsc" aria-controls="" role="tab" data-toggle="tab">我的上传</a></li>
 
                     </ul>
 
                     <div class="tab-content"  >
-                        <div role="tabpanel" class="tab-pane fade" id="kxtp">kxtpkxtpkxtpkxtpkxtpkxtp</div>
+
+                        <!--共享背景图片-->
+                        <div role="tabpanel" class="tab-pane fade" id="gxbj">
+                            <select id="gxbjOrder" class="form-control shubiao2" style="float: right;color: white;width: 15%;background-color: #252525;">
+                                <option value="0"  selected="selected">默认</option>
+                                <option  value="1" >最新</option>
+                                <option  value="2">最早</option>
+                                <option  value="3">按热度升序</option>
+                                <option  value="4">按热度降序</option>
+                            </select>
+
+                            <br>
+                            <ul class="row" style="margin-top: 10px">
+                                <!--共享图列表-->
+                            </ul>
+
+                            <!--上一页 下一页-->
+                            <nav aria-label="...">
+                                <ul class="pager gxbjpager">
+                                    <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
+
+                                    <li class="next"><a href="#">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+                                </ul>
+                            </nav>
+
+                            <!--第几页-->
+                            <div class="pageIndexBtn row ">
+
+                            <span>
+                                第<input type="number" id="gxbjCurrPage"  value="0" style="width:41px ;color: black; border-radius: 4px;"/>
+                                /<span id="gxbjPageTotal">0</span>页
+                                <a  href="javascript:void(0)" style="text-decoration: none;" onclick="gotoGxbjPage()"><span class="kongjianbnt" >GO!</span></a>
+                            </span>
+
+                            </div>
+
+
+                        </div>
                         <!--上传图片-->
                         <div role="tabpanel" class="tab-pane fade my-tab-pane" id="sctp">
                             <span  class="label label-danger" style="margin-top: 6px;">为保证背景清晰,请上传高清宽屏图片</span>
@@ -291,7 +360,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                             <span>
                                 第<input type="number" id="wdscCurrPage"  value="0" style="width:41px ;color: black; border-radius: 4px;"/>
                                 /<span id="wdscPageTotal">0</span>页
-                                <a  href="javascript:void(0)" style="text-decoration: none;" ><span class="kongjianbnt" onclick="gotoWdscPage()">GO!</span></a>
+                                <a  href="javascript:void(0)" style="text-decoration: none;" onclick="gotoWdscPage()"><span class="kongjianbnt" >GO!</span></a>
                             </span>
 
                             </div>
@@ -409,7 +478,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                showCancelButton: true,
                confirmButtonColor: '#3085d6',
                cancelButtonColor: '#d33',
-               cancelButtonText:"点错了",
+               cancelButtonText:"<span class='shubiao2'>点错了</span>",
                confirmButtonText: "确认删除!"
            }).then((isConfirm) => {
                 if(isConfirm.value){
@@ -605,10 +674,9 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
     }
 //选中缩略图
 $(function () {
-    var min_reg = new RegExp("min_","g");
+
     $("#wdsc").on("click",".min-img",function (event) {
-
-
+        var min_reg = new RegExp("min_","g");
         $("#wdsc .min-img").removeClass("min-img-active");
         $(this).addClass("min-img-active");
         currBgImg=$(this).attr("md5");//获取选中的md5
@@ -621,11 +689,287 @@ $(function () {
            $("#picUp").prop("src", "img/上传图片.png");
        }
 
+        //把共享背景的选中更新
+        $("#gxbj .min-img").removeClass("min-img-active");
+        var gxbjMinImg= $("#gxbj .min-img");
+        if(gxbjMinImg.length>0){
+            $.each(gxbjMinImg,function (index,c) {
+                if($(c).attr("md5")===currBgImg){
+                    $(c).addClass("min-img-active");
+                }
+            });
+        }
+
     });
+
 });
 
 </script>
-<!--背景图片-->
+
+<!-- 共享背景图片分页-->
+<script type="text/javascript" th:inline ="javascript" th:if="${user.username!=null}">
+    //*********************************************************************************
+    //加载我的上传缩略图列表
+    var gxbjpageNumb=-1;//页码
+    var gxbjtotalPage=0 //总页数
+
+
+//排序加载
+    $("#gxbjOrder").change(function () {
+        //排序规则
+        var gxbjOrder=$("#gxbjOrder").val();
+        var requestPath="/bgImg/ispublic/true?";
+        if(gxbjOrder==="1"){
+            requestPath=requestPath+"field=1&order=2&";
+        }else if(gxbjOrder==="2"){
+            requestPath=requestPath+"field=1&order=1&";
+        }else if(gxbjOrder==="3"){
+            requestPath=requestPath+"field=2&order=1&";
+        }else if(gxbjOrder==="4"){
+            requestPath=requestPath+"field=2&order=2&";
+        }
+        $.get(requestPath+"page=1",function(data){
+            gxbjpageNumb=data.page;//获取当前页码
+            $("#gxbjCurrPage").val(gxbjpageNumb);
+            if(!data.hasNextPage){
+                $(".gxbjpager .next").hide();
+            }else {
+                $(".gxbjpager .next").show();
+            }
+            if(!data.hasPreviousPage){
+                $(".gxbjpager .previous").hide();
+            }else {
+                $(".gxbjpager .previous").show();
+            }
+
+            var imgul=$("#gxbj").children("ul");
+            $(imgul).children("li").remove();
+            $.each(data.rows, function(index,c) {
+                if(currBgImg!=null&&currBgImg==c.md5){
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img min-img-active' ></li>");
+                }else
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img' ></li>");
+
+            });
+        },"json");
+
+    });
+
+    function load_gxbj(obj){
+        var aTab= $(obj).children("a");
+        var aHref=$(aTab).attr("href");
+        var imgul=$(aHref).children("ul");
+        var liList=$(imgul).children("li");
+        //  console.log(liList.length);
+        if(liList.length===0){
+            $.get("/bgImg/ispublic/true?page=1",function(data){
+                gxbjpageNumb=data.page;//获取当前页码
+                $("#gxbjCurrPage").val(gxbjpageNumb);
+
+                gxbjtotalPage=Math.ceil(data.total/8);//总页数
+                $("#gxbjPageTotal").text(gxbjtotalPage);
+                if(!data.hasNextPage){
+                    $(".gxbjpager .next").hide();
+                }else {
+                    $(".gxbjpager .next").show();
+                }
+                if(!data.hasPreviousPage){
+                    $(".gxbjpager .previous").hide();
+                }else {
+                    $(".gxbjpager .previous").show();
+                }
+                $.each(data.rows, function(index,c) {
+                    if(currBgImg!=null&&currBgImg==c.md5){
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img min-img-active' ></li>");
+                    }else
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img' ></li>");
+                });
+
+            },"json");
+
+
+        }
+
+    }
+    $(".gxbjpager .next").click(function () {
+        if(gxbjpageNumb+1<=gxbjtotalPage){
+            //排序规则
+            var gxbjOrder=$("#gxbjOrder").val();
+            var requestPath="/bgImg/ispublic/true?";
+            if(gxbjOrder==="1"){
+                requestPath=requestPath+"field=1&order=2&";
+            }else if(gxbjOrder==="2"){
+                requestPath=requestPath+"field=1&order=1&";
+            }else if(gxbjOrder==="3"){
+                requestPath=requestPath+"field=2&order=1&";
+            }else if(gxbjOrder==="4"){
+                requestPath=requestPath+"field=2&order=2&";
+            }
+
+            $.get(requestPath+"page="+(gxbjpageNumb+1),function(data){
+                gxbjpageNumb=data.page;//获取当前页码
+                $("#gxbjCurrPage").val(gxbjpageNumb);
+                if(!data.hasNextPage){
+                    $(".gxbjpager .next").hide();
+                }else {
+                    $(".gxbjpager .next").show();
+                }
+                if(!data.hasPreviousPage){
+                    $(".gxbjpager .previous").hide();
+                }else {
+                    $(".gxbjpager .previous").show();
+                }
+
+                var imgul=$("#gxbj").children("ul");
+                $(imgul).children("li").remove();
+                $.each(data.rows, function(index,c) {
+                    if(currBgImg!=null&&currBgImg==c.md5){
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img min-img-active' ></li>");
+                    }else
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img' ></li>");
+
+                });
+            },"json");
+
+        }
+    });
+
+    $(".gxbjpager .previous").click(function () {
+
+        if((gxbjpageNumb-1)>0){
+            //排序规则
+            var gxbjOrder=$("#gxbjOrder").val();
+            var requestPath="/bgImg/ispublic/true?";
+            if(gxbjOrder==="1"){
+                requestPath=requestPath+"field=1&order=2&";
+            }else if(gxbjOrder==="2"){
+                requestPath=requestPath+"field=1&order=1&";
+            }else if(gxbjOrder==="3"){
+                requestPath=requestPath+"field=2&order=1&";
+            }else if(gxbjOrder==="4"){
+                requestPath=requestPath+"field=2&order=2&";
+            }
+
+
+
+            $.get(requestPath+"page="+(gxbjpageNumb-1),function(data){
+                gxbjpageNumb=data.page;//获取当前页码
+                $("#gxbjCurrPage").val(gxbjpageNumb);
+
+                if(!data.hasNextPage){
+                    $(".gxbjpager .next").hide();
+                }else {
+                    $(".gxbjpager .next").show();
+                }
+                if(!data.hasPreviousPage){
+                    $(".gxbjpager .previous").hide();
+                }else {
+                    $(".gxbjpager .previous").show();
+                }
+                var imgul=$("#gxbj").children("ul");
+                $(imgul).children("li").remove();
+                $.each(data.rows, function(index,c) {
+                    if(currBgImg!=null&&currBgImg==c.md5){
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img min-img-active' ></li>");
+                    }else
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img' ></li>");                });
+
+            },"json");
+
+        }
+    });
+    function gotoGxbjPage() {
+
+        var page= $("#gxbjCurrPage").val();
+        page=Math.floor(page);
+
+        if (page===gxbjpageNumb||page<1||page>gxbjtotalPage)return;
+        //排序规则
+        var gxbjOrder=$("#gxbjOrder").val();
+        var requestPath="/bgImg/ispublic/true?";
+        if(gxbjOrder==="1"){
+            requestPath=requestPath+"field=1&order=2&";
+        }else if(gxbjOrder==="2"){
+            requestPath=requestPath+"field=1&order=1&";
+        }else if(gxbjOrder==="3"){
+            requestPath=requestPath+"field=2&order=1&";
+        }else if(gxbjOrder==="4"){
+            requestPath=requestPath+"field=2&order=2&";
+        }
+        $.get(requestPath+"page="+page,function(data){
+            gxbjpageNumb=data.page;//获取当前页码
+            $("#gxbjCurrPage").val(gxbjpageNumb);
+            if(!data.hasNextPage){
+                $(".gxbjpager .next").hide();
+            }else {
+                $(".gxbjpager .next").show();
+            }
+            if(!data.hasPreviousPage){
+                $(".gxbjpager .previous").hide();
+            }else {
+                $(".gxbjpager .previous").show();
+            }
+
+            var imgul=$("#gxbj").children("ul");
+            $(imgul).children("li").remove();
+            $.each(data.rows, function(index,c) {
+                if(currBgImg!=null&&currBgImg==c.md5){
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img min-img-active' ></li>");
+                }else
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img' ></li>");
+
+            });
+        },"json");
+
+
+    }
+    //选中缩略图
+    $(function () {
+        $("#gxbj").on("click",".min-img",function (event) {
+            var min_reg = new RegExp("min_","g");
+            $("#gxbj .min-img").removeClass("min-img-active");
+            $(this).addClass("min-img-active");
+            currBgImg=$(this).attr("md5");//获取选中的md5
+            var path=$(this).prop("src").replace(min_reg,"");
+            $("body").css("background-image","url('"+path+"')");
+
+            //清空上传背景图表单
+            if ($("#picFileUp").val().trim()!==""){
+                $("#picFileUp").val("");
+                $("#picUp").prop("src", "img/上传图片.png");
+            }
+
+            //把我的上传的选中更新
+            $("#wdsc .min-img").removeClass("min-img-active");
+            var wdscMinImg= $("#wdsc .min-img");
+            if(wdscMinImg.length>0){
+                $.each(wdscMinImg,function (index,c) {
+                   if($(c).attr("md5")===currBgImg){
+                       $(c).addClass("min-img-active");
+                   }
+                });
+            }
+
+
+        });
+
+
+        //鼠标移入
+        $("#gxbj").on("mouseenter",".min-img",function(){
+            $(this).addClass("min-img-active");
+        });
+        //鼠标移出
+        $("#gxbj").on("mouseleave",".min-img",function(){
+            if(currBgImg==null||currBgImg!==$(this).attr("md5"))
+                $(this).removeClass("min-img-active");
+        });
+
+
+
+    });
+</script>
+
+<!--背景图片上传-->
 <script type="text/javascript" th:inline ="javascript" th:if="${user.username!=null}">
     //上传
     $("#picUp").click(function(){

@@ -65,4 +65,22 @@ public interface BackgroundService {
      * @return
      */
     public List<Background> getUserBackgroundByPid(Long pid);
+
+    /**
+     * 根据是否公开查询背景图片
+     * @param ispublic 是否公开
+     * @param page 第几页
+     * @param size 每页几条
+     * @param field  排序字段
+     * @param order asc or desc
+     * @return
+     */
+    public PageDataGridResult getBackgroundImgByIsPublic(boolean ispublic,Integer page,Integer size,String field,String order);
+
+    /**
+     * 根据pid增加背景图片使用次数
+     * @param pid
+     * @return
+     */
+    public Integer addBackgroundImgUseCountByPid(Long pid);
 }

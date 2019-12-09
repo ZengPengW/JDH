@@ -80,4 +80,14 @@ public interface BackgroundService {
      */
     @GetMapping("/bg/pid/{pid}")
     public List<Background> getUserBackgroundByPid(@PathVariable(name = "pid") Long pid);
-}
+
+
+    /**
+     *根据是否公开查询背景图片
+     * @param ispublic boolean
+     * @return
+     */
+    @GetMapping ("/bgImg/ispublic/{ispublic}")
+    public PageDataGridResult getBackgroundImgByIsPublic(@PathVariable(name = "ispublic") Boolean ispublic,@RequestParam(required = false,name = "page") Integer page, @RequestParam(required = false,name = "size")Integer size, @RequestParam(required = false,name = "field")String field, @RequestParam(required = false,name = "order")String order);
+
+    }
