@@ -52,8 +52,8 @@ select * from `background` where `uid`=#{uid}
 </update>
 
 <select id="getBackgroundImgByIsPublic" parameterType="map" resultType="com.jdh.pojo.BackgroundImgDo" >
-     SELECT * FROM background_img
-     WHERE `ispublic`=#{ispublic}
+      SELECT i.*,u.`username` `author_name` FROM `background_img` i, `sys_user` u
+      WHERE `ispublic`=#{ispublic} AND u.`id`=i.`author_id`
       <if test="up_date != null and up_date != '' ">
             ORDER BY `up_date` ${up_date}
       </if>

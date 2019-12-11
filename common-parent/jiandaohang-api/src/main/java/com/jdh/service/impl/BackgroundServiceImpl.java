@@ -87,7 +87,7 @@ public class BackgroundServiceImpl implements BackgroundService {
     }
 
     @Override
-    public PageDataGridResult getBackgroundImgByIsPublic(boolean ispublic,Integer page,Integer size,String field,String order) {
+    public PageDataGridResult<BackgroundImgDo> getBackgroundImgByIsPublic(Boolean ispublic,Integer page,Integer size,String field,String order) {
         //分页
         PageHelper.startPage(page, size);
 

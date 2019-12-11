@@ -75,7 +75,7 @@ public interface BackgroundService {
      * @param order asc or desc
      * @return
      */
-    public PageDataGridResult getBackgroundImgByIsPublic(boolean ispublic,Integer page,Integer size,String field,String order);
+    public PageDataGridResult<BackgroundImgDo> getBackgroundImgByIsPublic(Boolean ispublic,Integer page,Integer size,String field,String order);
 
     /**
      * 根据pid增加背景图片使用次数

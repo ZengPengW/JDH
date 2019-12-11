@@ -142,19 +142,14 @@ public class BackgroundController {
             field=field.trim();
             order=order.trim();
 
-            if(!field.equals("1")&&!field.equals("2")){
+            if((!field.equals("1")&&!field.equals("2"))||(!order.equals("1")&&!order.equals("2"))){
                 field=null;
                 order=null;
             }else {
                 //1.根据上传时间排序 2.根据热度排序
                 if(field.equals("1"))field="up_date";
                 else field="use_count";
-            }
 
-            if(!order.equals("1")&&!order.equals("2")){
-                field=null;
-                order=null;
-            }else {
                 //1.asc 2.desc
                 if(order.equals("1"))order="asc";
                 else order="desc";

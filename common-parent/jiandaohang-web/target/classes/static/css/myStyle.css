@@ -694,3 +694,11 @@ hr {
     border:1px solid #cfec14;
 }
 
+/*上传者样式*/
+.up-user{
+    overflow: hidden;
+    white-space: nowrap;
+    width: 180px;
+    text-overflow: ellipsis;
+    text-align: center;
+}

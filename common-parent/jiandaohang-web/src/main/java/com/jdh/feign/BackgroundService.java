@@ -90,4 +90,7 @@ public interface BackgroundService {
     @GetMapping ("/bgImg/ispublic/{ispublic}")
     public PageDataGridResult getBackgroundImgByIsPublic(@PathVariable(name = "ispublic") Boolean ispublic,@RequestParam(required = false,name = "page") Integer page, @RequestParam(required = false,name = "size")Integer size, @RequestParam(required = false,name = "field")String field, @RequestParam(required = false,name = "order")String order);
 
-    }
+
+
+
+}

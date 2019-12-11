@@ -3,6 +3,22 @@ package com.jdh.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 背景图片 pojo
+ *
+ *
+
+ pidbigint(20) NOT NULL背景图片id
+ picvarchar(500) NULL背景图片地址
+ author_idint(11) NULL上传者id
+ expiretinyint(1) NULL是否到期
+ ispublictinyint(1) NULL是否共享
+ md5varchar(500) NULL文件md5值
+ thumbnailvarchar(500) NULL缩略图
+ up_datedatetime NULL上传时间
+ use_countbigint(20) NULL
+
+ */
 public class BackgroundImgDo implements Serializable {
     private Long pid; //图片id
     private String pic; //图片地址
@@ -14,6 +30,16 @@ public class BackgroundImgDo implements Serializable {
     private Date upDate; //上传时间
     private Long useCount; //使用次数
 
+    //可选参数
+    private String authorName;//上传者名称
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
 
     public Long getUseCount() {
         return useCount;

@@ -138,7 +138,8 @@ public class BackgroundController {
     public PageDataGridResult getBackgroundImgByIsPublic(@PathVariable(name = "ispublic") Boolean ispublic, @RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size, @RequestParam(required = false)String field, @RequestParam(required = false)String order) {
         if (size == null) size = 8;
         if (page == null || page == 0) page = 1;
-        if (ispublic == null) ispublic = true;
+        //if (ispublic == null) ispublic = true;
+        ispublic = true;
         return backgroundService.getBackgroundImgByIsPublic(ispublic, page, size,field,order);
     }
 }

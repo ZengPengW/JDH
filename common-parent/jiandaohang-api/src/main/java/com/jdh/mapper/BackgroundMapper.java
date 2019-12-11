@@ -8,6 +8,9 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 背景图片 和 背景信息共有mapper
+ */
 @Mapper
 public interface BackgroundMapper {
 
@@ -75,7 +78,11 @@ public interface BackgroundMapper {
 
     /**
      *根据是否公开查询背景图片 和 按时间 热度排序
-     * @param
+     * @param map
+     * map 参数如下：
+     * isPublic 是否公开的图片 必选
+     * order  key 字段名 val asc/desc 根据某字段排序 可选
+     *
      * @return
      */
     public List<BackgroundImgDo> getBackgroundImgByIsPublic(Map map);
