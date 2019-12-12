@@ -16,8 +16,10 @@ var ModalEffects = (function() {
 
 		[].slice.call( document.querySelectorAll( '.md-trigger' ) ).forEach( function( el, i ) {
 
-			var modal = document.querySelector( '#' + el.getAttribute( 'data-modal' ) ),
-				close = modal.querySelector( '.md-close' );
+			var modal = document.querySelector( '#' + el.getAttribute( 'data-modal' ) );
+            var close = null;
+			if(modal!==null)close = modal.querySelector( '.md-close' );
+
 
 			function removeModal( hasPerspective ) {
 				classie.remove( modal, 'md-show' );
@@ -43,10 +45,13 @@ var ModalEffects = (function() {
 				}
 			});
 
-			close.addEventListener( 'click', function( ev ) {
-				ev.stopPropagation();
-				removeModalHandler();
-			});
+			if(close!==null){
+                close.addEventListener( 'click', function( ev ) {
+                    ev.stopPropagation();
+                    removeModalHandler();
+                });
+            }
+
 
 		} );
 

@@ -1042,123 +1042,7 @@ $(function () {
         threeBtn(obj);
     }
 
-    //保存装饰
-    function savedeck(obj){
-        threeBtn(obj);
-        $(".zhezhao").css("visibility","visible");//显示遮罩
-        $(".my-load-div").show();//显示加载div
 
-        if($("#picFileUp").val().trim()!==""){
-            //console.log("保存背景图片成功");
-            var form = new FormData(document.getElementById("sctpform"));
-            form.append("isPublic",isPicPublic);
-            $.ajax({
-                url: "/bgImg/upload",
-                type: "post",
-                data: form,
-                cache:false,
-                processData: false,
-                contentType: false,
-                success: function(data) {
-                    if (data.status===1){
-                       // swal(data.msg,"","success");
-
-                        Swal.fire({
-                            title: data.msg,
-                            text: "",
-                            type: "success",
-                            confirmButtonColor:"#1aad19",
-                            allowOutsideClick: false,
-                            confirmButtonText: "确定"
-                    }).then((isConfirm) => {
-
-                            setTimeout(function () {
-                                window.location.reload();
-                            }, 100);
-
-                        });
-
-
-                    }else if(data.status===2) {
-                       // swal(data.msg,"","error");
-                        Swal.fire({
-                            title: data.msg,
-                            text: "",
-                            type: "error",
-                            confirmButtonColor:"#ad1d11",
-                            allowOutsideClick: false,
-                            confirmButtonText: "确定"
-                        }).then((isConfirm) => {
-                            setTimeout(function () {
-                                window.location.reload();
-                            }, 100);
-
-                        });
-                    }
-                   // console.log(data);
-                },
-                error: function(e) {
-                  //  swal("保存失败","服务器错误","error");
-                    Swal.fire({
-                        title: "保存失败:服务器错误",
-                        text: "",
-                        type: "error",
-                        confirmButtonColor:"#ad1d11",
-                        allowOutsideClick: false,
-                        confirmButtonText: "确定"
-                    }).then((isConfirm) => {
-                        setTimeout(function () {
-                            window.location.reload();
-                        }, 100);
-
-                    });
-                 //   console.log(e);
-                }
-            });
-            $("#picFileUp").val("");//置空防止重复提交
-        }else if(currBgImg!=null){
-            //此处通过MD5值保存图片背景 无需上传
-            $.post("/bgImg/change/md5/"+currBgImg,"",function (data) {
-                if (data.status===1){
-                    Swal.fire({
-                        title: data.msg,
-                        text: "",
-                        type: "success",
-                        confirmButtonColor:"#ad1d11",
-                        allowOutsideClick: false,
-                        confirmButtonText: "确定"
-                    }).then((isConfirm) => {
-                        setTimeout(function () {
-                            window.location.reload();
-                        }, 100);
-                       });
-                    }else if (data.status===2){
-                    Swal.fire({
-                        title: data.msg,
-                        text: "",
-                        type: "error",
-                        confirmButtonColor:"#ad1d11",
-                        allowOutsideClick: false,
-                        confirmButtonText: "确定"
-                    }).then((isConfirm) => {
-                        setTimeout(function () {
-                            window.location.reload();
-                        }, 100);
-
-                    });
-                }
-            },"json");
-
-        }else {
-            setTimeout(function () {
-                window.location.reload();
-            }, 100);
-        }
-
-
-
-
-    }
 
 </script>
 
@@ -1365,7 +1249,138 @@ $(function () {
     });
 </script>
 
+<!--保存装扮-->
 
+<!--保存弹窗 -->
+<a class="md-trigger" data-modal="saveAlert" style="display: none" >测试</a>
+<div class="md-modal md-effect-13" id="saveAlert">
+    <div class="md-content">
+        <h3 style="font-weight: bold">样式保存中···</h3>
+        <div>
+            <p  style="color: red;text-align: center; font-weight: 900; "></p>
+            <table id="saveContent" style="text-align: center;margin: 0 auto;">
+                <!--具体保存的内容-->
+
+
+<!--                <li><span class=" my_close_button" >确定!</span><span class="md-close my_close_button" style="display: none">Close!</span></li>-->
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript" th:inline ="javascript" th:if="${user.username!=null}">
+    //保存装饰
+    function savedeck(obj){
+        threeBtn(obj);
+     //   $(".zhezhao").css("visibility","visible");//显示遮罩
+     //   $(".my-load-div").show();//显示加载div
+
+      //  var isOPenSaveAlert=false;//是否打开弹窗
+        var taskCount=null;//任务个数
+        //打开弹窗
+        $("#saveAlert").addClass("md-show");
+
+
+        //----------------------保存背景图片----------------------------------------------
+        //上传的背景图不为空 就上传图片
+        if($("#picFileUp").val().trim()!==""){
+            if(taskCount===null)taskCount=1;
+            else taskCount+=1;
+            //没打开就打开
+         //   if(!isOPenSaveAlert){
+         //      $("#saveAlert").addClass("md-show");
+               $("#saveContent").append(" <tr><td><strong style='font-size: 20px'>保存背景图片:</strong></td><td> <span id='saveMessage1'><img src='/img/加载.svg'></span></td></tr>");
+           //     isOPenSaveAlert=true;
+          //  }
+
+            //console.log("保存背景图片成功");
+            var form = new FormData(document.getElementById("sctpform"));
+            form.append("isPublic",isPicPublic);
+            $.ajax({
+                url: "/bgImg/upload",
+                type: "post",
+                data: form,
+                cache:false,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    if (data.status===1){
+                        setTimeout(function () {
+                            $("#saveMessage1").addClass("label label-success");
+                            $("#saveMessage1").text(data.msg);
+                            taskCount-=1;
+
+                        },1500);
+                    }else if(data.status===2) {
+                        setTimeout(function () {
+                            $("#saveMessage1").addClass("label label-danger");
+                            $("#saveMessage1").text(data.msg);
+                            taskCount-=1;
+                        },1500);
+                    }
+
+                    // console.log(data);
+                },
+                error: function(e) {
+                    //  swal("保存失败","服务器错误","error");
+                    setTimeout(function () {
+                        $("#saveMessage1").addClass("label label-danger");
+                        $("#saveMessage1").text("服务器错误保存失败！！！");
+                        taskCount-=1;
+                    },1500);
+                    //   console.log(e);
+                }
+            });
+            $("#picFileUp").val("");//置空防止重复提交
+        }else if(currBgImg!=null){
+            if(taskCount===null)taskCount=1;
+            else taskCount+=1;
+            //没打开就打开
+           // if(!isOPenSaveAlert){
+           //     $("#saveAlert").addClass("md-show");
+                $("#saveContent").append(" <tr><td><strong style='font-size: 20px'>保存背景图片:</strong></td><td> <span id='saveMessage1'><img src='/img/加载.svg'></span></td></tr>");
+           //     isOPenSaveAlert=true;
+          //  }
+            //此处通过MD5值保存图片背景 无需上传
+            $.post("/bgImg/change/md5/"+currBgImg,"",function (data) {
+
+                if (data.status===1){
+                    setTimeout(function () {
+                        $("#saveMessage1").addClass("label label-success");
+                        $("#saveMessage1").text(data.msg);
+                        taskCount-=1;
+                    },1500);
+                }else if (data.status===2){
+                    setTimeout(function () {
+                        $("#saveMessage1").addClass("label label-danger");
+                        $("#saveMessage1").text(data.msg);
+                        taskCount-=1;
+                    },1500);
+                }
+            },"json");
+
+        }
+
+       var qd=setInterval(function () {
+        if(taskCount===null){
+            $("#saveContent").append("<tr><td colspan='2'><strong style='font-size: 20px;color: #03a9f4;'>无任何改动,无须保存！！！</strong></td></tr><tr><td colspan='2'><span class=' my_close_button' onclick='indexReLoad()' >确定</span></td></tr>");
+            clearInterval(qd);
+        }else if(taskCount===0) {
+            $("#saveContent").append("<tr><td colspan='2'><span class=' my_close_button' onclick='indexReLoad()' >确定</span></td></tr>");
+            clearInterval(qd);
+        }
+
+       },300);
+
+//----------------------保存背景图片----------------------------------------------
+
+
+
+    }
+</script>
 
 
 <!--装扮菜单-->
@@ -2344,12 +2359,13 @@ $(function () {
 </div>
 
 
+
 <!-- 弹窗 -->
-<div class="md-overlay" th:if="${user.username==null}"></div><!-- the overlay zhezhao -->
-<script src="/js/classie.js" th:if="${user.username==null}"></script>
-<script src="/js/modalEffects.js" th:if="${user.username==null}"></script>
-<script src="/js/cssParser.js" th:if="${user.username==null}"></script>
-<script src="/js/css-filters-polyfill.js" th:if="${user.username==null}"></script>
+<div class="md-overlay" ></div><!-- the overlay zhezhao -->
+<script src="/js/classie.js" ></script>
+<script src="/js/modalEffects.js" ></script>
+<script src="/js/cssParser.js" ></script>
+<!--<script src="/js/css-filters-polyfill.js" ></script>-->
 <script th:inline ="javascript" type="text/javascript" th:if="${user.username==null}">
     $("#password").focus(function () {
         $(this).attr("type","password");
@@ -2438,6 +2454,13 @@ $(function () {
        setTimeout(function () {
            window.location="/logout";
        },1000) ;
+    }
+    function  indexReLoad() {
+        $(".zhezhao").css("visibility","visible");
+        $(".my-load-div").show();
+        setTimeout(function () {
+            window.location.reload();
+        },1000) ;
     }
 </script>
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
