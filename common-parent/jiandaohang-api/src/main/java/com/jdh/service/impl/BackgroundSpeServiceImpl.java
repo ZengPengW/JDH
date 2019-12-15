@@ -43,4 +43,9 @@ public class BackgroundSpeServiceImpl implements BackgroundSpeService {
         dataGridResult.setHasPreviousPage(pageInfo.isHasPreviousPage());
         return dataGridResult;
     }
+
+    @Override
+    public BackgroundSpeDo getBackgroundSpeBySid(Long sid) {
+        return backgroundSpeMapper.getBackgroundSpeBySid(sid);
+    }
 }

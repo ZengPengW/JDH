@@ -1,5 +1,6 @@
 package com.jdh.mapper;
 
+import com.jdh.pojo.Background;
 import com.jdh.pojo.BackgroundSpeDo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -24,5 +25,12 @@ public interface BackgroundSpeMapper {
      */
     public List<BackgroundSpeDo> getBackgroundSpeByTransparent(Map map);
 
+
+    /**
+     * 根据sid查询背景特效
+     * @param sid
+     * @return
+     */
+    public BackgroundSpeDo getBackgroundSpeBySid(Long sid);
 
 }

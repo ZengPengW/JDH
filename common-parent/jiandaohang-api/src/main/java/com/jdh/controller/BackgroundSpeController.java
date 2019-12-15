@@ -32,4 +32,15 @@ public class BackgroundSpeController {
         return backgroundSpeService.getBackgroundSpeByTransparent(transparent, page, size, field, order);
     }
 
+
+
+    /**
+     * 根据sid查询背景特效
+     * @param sid
+     * @return
+     */
+    @GetMapping("/bgSpe/sid/{sid}")
+    public BackgroundSpeDo getBackgroundSpeBySid(@PathVariable Long sid){
+        return backgroundSpeService.getBackgroundSpeBySid(sid);
+    }
 }

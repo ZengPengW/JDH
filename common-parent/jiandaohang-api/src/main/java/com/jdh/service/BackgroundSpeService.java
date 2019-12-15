@@ -18,4 +18,11 @@ public interface BackgroundSpeService {
      * @return
      */
     public PageDataGridResult<BackgroundSpeDo> getBackgroundSpeByTransparent(Boolean transparent,Integer page,Integer size,String field,String order);
+
+    /**
+     * 根据sid查询背景特效
+     * @param sid
+     * @return
+     */
+    public BackgroundSpeDo getBackgroundSpeBySid(Long sid);
 }

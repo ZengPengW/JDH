@@ -383,7 +383,39 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 
                         <!--不透明背景特效-->
                         <div role="tabpanel" class="tab-pane fade" id="bjtx_btm">
+                            <span class="label label-warning">注:不透明背景特效，会遮住原有的背景图片!!!</span>
+                            <select id="btmtxOrder" class="form-control shubiao2" style="float: right;color: white;width: 15%;background-color: #252525;">
+                                <option value="0"  selected="selected">默认</option>
+                                <option  value="1" >最新</option>
+                                <option  value="2">最早</option>
+                                <option  value="3">按热度升序</option>
+                                <option  value="4">按热度降序</option>
+                            </select>
 
+                            <br>
+                            <ul class="row" style="margin-top: 10px">
+                                <!--透明背景特效列表-->
+                            </ul>
+
+                            <!--上一页 下一页-->
+                            <nav aria-label="...">
+                                <ul class="pager btmbjtxpager">
+                                    <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
+
+                                    <li class="next"><a href="#">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+                                </ul>
+                            </nav>
+
+                            <!--第几页-->
+                            <div class="pageIndexBtn row ">
+
+                            <span>
+                                第<input type="number" id="btmbjtxCurrPage"  value="0" style="width:41px ;color: black; border-radius: 4px;"/>
+                                /<span id="btmbjtxPageTotal">0</span>页
+                                <a  href="javascript:void(0)" style="text-decoration: none;" onclick="gotoBtmbjtxPage()"><span class="kongjianbnt" >GO!</span></a>
+                            </span>
+
+                            </div>
                         </div>
 
                     </div>
@@ -445,7 +477,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 <!--遮罩-->
 <div class="zhezhao" ></div>
 <!--背景特效-->
-<iframe id="iframe_bjtx"  src="/material/special/transparent/10001/不规则粒子特效.html"  name="iframe_a" frameborder="0" marginwidth="0px" scrolling="no" width="100%" height="110%" style="position: absolute; top: -10px; z-index: -999;">
+<iframe id="iframe_bjtx"  src="/material/special/transparent/10000/10000.html"  name="iframe_a" frameborder="0" marginwidth="0px" scrolling="no" width="100%" height="110%" style="position: absolute; top: -10px; z-index: -999;">
 
 </iframe>
 
@@ -899,7 +931,7 @@ $(function () {
 
         }
     });
-    function gotoTmbjtxPage() {
+    function gotoGxbjPage() {
 
         var page= $("#gxbjCurrPage").val();
         page=Math.floor(page);
@@ -1050,13 +1082,110 @@ $(function () {
 <!--背景特效-->
 <script type="text/javascript" th:inline ="javascript" th:if="${user.username!=null}">
     //初始化参数
-    var bgtxpath=[[${bgTx}]];
+    var bgtxpath=[[${bgSpe}]];
 
-    if(bgtxpath!==null&&bgtxpath.trim() !== "") $("#iframe_bjtx").attr("src",bgpath);
+    if(bgtxpath!==null&&bgtxpath.trim() !== "") $("#iframe_bjtx").attr("src",bgtxpath);
     var default_backgroundSpe=$("#iframe_bjtx").attr("src");//初始背景图
     var currBgSpe=null;//当前特效id
     var tmbjtxCurrPage=-1; //透明特效页码
     var tmbjtxPageTotal=-1;//透明特效总页数
+
+    var btmbjtxCurrPage=-1; //不透明特效页码
+    var btmbjtxPageTotal=-1;//不透明特效总页数
+
+    //tm排序加载
+    $("#tmtxOrder").change(function () {
+        //排序规则
+        var tmtxOrder=$("#tmtxOrder").val();
+        var requestPath="/bgSpe/transparent/true?";
+        if(tmtxOrder==="1"){
+            requestPath=requestPath+"field=1&order=2&";
+        }else if(tmtxOrder==="2"){
+            requestPath=requestPath+"field=1&order=1&";
+        }else if(tmtxOrder==="3"){
+            requestPath=requestPath+"field=2&order=1&";
+        }else if(tmtxOrder==="4"){
+            requestPath=requestPath+"field=2&order=2&";
+        }
+
+        $.get(requestPath+"page=1",function(data){
+            tmbjtxCurrPage=data.page;//获取当前页码
+            $("#tmbjtxCurrPage").val(tmbjtxCurrPage);
+
+            tmbjtxPageTotal=Math.ceil(data.total/8);//总页数
+            $("#tmbjtxPageTotal").text(tmbjtxPageTotal);
+
+            if(!data.hasNextPage){
+                $(".tmbjtxpager .next").hide();
+            }else {
+                $(".tmbjtxpager .next").show();
+            }
+            if(!data.hasPreviousPage){
+                $(".tmbjtxpager .previous").hide();
+            }else {
+                $(".tmbjtxpager .previous").show();
+            }
+            var imgul=$("#bjtx_tm").children("ul");
+            $(imgul).children("li").remove();
+            $.each(data.rows, function(index,c) {
+                if(currBgSpe!=null&&currBgSpe==c.sid){
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img sid='"+c.sid+"'  src='"+c.thumbnail+"' special='"+c.special+"' class='img-thumbnail min-img min-img-active' ><p class='up-user' >"+c.name+"</p></li>");
+                }else
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img sid='"+c.sid+"'  src='"+c.thumbnail+"' special='"+c.special+"' class='img-thumbnail min-img' ><p class='up-user' >"+c.name+"</p></li>");
+            });
+
+        },"json");
+
+
+
+    });
+
+    //btm排序加载
+    $("#btmtxOrder").change(function () {
+        //排序规则
+        var btmtxOrder=$("#btmtxOrder").val();
+        var requestPath="/bgSpe/transparent/false?";
+        if(btmtxOrder==="1"){
+            requestPath=requestPath+"field=1&order=2&";
+        }else if(btmtxOrder==="2"){
+            requestPath=requestPath+"field=1&order=1&";
+        }else if(btmtxOrder==="3"){
+            requestPath=requestPath+"field=2&order=1&";
+        }else if(btmtxOrder==="4"){
+            requestPath=requestPath+"field=2&order=2&";
+        }
+
+        $.get(requestPath+"page=1",function(data){
+            btmbjtxCurrPage=data.page;//获取当前页码
+            $("#btmbjtxCurrPage").val(btmbjtxCurrPage);
+
+            btmbjtxPageTotal=Math.ceil(data.total/8);//总页数
+            $("#btmbjtxPageTotal").text(btmbjtxPageTotal);
+
+            if(!data.hasNextPage){
+                $(".btmbjtxpager .next").hide();
+            }else {
+                $(".btmbjtxpager .next").show();
+            }
+            if(!data.hasPreviousPage){
+                $(".btmbjtxpager .previous").hide();
+            }else {
+                $(".btmbjtxpager .previous").show();
+            }
+            var imgul=$("#bjtx_btm").children("ul");
+            $(imgul).children("li").remove();
+            $.each(data.rows, function(index,c) {
+                if(currBgSpe!=null&&currBgSpe==c.sid){
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img sid='"+c.sid+"'  src='"+c.thumbnail+"' special='"+c.special+"' class='img-thumbnail min-img min-img-active' ><p class='up-user' >"+c.name+"</p></li>");
+                }else
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img sid='"+c.sid+"'  src='"+c.thumbnail+"' special='"+c.special+"' class='img-thumbnail min-img' ><p class='up-user' >"+c.name+"</p></li>");
+            });
+
+        },"json");
+
+
+
+    });
 
     //加载透明背景特效
     function load_bjtx_tm(obj){
@@ -1083,6 +1212,45 @@ $(function () {
                     $(".tmbjtxpager .previous").hide();
                 }else {
                     $(".tmbjtxpager .previous").show();
+                }
+                $.each(data.rows, function(index,c) {
+                    if(currBgSpe!=null&&currBgSpe==c.sid){
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img sid='"+c.sid+"'  src='"+c.thumbnail+"' special='"+c.special+"' class='img-thumbnail min-img min-img-active' ><p class='up-user' >"+c.name+"</p></li>");
+                    }else
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img sid='"+c.sid+"'  src='"+c.thumbnail+"' special='"+c.special+"' class='img-thumbnail min-img' ><p class='up-user' >"+c.name+"</p></li>");
+                });
+
+            },"json");
+
+
+        }
+
+    }
+
+    function load_bjtx_btm(obj){
+        var aTab= $(obj).children("a");
+        var aHref=$(aTab).attr("href");
+        var imgul=$(aHref).children("ul");
+        var liList=$(imgul).children("li");
+        //  console.log(liList.length);
+        if(liList.length===0){
+
+            $.get("/bgSpe/transparent/false?page=1",function(data){
+                btmbjtxCurrPage=data.page;//获取当前页码
+                $("#btmbjtxCurrPage").val(btmbjtxCurrPage);
+
+                btmbjtxPageTotal=Math.ceil(data.total/8);//总页数
+                $("#btmbjtxPageTotal").text(btmbjtxPageTotal);
+
+                if(!data.hasNextPage){
+                    $(".btmbjtxpager .next").hide();
+                }else {
+                    $(".btmbjtxpager .next").show();
+                }
+                if(!data.hasPreviousPage){
+                    $(".btmbjtxpager .previous").hide();
+                }else {
+                    $(".btmbjtxpager .previous").show();
                 }
                 $.each(data.rows, function(index,c) {
                     if(currBgSpe!=null&&currBgSpe==c.sid){
@@ -1128,6 +1296,93 @@ $(function () {
                 }
 
                 var imgul=$("#bjtx_tm").children("ul");
+                $(imgul).children("li").remove();
+                $.each(data.rows, function(index,c) {
+                    if(currBgSpe!=null&&currBgSpe==c.sid){
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img sid='"+c.sid+"'  src='"+c.thumbnail+"' special='"+c.special+"' class='img-thumbnail min-img min-img-active' ><p class='up-user' >"+c.name+"</p></li>");
+                    }else
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img sid='"+c.sid+"'  src='"+c.thumbnail+"' special='"+c.special+"' class='img-thumbnail min-img' ><p class='up-user' >"+c.name+"</p></li>");
+
+                });
+            },"json");
+
+        }
+    });
+
+    $(".btmbjtxpager .next").click(function () {
+        if(btmbjtxCurrPage+1<=btmbjtxPageTotal){
+            //排序规则
+            var btmtxOrder=$("#btmtxOrder").val();
+            var requestPath="/bgSpe/transparent/false?";
+            if(btmtxOrder==="1"){
+                requestPath=requestPath+"field=1&order=2&";
+            }else if(btmtxOrder==="2"){
+                requestPath=requestPath+"field=1&order=1&";
+            }else if(btmtxOrder==="3"){
+                requestPath=requestPath+"field=2&order=1&";
+            }else if(btmtxOrder==="4"){
+                requestPath=requestPath+"field=2&order=2&";
+            }
+
+            $.get(requestPath+"page="+(btmbjtxCurrPage+1),function(data){
+                btmbjtxCurrPage=data.page;//获取当前页码
+                $("#btmbjtxCurrPage").val(btmbjtxCurrPage);
+                if(!data.hasNextPage){
+                    $(".btmbjtxpager .next").hide();
+                }else {
+                    $(".btmbjtxpager .next").show();
+                }
+                if(!data.hasPreviousPage){
+                    $(".btmbjtxpager .previous").hide();
+                }else {
+                    $(".btmbjtxpager .previous").show();
+                }
+
+                var imgul=$("#bjtx_btm").children("ul");
+                $(imgul).children("li").remove();
+                $.each(data.rows, function(index,c) {
+                    if(currBgSpe!=null&&currBgSpe==c.sid){
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img sid='"+c.sid+"'  src='"+c.thumbnail+"' special='"+c.special+"' class='img-thumbnail min-img min-img-active' ><p class='up-user' >"+c.name+"</p></li>");
+                    }else
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img sid='"+c.sid+"'  src='"+c.thumbnail+"' special='"+c.special+"' class='img-thumbnail min-img' ><p class='up-user' >"+c.name+"</p></li>");
+
+                });
+            },"json");
+
+        }
+    });
+
+
+    $(".btmbjtxpager .previous").click(function () {
+        if(btmbjtxCurrPage-1>0){
+            //排序规则
+            var btmtxOrder=$("#btmtxOrder").val();
+            var requestPath="/bgSpe/transparent/false?";
+            if(btmtxOrder==="1"){
+                requestPath=requestPath+"field=1&order=2&";
+            }else if(btmtxOrder==="2"){
+                requestPath=requestPath+"field=1&order=1&";
+            }else if(btmtxOrder==="3"){
+                requestPath=requestPath+"field=2&order=1&";
+            }else if(btmtxOrder==="4"){
+                requestPath=requestPath+"field=2&order=2&";
+            }
+
+            $.get(requestPath+"page="+(btmbjtxCurrPage-1),function(data){
+                btmbjtxCurrPage=data.page;//获取当前页码
+                $("#btmbjtxCurrPage").val(btmbjtxCurrPage);
+                if(!data.hasNextPage){
+                    $(".btmbjtxpager .next").hide();
+                }else {
+                    $(".btmbjtxpager .next").show();
+                }
+                if(!data.hasPreviousPage){
+                    $(".btmbjtxpager .previous").hide();
+                }else {
+                    $(".btmbjtxpager .previous").show();
+                }
+
+                var imgul=$("#bjtx_btm").children("ul");
                 $(imgul).children("li").remove();
                 $.each(data.rows, function(index,c) {
                     if(currBgSpe!=null&&currBgSpe==c.sid){
@@ -1230,12 +1485,98 @@ $(function () {
 
     }
 
+    function gotoBtmbjtxPage() {
+
+        var page= $("#btmbjtxCurrPage").val();
+        page=Math.floor(page);
+
+        if (page===btmbjtxCurrPage||page<1||page>btmbjtxPageTotal)return;
+        //排序规则
+        var btmtxOrder=$("#btmtxOrder").val();
+        var requestPath="/bgSpe/transparent/false?";
+        if(btmtxOrder==="1"){
+            requestPath=requestPath+"field=1&order=2&";
+        }else if(btmtxOrder==="2"){
+            requestPath=requestPath+"field=1&order=1&";
+        }else if(btmtxOrder==="3"){
+            requestPath=requestPath+"field=2&order=1&";
+        }else if(btmtxOrder==="4"){
+            requestPath=requestPath+"field=2&order=2&";
+        }
+        $.get(requestPath+"page="+page,function(data){
+            btmbjtxCurrPage=data.page;//获取当前页码
+            $("#btmbjtxCurrPage").val(tmbjtxCurrPage);
+            if(!data.hasNextPage){
+                $(".btmbjtxpager .next").hide();
+            }else {
+                $(".btmbjtxpager .next").show();
+            }
+            if(!data.hasPreviousPage){
+                $(".btmbjtxpager .previous").hide();
+            }else {
+                $(".btmbjtxpager .previous").show();
+            }
+
+            var imgul=$("#bjtx_btm").children("ul");
+            $(imgul).children("li").remove();
+            $.each(data.rows, function(index,c) {
+                if(currBgSpe!=null&&currBgSpe==c.sid){
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img sid='"+c.sid+"'  src='"+c.thumbnail+"' special='"+c.special+"' class='img-thumbnail min-img min-img-active' ><p class='up-user' >"+c.name+"</p></li>");
+                }else
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img sid='"+c.sid+"'  src='"+c.thumbnail+"' special='"+c.special+"' class='img-thumbnail min-img' ><p class='up-user' >"+c.name+"</p></li>");
+
+            });
+        },"json");
+
+
+    }
+
+    //排序加载
+    $("#gxbjOrder").change(function () {
+        //排序规则
+        var gxbjOrder=$("#gxbjOrder").val();
+        var requestPath="/bgImg/ispublic/true?";
+        if(gxbjOrder==="1"){
+            requestPath=requestPath+"field=1&order=2&";
+        }else if(gxbjOrder==="2"){
+            requestPath=requestPath+"field=1&order=1&";
+        }else if(gxbjOrder==="3"){
+            requestPath=requestPath+"field=2&order=1&";
+        }else if(gxbjOrder==="4"){
+            requestPath=requestPath+"field=2&order=2&";
+        }
+        $.get(requestPath+"page=1",function(data){
+            gxbjpageNumb=data.page;//获取当前页码
+            $("#gxbjCurrPage").val(gxbjpageNumb);
+            if(!data.hasNextPage){
+                $(".gxbjpager .next").hide();
+            }else {
+                $(".gxbjpager .next").show();
+            }
+            if(!data.hasPreviousPage){
+                $(".gxbjpager .previous").hide();
+            }else {
+                $(".gxbjpager .previous").show();
+            }
+
+            var imgul=$("#gxbj").children("ul");
+            $(imgul).children("li").remove();
+            $.each(data.rows, function(index,c) {
+                if(currBgImg!=null&&currBgImg==c.md5){
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img min-img-active' ><p class='up-user' >上传者："+c.authorName+"</p></li>");
+                }else
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img' ><p class='up-user' >上传者："+c.authorName+"</p></li>");
+
+            });
+        },"json");
+
+    });
     //鼠标移入
-    $("#bjtx_tm").on("mouseenter",".min-img",function(){
+    $("#bjtx_tm,#bjtx_btm").on("mouseenter",".min-img",function(){
         $(this).addClass("min-img-active");
     });
     //鼠标移出
-    $("#bjtx_tm").on("mouseleave",".min-img",function(){
+    $("#bjtx_tm,#bjtx_btm").on("mouseleave",".min-img",function(){
         if(currBgSpe==null||currBgSpe!==$(this).attr("sid"))
             $(this).removeClass("min-img-active");
     });
@@ -1243,9 +1584,40 @@ $(function () {
     $("#bjtx_tm").on("click",".min-img",function (event) {
         $("#bjtx_tm .min-img").removeClass("min-img-active");
         $(this).addClass("min-img-active");
-        currBgSpe=$(this).attr("sid");//获取选中的md5
+        currBgSpe=$(this).attr("sid");//获取选中的sid
         var path=$(this).attr("special");
         $("#iframe_bjtx").attr("src",path);
+
+        //把不透明的选中更新
+        $("#bjtx_btm .min-img").removeClass("min-img-active");
+        var btmMinImg= $("#bjtx_btm .min-img");
+        if(btmMinImg.length>0){
+            $.each(btmMinImg,function (index,c) {
+                if($(c).attr("sid")===currBgSpe){
+                    $(c).addClass("min-img-active");
+                }
+            });
+        }
+    });
+
+    $("#bjtx_btm").on("click",".min-img",function (event) {
+        $("#bjtx_btm .min-img").removeClass("min-img-active");
+        $(this).addClass("min-img-active");
+        currBgSpe=$(this).attr("sid");//获取选中的sid
+        var path=$(this).attr("special");
+        $("#iframe_bjtx").attr("src",path);
+
+
+        //把透明的选中更新
+        $("#bjtx_tm .min-img").removeClass("min-img-active");
+        var tmMinImg= $("#bjtx_tm .min-img");
+        if(tmMinImg.length>0){
+            $.each(tmMinImg,function (index,c) {
+                if($(c).attr("sid")===currBgSpe){
+                    $(c).addClass("min-img-active");
+                }
+            });
+        }
     });
 </script>
 
@@ -1255,7 +1627,7 @@ $(function () {
 <a class="md-trigger" data-modal="saveAlert" style="display: none" >测试</a>
 <div class="md-modal md-effect-13" id="saveAlert">
     <div class="md-content">
-        <h3 style="font-weight: bold">样式保存中···</h3>
+        <h3 style="font-weight: bold;color: cyan;">样式保存中......请勿刷新！！！</h3>
         <div>
             <p  style="color: red;text-align: center; font-weight: 900; "></p>
             <table id="saveContent" style="text-align: center;margin: 0 auto;">
@@ -1270,7 +1642,7 @@ $(function () {
 </div>
 
 
-
+<!--保存 -->
 <script type="text/javascript" th:inline ="javascript" th:if="${user.username!=null}">
     //保存装饰
     function savedeck(obj){
@@ -1283,8 +1655,8 @@ $(function () {
         //打开弹窗
         $("#saveAlert").addClass("md-show");
 
-
-        //----------------------保存背景图片----------------------------------------------
+        $.ajaxSettings.async = false;//同步请求
+//----------------------保存背景图片----------------------------------------------
         //上传的背景图不为空 就上传图片
         if($("#picFileUp").val().trim()!==""){
             if(taskCount===null)taskCount=1;
@@ -1360,10 +1732,52 @@ $(function () {
                         taskCount-=1;
                     },1500);
                 }
-            },"json");
+            },"json").error(function () {
+                setTimeout(function () {
+                    $("#saveMessage1").addClass("label label-danger");
+                    $("#saveMessage1").text("操作失败,服务器错误!");
+                    taskCount-=1;
+                },1500);
+            });;
 
         }
+//----------------------保存背景图片----------------------------------------------
 
+//----------------------保存背景特效----------------------------------------------
+        if(currBgSpe!==null){
+            if(taskCount===null)taskCount=1;
+            else taskCount+=1;
+
+            $("#saveContent").append(" <tr><td><strong style='font-size: 20px'>保存背景特效:</strong></td><td> <span id='saveMessage2'><img src='/img/加载.svg'></span></td></tr>");
+
+            $.post("/bgSpe/change/"+currBgSpe,"",function (data) {
+
+                if (data.status===1){
+                    setTimeout(function () {
+                        $("#saveMessage2").addClass("label label-success");
+                        $("#saveMessage2").text(data.msg);
+                        taskCount-=1;
+                    },1500);
+                }else if (data.status===2){
+                    setTimeout(function () {
+                        $("#saveMessage2").addClass("label label-danger");
+                        $("#saveMessage2").text(data.msg);
+                        taskCount-=1;
+                    },1500);
+                }
+            },"json").error(function () {
+                setTimeout(function () {
+                    $("#saveMessage2").addClass("label label-danger");
+                    $("#saveMessage2").text("操作失败,服务器错误!");
+                    taskCount-=1;
+                },1500);
+            });
+        }
+
+
+//----------------------保存背景特效----------------------------------------------
+        $.ajaxSettings.async = true;//变回异步
+        //确定跳转
        var qd=setInterval(function () {
         if(taskCount===null){
             $("#saveContent").append("<tr><td colspan='2'><strong style='font-size: 20px;color: #03a9f4;'>无任何改动,无须保存！！！</strong></td></tr><tr><td colspan='2'><span class=' my_close_button' onclick='indexReLoad()' >确定</span></td></tr>");
@@ -1375,7 +1789,7 @@ $(function () {
 
        },300);
 
-//----------------------保存背景图片----------------------------------------------
+
 
 
 

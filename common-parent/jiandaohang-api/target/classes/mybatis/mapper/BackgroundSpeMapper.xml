@@ -14,5 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </if>
 
 </select>
-
+<select id="getBackgroundSpeBySid" parameterType="long" resultType="com.jdh.pojo.BackgroundSpeDo" >
+    select * from `background_spe` where `sid`=#{sid}
+</select>
 </mapper>

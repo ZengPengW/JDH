@@ -22,4 +22,11 @@ public interface BackgroundSpeService {
     @GetMapping("/bgSpe/transparent/{transparent}")
     public PageDataGridResult<BackgroundSpeDo> getBackgroundSpeByTransparent(@PathVariable(name = "transparent") Boolean transparent, @RequestParam(required = false,name = "page") Integer page, @RequestParam(required = false,name = "size")Integer size, @RequestParam(required = false,name = "field")String field, @RequestParam(required = false,name = "order")String order);
 
+    /**
+     * 根据sid查询背景特效
+     * @param sid
+     * @return
+     */
+    @GetMapping("/bgSpe/sid/{sid}")
+    public BackgroundSpeDo getBackgroundSpeBySid(@PathVariable(name = "sid") Long sid);
 }
