@@ -292,6 +292,10 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                             <br />
 
                             <a  href="javascript:void(0)" style="text-decoration: none;" ><div class="kongjianbnt" onclick="rollback_background(this)">还原</div></a>
+                            <a  href="javascript:void(0)" style="text-decoration: none; width: 131px;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;" >
+                                <div class="kongjianbnt" style="width: 131px;" onclick="biying_background(this)">使用每日必应图</div>
+                            </a>
+
                             <div >是否公开此图供其他用户使用:
                                 <input type="checkbox" id="flex-3">
                                 <label for="flex-3" class="green" style="margin-bottom: -4px;" id="isPublic" ></label>
@@ -346,6 +350,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 
                         <!--透明背景特效-->
                         <div role="tabpanel" class="tab-pane fade" id="bjtx_tm">
+                            <span class="label label-warning">注:所有特效均来源于网络,如站长之家等，侵删！</span>
                             <select id="tmtxOrder" class="form-control shubiao2" style="float: right;color: white;width: 15%;background-color: #252525;">
                                 <option value="0"  selected="selected">默认</option>
                                 <option  value="1" >最新</option>
@@ -483,10 +488,23 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 
 <!--********************************************************************-->
 <!--背景图片-->
-<script th:inline ="javascript" type="text/javascript">
-    var bgpath=[[${bgImg}]];
+<script th:inline ="javascript" type="text/javascript" >
+    var bgpath=[[${bgImg}]]; //背景图片
     // console.log(bgpath!=null);
-    if(bgpath!==null&&bgpath.trim() !== "") $("body").css("background-image","url('"+bgpath+"')");
+    var bgtxpath=[[${bgSpe.special}]]; //背景特效
+    var isTransparent=[[${bgSpe.transparent}]];
+
+    if(bgtxpath!==null&&bgtxpath.trim() !== "") $("#iframe_bjtx").attr("src",bgtxpath);
+    //&&(bgtxpath===null||bgtxpath.trim()===""||isTransparent===true)
+
+    if((bgtxpath===null||bgtxpath.trim()===""||isTransparent===true)){
+        if(bgpath!==null&&bgpath.trim() !== "") $("body").css("background-image","url('"+bgpath+"')");
+    }else {
+        setTimeout(function () {
+            if(bgpath!==null&&bgpath.trim() !== "") $("body").css("background-image","url('"+bgpath+"')");
+        },2000);
+    }
+
     var default_background=$("body").css("background-image");//初始背景图
     var currBgImg=null;//当前背景图md5
 </script>
@@ -1074,7 +1092,32 @@ $(function () {
         threeBtn(obj);
     }
 
+    //采用必应图
+    function biying_background(obj) {
+        $.get("/bgImg/biying",function (data) {
+            if(data.msg==="1"){
+                currBgImg="biying";
+                $("body").css("background-image","url('"+data.data+"')");
+                //console.log(data.data);
+                //把我的上传背景图选择删除
+                $("#wdsc .min-img").removeClass("min-img-active");
+                //把共享背景的选中更新
+                $("#gxbj .min-img").removeClass("min-img-active");
+                //清空上传背景图表单
+                if ($("#picFileUp").val().trim()!==""){
+                    $("#picFileUp").val("");
+                    $("#picUp").prop("src", "img/上传图片.png");
+                }
 
+                Swal.fire("设置成功,保存后生效!!!","","success");
+            }else {
+                Swal.fire("服务器错误,设置失败!!!","请稍后再试！！！","error");
+            }
+        }).error(function () {
+            Swal.fire("服务器错误,设置失败!!!","请稍后再试！！！","error");
+        });
+        threeBtn(obj);
+    }
 
 </script>
 
@@ -1082,9 +1125,9 @@ $(function () {
 <!--背景特效-->
 <script type="text/javascript" th:inline ="javascript" th:if="${user.username!=null}">
     //初始化参数
-    var bgtxpath=[[${bgSpe}]];
+   // var bgtxpath=[[${bgSpe.special}]];
 
-    if(bgtxpath!==null&&bgtxpath.trim() !== "") $("#iframe_bjtx").attr("src",bgtxpath);
+   // if(bgtxpath!==null&&bgtxpath.trim() !== "") $("#iframe_bjtx").attr("src",bgtxpath);
     var default_backgroundSpe=$("#iframe_bjtx").attr("src");//初始背景图
     var currBgSpe=null;//当前特效id
     var tmbjtxCurrPage=-1; //透明特效页码

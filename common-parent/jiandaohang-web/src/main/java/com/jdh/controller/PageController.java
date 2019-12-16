@@ -51,7 +51,7 @@ public class PageController {
         if (principal instanceof UserDetails) { //存在当前用户
             //获取用户
             MyUser userDetails = (MyUser) principal;
-            String username = userDetails.getUsername();
+           // String username = userDetails.getUsername();
             model.addAttribute("user", userDetails);
 
             //获取背景信息
@@ -63,7 +63,7 @@ public class PageController {
                 bgImg = backgroundService.getUserBackgroundImgByPid(background.getPid());
 
             //如果用户无背景图 就调用bing背景图
-            if (bgImg == null) {
+            if (bgImg == null||bgImg.getPic()==null||bgImg.getPic().trim().length()==0) {
 
                 model.addAttribute("bgImg", bingBgImgBean.getImgPath());
 
@@ -80,9 +80,10 @@ public class PageController {
 
             //如果有特效 就用 无就不用
             if (bgSpe != null) {
-
-                model.addAttribute("bgSpe", bgSpe.getSpecial());
-
+                model.addAttribute("bgSpe", bgSpe);
+            }else {
+                bgSpe=new BackgroundSpeDo();//空参数的背景特效
+                model.addAttribute("bgSpe", bgSpe);
             }
             //****************************背景特效******************************************************
 
@@ -91,6 +92,8 @@ public class PageController {
 
         } else { //不存在用户 用bing图片
             MyUser userDetails=new MyUser();
+            BackgroundSpeDo   bgSpe=new BackgroundSpeDo();//空参数的背景特效
+            model.addAttribute("bgSpe", bgSpe);
             model.addAttribute("user", userDetails);
             model.addAttribute("bgImg", bingBgImgBean.getImgPath());
         }

@@ -4,10 +4,7 @@ import com.jdh.feign.BackgroundService;
 import com.jdh.pojo.Background;
 import com.jdh.pojo.BackgroundImgDo;
 import com.jdh.pojo.MyUser;
-import com.jdh.utils.FileUtil;
-import com.jdh.utils.JdhResult;
-import com.jdh.utils.PageDataGridResult;
-import com.jdh.utils.UserContext;
+import com.jdh.utils.*;
 import jdk.nashorn.internal.scripts.JD;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +18,9 @@ public class BackgroundController {
 
     @Autowired
     private BackgroundService backgroundService;
+
+    @Autowired
+    private BingBgImgBean bingBgImgBean;
 
     @Value("${myparameter.uploadPath}")
     public String materialPath;//d:/zp/material/
@@ -45,26 +45,45 @@ public class BackgroundController {
     public JdhResult changeUserBackgroundImgByMd5(@PathVariable(name = "md5",required = true) String md5){
 
         try {
-            List<BackgroundImgDo> imgByMd5 = backgroundService.getBackgroundImgByMd5(md5);
-            //如果有此图 就设置
-            if (imgByMd5!=null&&imgByMd5.size()>0){
+            if(md5.equals("biying")){
                 MyUser user=UserContext.getCurrUser();
-                BackgroundImgDo backgroundImgDo = imgByMd5.get(0);
                 Background background = backgroundService.getUserBackgroundById(user.getId());
                 //用户无背景 就添加
                 if(background==null){
                     background=new Background();
-                    background.setPid(backgroundImgDo.getPid());
+                    background.setPid(null);
                     background.setUid(user.getId());
                     backgroundService.saveBackground(background);
                 } else { //用户有背景 就更新
-                    background.setPid(backgroundImgDo.getPid());
+                    background.setPid(null);
                     backgroundService.updateBackground(background);
                 }
-              return JdhResult.success("背景图片:修改成功!");
+
+                return JdhResult.success("背景图片:修改成功!");
             }else {
-              return  JdhResult.fail("无此背景图: 背景图片设置失败！");
+                List<BackgroundImgDo> imgByMd5 = backgroundService.getBackgroundImgByMd5(md5);
+                //如果有此图 就设置
+                if (imgByMd5!=null&&imgByMd5.size()>0){
+                    MyUser user=UserContext.getCurrUser();
+                    BackgroundImgDo backgroundImgDo = imgByMd5.get(0);
+                    Background background = backgroundService.getUserBackgroundById(user.getId());
+                    //用户无背景 就添加
+                    if(background==null){
+                        background=new Background();
+                        background.setPid(backgroundImgDo.getPid());
+                        background.setUid(user.getId());
+                        backgroundService.saveBackground(background);
+                    } else { //用户有背景 就更新
+                        background.setPid(backgroundImgDo.getPid());
+                        backgroundService.updateBackground(background);
+                    }
+                    return JdhResult.success("背景图片:修改成功!");
+                }else {
+                    return  JdhResult.fail("无此背景图: 背景图片设置失败！");
+                }
             }
+
+
         }catch (Exception e){
             e.printStackTrace();
             return  JdhResult.fail("服务器错误: 背景图片设置失败！");
@@ -159,6 +178,17 @@ public class BackgroundController {
 
 
         return backgroundService.getBackgroundImgByIsPublic(ispublic,page,size,field,order);
+    }
+
+
+    @GetMapping("/bgImg/biying")
+    public JdhResult getBiYingBgImg(){
+        try {
+            return JdhResult.success("1",bingBgImgBean.getImgPath());
+        }catch (Exception e){
+            return JdhResult.fail("2");
+        }
+
     }
 
 

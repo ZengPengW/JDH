@@ -25,6 +25,13 @@ public class BackgroundSpeDo implements Serializable {
     private String name; //特效名称
     private boolean transparent;//是否透明
 
+    public boolean isTransparent() {
+        return transparent;
+    }
+
+    public void setTransparent(boolean transparent) {
+        this.transparent = transparent;
+    }
 
     public Long getSid() {
         return sid;
