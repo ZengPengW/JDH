@@ -23,6 +23,8 @@
     <link rel="stylesheet" type="text/css" href="/css/default.css" />
     <link rel="stylesheet" type="text/css" href="/css/component.css" />
     <link rel="stylesheet" type="text/css" href="/css/sweetalert2.css" />
+    <!--取色器-->
+    <link rel="stylesheet" type="text/css" href="/css/colorpicker.css" />
 
 <style type="text/css" th:inline="css">
 a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search-menu-info li{
@@ -427,8 +429,60 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 
                 </div>
 
+                <!--搜索框样式-->
+                <div role="tabpanel" class="tab-pane fade" id="sskys">
+                    <!--描述：搜索框样式-->
+                    <!--搜索框颜色-->
+                    <table style="margin: 0 auto; line-height: 40px;">
+                        <tr>
+                            <td style="font-size: 17px;font-weight: bold;">搜索框默认颜色:</td>
+                            <td><div id="sousuobgcolor"><div style="background-color: #0000ff;"></div></div></td>
+                        </tr>
+                        <tr>
+                            <td style="font-size: 17px;font-weight: bold;">输入时边框变色:</td>
+                            <td><select id="sousuoIsChange" style="background-color: black;border-radius: 3px;">
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select></td>
+                        </tr>
 
-                <div role="tabpanel" class="tab-pane fade" id="sskys">sskysadsssssssssssss</div>
+                        <tr >
+                            <td style="font-size: 17px;font-weight: bold;">搜索框字体颜色:</td>
+                            <td><div id="sousuofontcolor"><div style="background-color: #0000ff;"></div></div></td>
+                        </tr>
+
+                        <tr>
+                            <td style="font-size: 17px;font-weight: bold;">输入时字体变色:</td>
+                            <td><select id="sousuofontIsChange" style="background-color: black;border-radius: 3px;">
+                                <option value="1">是</option>
+                                <option value="0">否</option>
+                            </select></td>
+                        </tr>
+                    </table>
+                    <br /><br />
+
+                    <div class="row">
+                        <div class="col-lg-2 col-md-2 col-xs-2"></div>
+                        <div class="col-lg-8 col-md-8 col-xs-8 " style="" >
+                            <div class="row " id="sousuoChangeView"  style="height: 50px; border-radius: 33px 33px 33px 33px; box-shadow:1px 0px 0px 5px rgba(0, 0, 0, 01), 1px 1px 20px 6px rgba(0, 0, 0, 01); background-color: rgba(0, 0, 0, 0.09); ">
+                                <div class="col-lg-1 col-md-1 col-xs-1 shubiao2" style=" width: 6%; height: 50px; padding:0; padding-left: 10px; margin-top: 10px; text-align: center; "  >
+                                    <a href="javascript:void(0)" style="width: 40px; height: 40px; " >
+                                        <img  width="30px" height="30px" src="/material/img/search/icon_百度logo.png"  />
+                                    </a>
+                                </div>
+                                <div class="col-lg-10 col-md-10 col-xs-10 ">
+                                    <input type="text" class="form-control sousuo" placeholder="搜索框样式编辑预览"  oninput="oninputchange()"  style=" text-align:center"></input>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <br /><br />
+
+                </div>
+
                 <div role="tabpanel" class="tab-pane fade" id="settings">
                     adssssssssssssssssss<br />
                     adssssssssssssssssss<br />
@@ -448,7 +502,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 </div>
 
 
-<!--加载-->
+<!--加载svg-->
 <div class="my-load-div" >
     <!--<span class="whirly-loader">Loading…</span>	-->
     <div class="scene">
@@ -487,6 +541,80 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 </iframe>
 
 <!--********************************************************************-->
+<!--搜索框样式-->
+<script th:inline ="javascript" type="text/javascript" th:if="${user.username!=null}">
+    var sousuoIsChange=null; //搜索框是否变色
+    var sousuobgcolor=null;  //搜索框颜色
+    var sousuofontcolor=null;//字体颜色
+    var sousuofontIsChange=null;//字体是否变色
+
+    var defaultsousuobgcolor="#ff0000";//默认搜索框颜色
+    var defaultIsChange=1;//默认边框是否变色
+
+    var defaultsousuofontcolor="#000000";//默认字体颜色
+    var defaultsousuofontIsChange=1;//字体是否变色
+
+    sousuoIsChange=defaultIsChange;
+    sousuofontIsChange=defaultsousuofontIsChange;
+    // if(defaultsousuobgcolor!==null&&defaultsousuobgcolor.trim().length>0){
+    //     $("#sousuoChangeView,#sousuobox").css("box-shadow","1px 0px 0px 5px "+defaultsousuobgcolor+", 1px 1px 20px 6px "+defaultsousuobgcolor);
+    //     $('#sousuobgcolor div').css('backgroundColor',defaultsousuobgcolor );
+    // }
+    $(function(){
+        //搜索框取色
+        $('#sousuobgcolor').ColorPicker({
+            color: defaultsousuobgcolor,
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#sousuobgcolor div').css('backgroundColor', '#' + hex);
+                sousuobgcolor='#'+hex;//记录选择的颜色
+
+               // box-shadow:1px 0px 0px 5px rgba(0, 0, 0, 01), 1px 1px 20px 6px rgba(0, 0, 0, 01);
+                $("#sousuoChangeView,#sousuobox").css("box-shadow","1px 0px 0px 5px "+sousuobgcolor+", 1px 1px 20px 6px "+sousuobgcolor);
+            }
+        });
+        //边框是否变色
+        $("#sousuoIsChange").change(function () {
+         //   console.log($(this).val());
+            sousuoIsChange=parseInt($(this).val());// 1 yes , 0 no
+        });
+
+
+        //搜索框字体取色
+        $('#sousuofontcolor').ColorPicker({
+            color: defaultsousuofontcolor,
+            onShow: function (colpkr) {
+                $(colpkr).fadeIn(500);
+                return false;
+            },
+            onHide: function (colpkr) {
+                $(colpkr).fadeOut(500);
+                return false;
+            },
+            onChange: function (hsb, hex, rgb) {
+                $('#sousuofontcolor div').css('backgroundColor', '#' + hex);
+                sousuofontcolor='#' + hex;
+            }
+        });
+        //边框是否变色
+        $("#sousuofontIsChange").change(function () {
+         //   console.log($(this).val());
+            sousuofontIsChange=parseInt($(this).val());// 1 yes , 0 no
+        });
+
+
+    });
+
+</script>
+
+
 <!--背景图片-->
 <script th:inline ="javascript" type="text/javascript" >
     var bgpath=[[${bgImg}]]; //背景图片
@@ -2166,20 +2294,72 @@ $(function () {
         threeBtn($(this));
     });
 </script>
+
+<!--搜索框初始化样式-->
+<script  type="text/javascript" th:inline ="javascript" th:if="${user.username!=null}">
+    //边框
+    if(defaultsousuobgcolor!==null&&defaultsousuobgcolor.trim().length>0){
+        $("#sousuoChangeView,#sousuobox").css("box-shadow","1px 0px 0px 5px "+defaultsousuobgcolor+", 1px 1px 20px 6px "+defaultsousuobgcolor);
+        $('#sousuobgcolor div').css('backgroundColor',defaultsousuobgcolor );
+    }
+    //字体
+    if(defaultsousuofontcolor!=null&&defaultsousuofontcolor.trim().length>0){
+        $(".sousuo").css("color",defaultsousuofontcolor);
+    }
+</script>
 <script type="text/javascript" th:inline ="javascript">
 
     /*************************搜索框输入值改变颜色*********************/
+
     function oninputchange(){
+
+       // sousuofontIsChange
+        //如果没有默认就是黑色
+        if(typeof defaultsousuobgcolor=="undefined"){
+            defaultsousuobgcolor="rgba(0,0,0, 1)";
+        }
+        //如果没有默认就是黑色
+        if(typeof defaultsousuofontcolor=="undefined"){
+            defaultsousuofontcolor="rgba(0,0,0, 1)";
+        }
+
+        //回溯
         if($("#Jsosuo").val().trim().length<=0){
-            $("#sousuobox").css("box-shadow", "1px 0px 0px 5px rgba(0,0,0, 1), 1px 1px 20px 6px rgba(0,0,0, 1)");
-            $(".sousuo").css("color","black");
+            $("#sousuobox,#sousuoChangeView").css("box-shadow", "1px 0px 0px 5px "+defaultsousuobgcolor+", 1px 1px 20px 6px "+defaultsousuobgcolor);
+
+            $(".sousuo").css("color",defaultsousuofontcolor);
             return;
         }
-        var r = Math.floor(Math.random() * 256);
-        var b = Math.floor(Math.random() * 256);
-        var g = Math.floor(Math.random() * 256);
-        $("#sousuobox").css("box-shadow", "1px 0px 0px 5px rgba(" + r + ", " + b + ", " + g + ", 1), 1px 1px 20px 6px rgba(" + r + ", " + b + ", " + g + ", 1)");
-        $(".sousuo").css("color","rgba(" + r + ", " + b + ", " + g + ", 1)");
+        //边框
+        if(typeof sousuoIsChange!="undefined"){
+            if(sousuoIsChange===0)return;
+            var r = Math.floor(Math.random() * 256);
+            var b = Math.floor(Math.random() * 256);
+            var g = Math.floor(Math.random() * 256);
+            $("#sousuobox,#sousuoChangeView").css("box-shadow", "1px 0px 0px 5px rgba(" + r + ", " + b + ", " + g + ", 1), 1px 1px 20px 6px rgba(" + r + ", " + b + ", " + g + ", 1)");
+        }else {
+            var r = Math.floor(Math.random() * 256);
+            var b = Math.floor(Math.random() * 256);
+            var g = Math.floor(Math.random() * 256);
+            $("#sousuobox,#sousuoChangeView").css("box-shadow", "1px 0px 0px 5px rgba(" + r + ", " + b + ", " + g + ", 1), 1px 1px 20px 6px rgba(" + r + ", " + b + ", " + g + ", 1)");
+        }
+        //字体
+        if(typeof sousuofontIsChange!="undefined"){
+            if(sousuofontIsChange===0)return;
+
+            var r = Math.floor(Math.random() * 256);
+            var b = Math.floor(Math.random() * 256);
+            var g = Math.floor(Math.random() * 256);
+
+            $(".sousuo").css("color","rgba(" + r + ", " + b + ", " + g + ", 1)");
+        }else {
+            var r = Math.floor(Math.random() * 256);
+            var b = Math.floor(Math.random() * 256);
+            var g = Math.floor(Math.random() * 256);
+
+            $(".sousuo").css("color","rgba(" + r + ", " + b + ", " + g + ", 1)");
+        }
+
     }
     /*****************音乐播放器***************************/
     var musicUrl="http://music.163.com/song/media/outer/url?id=1338355334.mp3"; //地址
@@ -2927,7 +3107,8 @@ $(function () {
 <!--弹窗1-->
 <script src="/js/modernizr.custom.js"></script>
 <script src="/js/sweetalert2.all.min.js"></script>
-
+<!--取色器-->
+<script src="/js/colorpicker.js"></script>
 
 
 
