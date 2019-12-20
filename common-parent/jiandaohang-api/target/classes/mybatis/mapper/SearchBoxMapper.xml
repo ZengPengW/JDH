@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jdh.mapper.SearchBoxMapper">
+
+    <select id="getSearchBoxByUid" parameterType="integer" resultType="com.jdh.pojo.SearchBoxDo">
+        select * from `search_box` where `uid`=#{uid}
+    </select>
+
+    <insert id="saveSearchBox" parameterType="com.jdh.pojo.SearchBoxDo" >
+        insert into `search_box`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                `uid`,
+            </if>
+            <if test="sid != null">
+                `sid`,
+            </if>
+            <if test="borderColor != null">
+                `border_color`,
+            </if>
+            <if test="borderChangeColor != null">
+                `border_change_color`,
+            </if>
+            <if test="textColor != null">
+                `text_color`,
+            </if>
+            <if test="textChangeColor != null">
+                `text_change_color`,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="sid != null">
+                #{sid,jdbcType=BIGINT},
+            </if>
+            <if test="borderColor != null">
+                #{borderColor,jdbcType=VARCHAR},
+            </if>
+            <if test="borderChangeColor != null">
+                #{borderChangeColor,jdbcType=BOOLEAN},
+            </if>
+            <if test="textColor != null">
+                #{textColor,jdbcType=VARCHAR},
+            </if>
+            <if test="textChangeColor != null">
+                #{textChangeColor,jdbcType=BOOLEAN},
+            </if>
+
+        </trim>
+
+
+    </insert>
+
+    <update id="updateSearchBox" parameterType="com.jdh.pojo.SearchBoxDo" >
+        UPDATE `search_box`
+        <set>
+            <if test="borderColor != null">
+                `border_color`=#{borderColor},
+            </if>
+            <if test="borderChangeColor != null">
+                `border_change_color`=#{borderChangeColor},
+            </if>
+            <if test="textColor != null">
+                `text_color`=#{textColor},
+            </if>
+            <if test="textChangeColor != null">
+                `text_change_color`=#{textChangeColor},
+            </if>
+        </set>
+        where `uid`=#{uid}
+
+
+    </update>
+</mapper>

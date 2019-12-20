@@ -4,10 +4,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jdh.feign.BackgroundService;
 import com.jdh.feign.BackgroundSpeService;
-import com.jdh.pojo.Background;
-import com.jdh.pojo.BackgroundImgDo;
-import com.jdh.pojo.BackgroundSpeDo;
-import com.jdh.pojo.MyUser;
+import com.jdh.feign.SearchBoxService;
+import com.jdh.pojo.*;
 import com.jdh.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
@@ -38,6 +36,9 @@ public class PageController {
 
     @Autowired
     private BackgroundSpeService backgroundSpeService;
+
+    @Autowired
+    private SearchBoxService searchBoxService;
 
     @Autowired
     private BingBgImgBean bingBgImgBean;
@@ -87,15 +88,30 @@ public class PageController {
             }
             //****************************背景特效******************************************************
 
+//****************************搜索框样式******************************************************
+            SearchBoxDo searchBox = searchBoxService.getSearchBoxByUid(userDetails.getId());
+            if(searchBox!=null){
+                model.addAttribute("searchBox", searchBox);
+            }else {
+                searchBox=new SearchBoxDo();
+                model.addAttribute("searchBox", searchBox);
+            }
 
+//****************************搜索框样式******************************************************
 
 
         } else { //不存在用户 用bing图片
             MyUser userDetails=new MyUser();
             BackgroundSpeDo   bgSpe=new BackgroundSpeDo();//空参数的背景特效
             model.addAttribute("bgSpe", bgSpe);
+            //用户
             model.addAttribute("user", userDetails);
+            //背景图
             model.addAttribute("bgImg", bingBgImgBean.getImgPath());
+
+            //搜索框
+            SearchBoxDo searchBox=new SearchBoxDo();
+            model.addAttribute("searchBox", searchBox);
         }
 
 

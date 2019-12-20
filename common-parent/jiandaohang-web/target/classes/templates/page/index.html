@@ -436,7 +436,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                     <table style="margin: 0 auto; line-height: 40px;">
                         <tr>
                             <td style="font-size: 17px;font-weight: bold;">搜索框默认颜色:</td>
-                            <td><div id="sousuobgcolor"><div style="background-color: #0000ff;"></div></div></td>
+                            <td><div id="sousuobgcolor"><div ></div></div></td>
                         </tr>
                         <tr>
                             <td style="font-size: 17px;font-weight: bold;">输入时边框变色:</td>
@@ -448,7 +448,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 
                         <tr >
                             <td style="font-size: 17px;font-weight: bold;">搜索框字体颜色:</td>
-                            <td><div id="sousuofontcolor"><div style="background-color: #0000ff;"></div></div></td>
+                            <td><div id="sousuofontcolor"><div ></div></div></td>
                         </tr>
 
                         <tr>
@@ -471,7 +471,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                                     </a>
                                 </div>
                                 <div class="col-lg-10 col-md-10 col-xs-10 ">
-                                    <input type="text" class="form-control sousuo" placeholder="搜索框样式编辑预览"  oninput="oninputchange()"  style=" text-align:center"></input>
+                                    <input id="sousuoInput1" type="text" class="form-control sousuo" placeholder="搜索框样式编辑预览"  oninput="oninputchange(this)"  style=" text-align:center"></input>
                                 </div>
 
                             </div>
@@ -542,17 +542,32 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 
 <!--********************************************************************-->
 <!--搜索框样式-->
-<script th:inline ="javascript" type="text/javascript" th:if="${user.username!=null}">
+<script th:inline ="javascript" type="text/javascript">
     var sousuoIsChange=null; //搜索框是否变色
     var sousuobgcolor=null;  //搜索框颜色
     var sousuofontcolor=null;//字体颜色
     var sousuofontIsChange=null;//字体是否变色
 
-    var defaultsousuobgcolor="#ff0000";//默认搜索框颜色
-    var defaultIsChange=1;//默认边框是否变色
+    var defaultsousuobgcolor=[[${searchBox.borderColor}]];//默认搜索框颜色
+    if(defaultsousuobgcolor===null||defaultsousuobgcolor.trim().length<=0){
+        defaultsousuobgcolor="#000000";
+    }
 
-    var defaultsousuofontcolor="#000000";//默认字体颜色
-    var defaultsousuofontIsChange=1;//字体是否变色
+
+    var defaultIsChange=[[${searchBox.borderChangeColor}]];//默认边框是否变色
+    if(defaultIsChange===null||defaultIsChange.toString().trim().length<=0){
+        defaultIsChange=true;
+    }
+    var defaultsousuofontcolor=[[${searchBox.textColor}]];//默认字体颜色
+    if(defaultsousuofontcolor===null||defaultsousuofontcolor.trim().length<=0){
+        defaultsousuofontcolor="#000000";
+    }
+
+
+    var defaultsousuofontIsChange=[[${searchBox.textChangeColor}]];//字体是否变色
+    if(defaultsousuofontIsChange===null||defaultsousuofontIsChange.toString().trim().length<=0){
+        defaultsousuofontIsChange=true;
+    }
 
     sousuoIsChange=defaultIsChange;
     sousuofontIsChange=defaultsousuofontIsChange;
@@ -560,12 +575,19 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
     //     $("#sousuoChangeView,#sousuobox").css("box-shadow","1px 0px 0px 5px "+defaultsousuobgcolor+", 1px 1px 20px 6px "+defaultsousuobgcolor);
     //     $('#sousuobgcolor div').css('backgroundColor',defaultsousuobgcolor );
     // }
+    $('#sousuofontcolor div').css('backgroundColor', defaultsousuofontcolor);
+    $('#sousuobgcolor div').css('backgroundColor',defaultsousuobgcolor );
+    $("#sousuofontIsChange").val(defaultsousuofontIsChange?1:0);
+    $("#sousuoIsChange").val(defaultIsChange?1:0);
+
     $(function(){
         //搜索框取色
+
         $('#sousuobgcolor').ColorPicker({
             color: defaultsousuobgcolor,
             onShow: function (colpkr) {
                 $(colpkr).fadeIn(500);
+                $('#sousuobgcolor div').css('backgroundColor',defaultsousuobgcolor );
                 return false;
             },
             onHide: function (colpkr) {
@@ -583,11 +605,17 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
         //边框是否变色
         $("#sousuoIsChange").change(function () {
          //   console.log($(this).val());
-            sousuoIsChange=parseInt($(this).val());// 1 yes , 0 no
+            sousuoIsChange=parseInt($(this).val())==1?true:false;// 1 yes , 0 no
+            if(!sousuoIsChange){
+
+                $("#sousuoChangeView,#sousuobox").css("box-shadow","1px 0px 0px 5px "+$('#sousuobgcolor div').css('backgroundColor')+", 1px 1px 20px 6px "+$('#sousuobgcolor div').css('backgroundColor'));
+
+            }
         });
 
 
         //搜索框字体取色
+
         $('#sousuofontcolor').ColorPicker({
             color: defaultsousuofontcolor,
             onShow: function (colpkr) {
@@ -601,12 +629,17 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
             onChange: function (hsb, hex, rgb) {
                 $('#sousuofontcolor div').css('backgroundColor', '#' + hex);
                 sousuofontcolor='#' + hex;
+
+                $(".sousuo").css("color",sousuofontcolor);
             }
         });
         //边框是否变色
         $("#sousuofontIsChange").change(function () {
          //   console.log($(this).val());
-            sousuofontIsChange=parseInt($(this).val());// 1 yes , 0 no
+            sousuofontIsChange=parseInt($(this).val())==1?true:false;;// 1 yes , 0 no
+            if(!sousuofontIsChange){
+                $(".sousuo").css("color",$('#sousuofontcolor div').css('backgroundColor'));
+            }
         });
 
 
@@ -1947,6 +1980,72 @@ $(function () {
 
 
 //----------------------保存背景特效----------------------------------------------
+
+//----------------------保存搜索框样式----------------------------------------------
+
+        var form2 = new FormData();
+        var form2Length=0;
+        if(sousuoIsChange!=null&&sousuoIsChange!=defaultIsChange){
+            form2.append("sousuoIsChange",sousuoIsChange);
+            form2Length+=1;
+        }
+        if(sousuobgcolor!=null&&sousuobgcolor!=defaultsousuobgcolor){
+            form2.append("sousuobgcolor",sousuobgcolor);
+            form2Length+=1;
+        }
+        if(sousuofontcolor!=null&&sousuofontcolor!=defaultsousuofontcolor){
+            form2.append("sousuofontcolor",sousuofontcolor);
+            form2Length+=1;
+        }
+        if(sousuofontIsChange!=null&&sousuofontIsChange!=defaultsousuofontIsChange){
+            form2.append("sousuofontIsChange",sousuofontIsChange);
+            form2Length+=1;
+        }
+        if(form2Length>0){
+            if(taskCount===null)taskCount=1;
+            else taskCount+=1;
+
+            $("#saveContent").append(" <tr><td><strong style='font-size: 20px'>保存搜索框样式:</strong></td><td> <span id='saveMessage3'><img src='/img/加载.svg'></span></td></tr>");
+
+            $.ajax({
+                url: "/searchbox/save",
+                type: "post",
+                data: form2,
+                cache:false,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    if (data.status===1){
+                        setTimeout(function () {
+                            $("#saveMessage3").addClass("label label-success");
+                            $("#saveMessage3").text(data.msg);
+                            taskCount-=1;
+
+                        },1500);
+                    }else if(data.status===2) {
+                        setTimeout(function () {
+                            $("#saveMessage3").addClass("label label-danger");
+                            $("#saveMessage3").text(data.msg);
+                            taskCount-=1;
+                        },1500);
+                    }
+
+                    // console.log(data);
+                },
+                error: function(e) {
+                    //  swal("保存失败","服务器错误","error");
+                    setTimeout(function () {
+                        $("#saveMessage1").addClass("label label-danger");
+                        $("#saveMessage1").text("服务器错误保存失败！！！");
+                        taskCount-=1;
+                    },1500);
+                    //   console.log(e);
+                }
+            });
+        }
+
+
+//----------------------保存搜索框样式----------------------------------------------
         $.ajaxSettings.async = true;//变回异步
         //确定跳转
        var qd=setInterval(function () {
@@ -2049,7 +2148,7 @@ $(function () {
                     </a>
                 </div>
                 <div class="col-lg-10 col-md-10 col-xs-10 ">
-                    <input type="text" class="form-control sousuo" placeholder="输入要搜索的内容" id="Jsosuo" oninput="oninputchange()"  style=" text-align:center"></input>
+                    <input  type="text"  class="form-control sousuo" placeholder="输入要搜索的内容" id="Jsosuo" oninput="oninputchange(this)"  style=" text-align:center" />
                 </div>
                 <div class="col-lg-1 col-md-1 col-xs-1 ">
                     <a href="javascript:void(0)" style="width: 40px; height: 40px; " >
@@ -2300,7 +2399,7 @@ $(function () {
     //边框
     if(defaultsousuobgcolor!==null&&defaultsousuobgcolor.trim().length>0){
         $("#sousuoChangeView,#sousuobox").css("box-shadow","1px 0px 0px 5px "+defaultsousuobgcolor+", 1px 1px 20px 6px "+defaultsousuobgcolor);
-        $('#sousuobgcolor div').css('backgroundColor',defaultsousuobgcolor );
+
     }
     //字体
     if(defaultsousuofontcolor!=null&&defaultsousuofontcolor.trim().length>0){
@@ -2311,8 +2410,11 @@ $(function () {
 
     /*************************搜索框输入值改变颜色*********************/
 
-    function oninputchange(){
-
+    function oninputchange(obj){
+       var currid= $(obj).prop("id");
+       if(currid==="sousuoInput1"){
+           $("#Jsosuo").val($(obj).val());
+       }
        // sousuofontIsChange
         //如果没有默认就是黑色
         if(typeof defaultsousuobgcolor=="undefined"){
@@ -2332,12 +2434,13 @@ $(function () {
         }
         //边框
         if(typeof sousuoIsChange!="undefined"){
-            if(sousuoIsChange===0)return;
-            var r = Math.floor(Math.random() * 256);
-            var b = Math.floor(Math.random() * 256);
-            var g = Math.floor(Math.random() * 256);
-            $("#sousuobox,#sousuoChangeView").css("box-shadow", "1px 0px 0px 5px rgba(" + r + ", " + b + ", " + g + ", 1), 1px 1px 20px 6px rgba(" + r + ", " + b + ", " + g + ", 1)");
-        }else {
+            if(sousuoIsChange){
+                var r = Math.floor(Math.random() * 256);
+                var b = Math.floor(Math.random() * 256);
+                var g = Math.floor(Math.random() * 256);
+                $("#sousuobox,#sousuoChangeView").css("box-shadow", "1px 0px 0px 5px rgba(" + r + ", " + b + ", " + g + ", 1), 1px 1px 20px 6px rgba(" + r + ", " + b + ", " + g + ", 1)");
+            }
+         }else {
             var r = Math.floor(Math.random() * 256);
             var b = Math.floor(Math.random() * 256);
             var g = Math.floor(Math.random() * 256);
@@ -2345,13 +2448,14 @@ $(function () {
         }
         //字体
         if(typeof sousuofontIsChange!="undefined"){
-            if(sousuofontIsChange===0)return;
+            if(sousuofontIsChange){
 
             var r = Math.floor(Math.random() * 256);
             var b = Math.floor(Math.random() * 256);
             var g = Math.floor(Math.random() * 256);
 
             $(".sousuo").css("color","rgba(" + r + ", " + b + ", " + g + ", 1)");
+            }
         }else {
             var r = Math.floor(Math.random() * 256);
             var b = Math.floor(Math.random() * 256);
