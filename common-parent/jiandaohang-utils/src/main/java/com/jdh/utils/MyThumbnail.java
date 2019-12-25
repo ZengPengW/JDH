@@ -32,4 +32,11 @@ public class MyThumbnail {
 
 
     }
+
+//    public static void main(String[] args) throws IOException {
+//        //用outputFormat(图像格式)转换图片格式，保持原尺寸不变
+//        Thumbnails.of("C:\\Users\\zp\\Desktop\\tp\\搜索\\鼠标2.png").scale(1f).outputFormat("jpg")
+//                .toFile("C:\\Users\\zp\\Desktop\\tp\\搜索\\鼠标32.jpg");
+//
+//    }
 }

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jdh.mapper.MouseStyleMapper">
+
+
+<insert id="addMouseImg" parameterType="com.jdh.pojo.MouseImgDo" useGeneratedKeys="true" keyProperty="mid" keyColumn="mid" >
+    insert into `mouse_img`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="uid != null">
+            `uid`,
+        </if>
+        <if test="mouseType != null">
+            `mouse_type`,
+        </if>
+        <if test="mouseUrl != null">
+            `mouse_url`,
+        </if>
+        <if test="md5 != null">
+            `md5`,
+        </if>
+        <if test="useCount != null">
+            `use_count`,
+        </if>
+        <if test="upDate != null">
+            `up_date`,
+        </if>
+        <if test="share != null">
+            `share`,
+        </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="uid != null">
+            #{uid,jdbcType=INTEGER},
+        </if>
+        <if test="mouseType != null">
+            #{mouseType,jdbcType=TINYINT},
+        </if>
+        <if test="mouseUrl != null">
+            #{mouseUrl,jdbcType=VARCHAR},
+        </if>
+        <if test="md5 != null">
+            #{md5,jdbcType=VARCHAR},
+        </if>
+        <if test="useCount != null">
+            #{useCount,jdbcType=BIGINT},
+        </if>
+        <if test="upDate != null">
+            #{upDate,jdbcType=DATE},
+        </if>
+        <if test="share != null">
+            #{share,jdbcType=BOOLEAN},
+        </if>
+    </trim>
+
+</insert>
+
+<insert id="saveMouseStyleDo" parameterType="com.jdh.pojo.MouseStyleDo">
+    insert into `mouse_style`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="uid != null">
+            `uid`,
+        </if>
+        <if test="pmid != null">
+            `pmid`,
+        </if>
+        <if test="hmid != null">
+            `hmid`,
+        </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="uid != null">
+            #{uid,jdbcType=INTEGER},
+        </if>
+        <if test="pmid != null">
+            #{pmid,jdbcType=BIGINT},
+        </if>
+        <if test="hmid != null">
+            #{hmid,jdbcType=BIGINT},
+        </if>
+    </trim>
+</insert>
+
+<update id="updateMouseStyleDo" parameterType="com.jdh.pojo.MouseStyleDo">
+    UPDATE `mouse_style`
+    <set>
+        <if test="pmid != null">
+            `pmid`=#{pmid},
+        </if>
+        <if test="hmid != null">
+            `hmid`=#{hmid},
+        </if>
+    </set>
+    where `uid`=#{uid}
+</update>
+
+<select id="getMouseImgDoByMd5" parameterType="java.lang.String" resultType="com.jdh.pojo.MouseImgDo" >
+    select * from `mouse_img` where `md5`=#{md5}
+</select>
+
+<update id="updateMouseImgDo" parameterType="com.jdh.pojo.MouseImgDo">
+    UPDATE `mouse_img`
+    <set>
+        <if test="uid != null">
+           `uid`=#{uid,jdbcType=INTEGER},
+        </if>
+        <if test="mouseType != null">
+            `mouse_type`=#{mouseType,jdbcType=TINYINT},
+        </if>
+        <if test="mouseUrl != null">
+            `mouse_url`=#{mouseUrl,jdbcType=VARCHAR},
+        </if>
+        <if test="md5 != null">
+            `md5`=#{md5,jdbcType=VARCHAR},
+        </if>
+        <if test="useCount != null">
+            `use_count`=#{useCount,jdbcType=BIGINT},
+        </if>
+        <if test="upDate != null">
+            `up_date`=#{upDate,jdbcType=DATE},
+        </if>
+        <if test="share != null">
+            `share`=#{share,jdbcType=BOOLEAN},
+        </if>
+    </set>
+    where `mid`=#{mid}
+</update>
+
+<select id="getMouseStyleDoByUid" parameterType="java.lang.Integer" resultType="com.jdh.pojo.MouseStyleDo">
+    select * from `mouse_style` where `uid`=#{uid}
+</select>
+
+<delete id="deleteMouseImgDoByMid" parameterType="java.lang.Long" >
+    DELETE FROM `mouse_img` WHERE `mid`=#{mid}
+</delete>
+</mapper>

@@ -23,8 +23,8 @@ public class BackgroundImgDo implements Serializable {
     private Long pid; //图片id
     private String pic; //图片地址
     private Integer authorId; //上传者id
-    private boolean expire; //是否过期
-    private boolean ispublic;//是否公开
+    private Boolean expire; //是否过期
+    private Boolean ispublic;//是否公开
     private String md5;
     private String thumbnail;//缩略图
     private Date upDate; //上传时间
@@ -73,19 +73,20 @@ public class BackgroundImgDo implements Serializable {
         this.md5 = md5;
     }
 
-    public boolean isExpire() {
+
+    public Boolean getExpire() {
         return expire;
     }
 
-    public void setExpire(boolean expire) {
+    public void setExpire(Boolean expire) {
         this.expire = expire;
     }
 
-    public boolean isIspublic() {
+    public Boolean getIspublic() {
         return ispublic;
     }
 
-    public void setIspublic(boolean ispublic) {
+    public void setIspublic(Boolean ispublic) {
         this.ispublic = ispublic;
     }
 

@@ -13,8 +13,8 @@ logging:
 spring:
   servlet:
     multipart:
-      max-request-size: 50Mb
-      max-file-size: 10Mb
+      max-request-size: 100Mb
+      max-file-size: 20Mb
   application:
     name: jiandaohang-web  #应用名称
   #thymeleaf关闭缓存.

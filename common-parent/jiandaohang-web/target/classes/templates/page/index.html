@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=0.75">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="renderer" content="webkit" />
     <title>简导航-最个性的导航</title>
   <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
@@ -27,10 +27,10 @@
     <link rel="stylesheet" type="text/css" href="/css/colorpicker.css" />
 
 <style type="text/css" th:inline="css">
-a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search-menu-info li{
-    cursor: url("/material/img/mouse/hand/手指.ico"),default;
+a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search-menu-info li,select{
+    cursor: url("/material/img/mouse/hand/手指.ico"),pointer;
 }
-.shubiao,.nav-tabs>li.active>a:hover {
+.shubiao,.nav-tabs>li.active>a:hover,.contextTitle {
     cursor: url("/material/img/mouse/pointer/蓝色鼠标.ico"),default;
 }
 /*html{*/
@@ -41,6 +41,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 </head>
 
 <body class="shubiao">
+
 <!-- 弹窗 -->
 <a  id="userinfo" class="md-trigger" th:attr="data-modal=${user.username==null?'modal-13':'null'}" data-modal="modal-13" style="text-decoration: none;    background-color: white;
     border-radius: 20px;"><img src="/material/img/head/登录.png" /><span th:text="${user.username==null?'登陆':''}"></span></a>
@@ -227,7 +228,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                 <li  role="presentation" ><a href="#bjtp" aria-controls="" role="tab" data-toggle="tab">背景图片</a></li>
                 <li role="presentation"><a href="#bjtx" aria-controls="" role="tab" data-toggle="tab">背景特效</a></li>
                 <li role="presentation"><a href="#sskys" aria-controls="" role="tab" data-toggle="tab">搜索框样式</a></li>
-                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">鼠标样式</a></li>
+                <li role="presentation"><a href="#sbys" aria-controls="" role="tab" data-toggle="tab">鼠标样式</a></li>
                 <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">漂浮物样式</a></li>
                 <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">播放器样式</a></li>
             </ul>
@@ -436,7 +437,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                     <table style="margin: 0 auto; line-height: 40px;">
                         <tr>
                             <td style="font-size: 17px;font-weight: bold;">搜索框默认颜色:</td>
-                            <td><div id="sousuobgcolor"><div ></div></div></td>
+                            <td><div id="sousuobgcolor" class="shubiao2"><div ></div></div></td>
                         </tr>
                         <tr>
                             <td style="font-size: 17px;font-weight: bold;">输入时边框变色:</td>
@@ -448,7 +449,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 
                         <tr >
                             <td style="font-size: 17px;font-weight: bold;">搜索框字体颜色:</td>
-                            <td><div id="sousuofontcolor"><div ></div></div></td>
+                            <td><div id="sousuofontcolor" class="shubiao2"><div ></div></div></td>
                         </tr>
 
                         <tr>
@@ -482,6 +483,141 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                     <br /><br />
 
                 </div>
+
+                <!--鼠标样式-->
+                <div role="tabpanel" class="tab-pane fade" id="sbys">
+
+                    <ul class="nav nav-tabs" role="tablist" >
+                        <li  role="presentation" ><a href="#kxzz" aria-controls="" role="tab" data-toggle="tab">可选鼠标指针</a></li>
+                        <li  role="presentation" ><a href="#kxsz" aria-controls="" role="tab" data-toggle="tab">可选鼠标手指</a></li>
+                        <li role="presentation"><a href="#scsbys" aria-controls="" role="tab" data-toggle="tab">上传鼠标样式</a></li>
+                        <li role="presentation" ><a href="#wdscsb" aria-controls="" role="tab" data-toggle="tab">我的上传</a></li>
+                    </ul>
+
+
+                    <div class="tab-content" >
+                        <!--可选鼠标指针-->
+                        <div role="tabpanel" class="tab-pane fade" id="kxzz">
+                            <ul class="row">
+                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/hand/手指.ico"  class="img-thumbnail mouse-pointer" ></li>
+                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/hand/手指.ico"  class="img-thumbnail mouse-pointer" ></li>
+                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/hand/手指.ico"  class="img-thumbnail mouse-pointer" ></li>
+                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/hand/手指.ico"  class="img-thumbnail mouse-pointer" ></li>
+                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+
+                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer"  style="box-shadow: 0px 0px 0px 3px #b600ff;" ></li>
+                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/hand/手指.ico"  class="img-thumbnail mouse-pointer" ></li>
+                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/hand/手指.ico"  class="img-thumbnail mouse-pointer" ></li>
+                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/hand/手指.ico"  class="img-thumbnail mouse-pointer" ></li>
+                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/hand/手指.ico"  class="img-thumbnail mouse-pointer" ></li>
+                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+                            </ul>
+
+
+                            <!--上一页 下一页-->
+                            <nav aria-label="...">
+                                <ul class="pager">
+                                    <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
+
+                                    <li class="next"><a href="#">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+                                </ul>
+                            </nav>
+
+                            <!--第几页-->
+                            <div class="pageIndexBtn row ">
+
+				<span>
+					第<input type="number"  value="1" style="width:41px ;color: black; border-radius: 4px;"/>/20页
+					<a  href="javascript:void(0)" style="text-decoration: none;" ><span class="kongjianbnt" onclick="">GO!</span></a>
+				</span>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <!--可选鼠标手指-->
+                        <div role="tabpanel" class="tab-pane fade" id="kxsz">
+                            可选鼠标手指
+
+                        </div>
+
+                        <!--上传鼠标样式-->
+                        <div role="tabpanel" class="tab-pane fade" id="scsbys">
+                            <span class="label label-info">注:选择图片后,保存后才能生效！图片尺寸最佳为32*32</span>
+                            <span class="label label-info">注:兼容问题,本站不支持ie浏览器,推荐使用谷歌(Chrome)浏览器</span>
+
+
+
+                            <table style="margin-top: 3%; text-align: center;">
+                                <form id="mouseImgUpForm" method="post" >
+                                <tr>
+                                    <td>上传鼠标指针(可选):</td>
+                                    <td >
+                                        <img id="mousePointer1-img"  src="/material/img/mouse/pointer/蓝色鼠标.ico" title="点击选择" class="img-thumbnail mouse-pointer" onclick="selectMouse(1)" />
+                                        <input type="file" name="mousePointer1" id="mousePointer1" style="display: none;">
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>上传鼠标手指(可选):</td>
+                                    <td style="padding: 24px;">
+                                        <img  id="mousePointer2-img" src="/material/img/mouse/hand/手指.ico" title="点击选择" class="img-thumbnail mouse-pointer"  onclick="selectMouse(2)" />
+                                        <input type="file" name="mousePointer2" id="mousePointer2" style="display: none;">
+                                    </td>
+                                </tr>
+                                </form>
+                                <tr>
+                                    <td>是否共享此鼠标样式：</td>
+                                    <td>
+                                        <input type="checkbox" id="inset-3">
+                                        <label for="inset-3" class="green"  id="isPublicMouse" ></label>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+
+                        </div>
+
+                        <!--我的上传鼠标样式-->
+                        <div role="tabpanel" class="tab-pane fade" id="wdscsb">
+                            <ul class="nav nav-tabs" role="tablist" >
+                                <li  role="presentation" ><a href="#sczz" aria-controls="" role="tab" data-toggle="tab">鼠标指针</a></li>
+                                <li  role="presentation" ><a href="#scsz" aria-controls="" role="tab" data-toggle="tab">鼠标手指</a></li>
+
+                            </ul>
+                            <div class="tab-content" >
+                                <!--我的上传鼠标指针-->
+                                <div role="tabpanel" class="tab-pane fade" id="sczz">
+                                    鼠标指针
+                                </div>
+                                <!--我的上传鼠标手指-->
+                                <div role="tabpanel" class="tab-pane fade" id="scsz">
+                                    鼠标手指
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+
 
                 <div role="tabpanel" class="tab-pane fade" id="settings">
                     adssssssssssssssssss<br />
@@ -541,6 +677,123 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 </iframe>
 
 <!--********************************************************************-->
+<!--测试尺寸-->
+<img id="mousePointer1-test" style="display: none;" src=""/>
+<!--鼠标样式-->
+<script th:inline ="javascript" type="text/javascript">
+    //默认样式
+    var defaultMouse1="/material/img/mouse/pointer/蓝色鼠标.ico";
+    var defaultMouse2="/material/img/mouse/hand/手指.ico";
+
+    //是否公开
+    var isPublicMouse=false;
+    $("#isPublicMouse").click(function(){
+        isPublicMouse=!isPublicMouse;
+    });
+
+    /*文件上传过滤*/
+
+    //点击选择上传文件
+    function selectMouse(obj){
+//	console.log(obj);
+        if(obj===1){
+            $('#mousePointer1').click();
+            return;
+        }
+        if(obj===2){
+            $('#mousePointer2').click();
+            return;
+        }
+    }
+
+    //文件改变事件
+    $(function(){
+//初始值反正重复点击
+
+        $("#mousePointer1,#mousePointer2").change(function(){
+
+            if($(this).val()!==""&&$(this).val().trim()!==""){
+
+                //验证格式
+                var filePath = $(this).val();
+                var fileformat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
+                if(!fileformat.match(/.png|.jpg|jpeg|.gif|.ico/)) {
+                    Swal.fire('上传错误,文件格式必须为：png/jpg/jpeg/gif/ico',"","error");
+                    $(this).val("");
+                    return;
+                }
+
+                //验证尺寸
+                var src = window.URL.createObjectURL(this.files[0]);
+                var index=0;
+                var currid=$(this).prop("id");
+                $("#mousePointer1-test").prop("src", src) .load(function() {
+
+                    if(index>0)return;
+                    index+=1;
+                    pic_real_width = this.width;   // Note: $(this).width() will not
+
+                    pic_real_height = this.height; // work for in memory images.
+
+                    console.log("width:"+$("#mousePointer1-test").width()+"  height:"+$("#mousePointer1-test").height());
+                    if($("#mousePointer1-test").width()>33&&$("#mousePointer1-test").height()>33){
+                        Swal.fire("鼠标宽高必须小于等于 32*32","当前选中的图片宽高为:"+$("#mousePointer1-test").width()+"*"+$("#mousePointer1-test").height(),"error");
+                        $("#"+currid).val("");
+                        if(currid=="mousePointer1"){
+                            $("#"+currid+"-img").prop("src","/material/img/mouse/pointer/蓝色鼠标.ico");
+                            $(".shubiao,.nav-tabs>li.active>a:hover,.contextTitle").css("cursor","url('"+defaultMouse1+"'),default");
+                        }else{
+                            $("#"+currid+"-img").prop("src","/material/img/mouse/hand/手指.ico");
+                            $("a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search-menu-info li,select").css("cursor","url('"+defaultMouse2+"'),pointer");
+
+                        }
+
+                    }else{
+
+                        if(currid=="mousePointer1"){
+                            $("#mousePointer1-img").prop("src",src);
+                            $(".shubiao,.nav-tabs>li.active>a:hover,.contextTitle").css("cursor","url('"+src+"'),default");
+                        }else{
+                            $("#mousePointer2-img").prop("src",src);
+                            $("a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search-menu-info li,select").css("cursor","url('"+src+"'),pointer");
+                        }
+                    }
+                });
+
+
+
+
+
+
+
+            }
+        });
+
+    });
+
+
+
+
+    /*文件上传过滤*/
+
+
+
+
+
+
+
+    //鼠标移入
+    $("#kxzz").on("mouseenter",".img-thumbnail",function(){
+        $(this).css("box-shadow","0px 0px 0px 3px #b600ff");
+    });
+    //鼠标移出
+    $("#kxzz").on("mouseleave",".img-thumbnail",function(){
+
+        $(this).css("box-shadow","");
+    });
+
+</script>
+
 <!--搜索框样式-->
 <script th:inline ="javascript" type="text/javascript">
     var sousuoIsChange=null; //搜索框是否变色
@@ -1228,7 +1481,9 @@ $(function () {
 
             if(((this.files[0].size).toFixed(2))<(1024*1024*0.3)){
 
-                Swal.fire("图片模糊","上传图片太模糊","error");
+
+
+               Swal.fire("图片模糊","上传图片太模糊","error");
                 $(this).val("");
                 return;
             }
@@ -1851,10 +2106,6 @@ $(function () {
     //保存装饰
     function savedeck(obj){
         threeBtn(obj);
-     //   $(".zhezhao").css("visibility","visible");//显示遮罩
-     //   $(".my-load-div").show();//显示加载div
-
-      //  var isOPenSaveAlert=false;//是否打开弹窗
         var taskCount=null;//任务个数
         //打开弹窗
         $("#saveAlert").addClass("md-show");
@@ -1880,6 +2131,7 @@ $(function () {
                 type: "post",
                 data: form,
                 cache:false,
+                async:false,
                 processData: false,
                 contentType: false,
                 success: function(data) {
@@ -1981,6 +2233,7 @@ $(function () {
 
 //----------------------保存背景特效----------------------------------------------
 
+
 //----------------------保存搜索框样式----------------------------------------------
 
         var form2 = new FormData();
@@ -2035,8 +2288,8 @@ $(function () {
                 error: function(e) {
                     //  swal("保存失败","服务器错误","error");
                     setTimeout(function () {
-                        $("#saveMessage1").addClass("label label-danger");
-                        $("#saveMessage1").text("服务器错误保存失败！！！");
+                        $("#saveMessage3").addClass("label label-danger");
+                        $("#saveMessage3").text("服务器错误保存失败！！！");
                         taskCount-=1;
                     },1500);
                     //   console.log(e);
@@ -2046,6 +2299,64 @@ $(function () {
 
 
 //----------------------保存搜索框样式----------------------------------------------
+
+//----------------------保存鼠标框样式----------------------------------------------
+
+        //两个图标只要一个不为空
+        if($("#mousePointer1").val().trim()!==""||$("#mousePointer2").val().trim()!==""){
+
+            if(taskCount===null)taskCount=1;
+            else taskCount+=1;
+
+            $("#saveContent").append(" <tr><td><strong style='font-size: 20px'>保存鼠标图标:</strong></td><td> <span id='saveMessage4'><img src='/img/加载.svg'></span></td></tr>");
+
+            var mouseImgUpForm = new FormData(document.getElementById("mouseImgUpForm"));
+            mouseImgUpForm.append("isPublicMouse",isPublicMouse);
+            $.ajax({
+                url: "/mouseImg/add",
+                type: "post",
+                data: mouseImgUpForm,
+                cache:false,
+                async:false,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    if (data.status===1){
+                        setTimeout(function () {
+                            $("#saveMessage4").addClass("label label-success");
+                            $("#saveMessage4").text(data.msg);
+                            taskCount-=1;
+                        },1500);
+                    }else if(data.status===2) {
+                        setTimeout(function () {
+                            $("#saveMessage4").addClass("label label-danger");
+                            $("#saveMessage4").text(data.msg);
+                            taskCount-=1;
+                        },1500);
+                    }
+
+                    // console.log(data);
+                },
+                error: function(e) {
+                    //  swal("保存失败","服务器错误","error");
+                    setTimeout(function () {
+                        $("#saveMessage4").addClass("label label-danger");
+                        $("#saveMessage4").text("服务器错误保存失败！！！");
+                        taskCount-=1;
+                    },1500);
+                    //   console.log(e);
+                }
+            });
+            $("#mousePointer1,#mousePointer2").val("");//置空防止重复提交
+
+
+
+
+        }
+
+
+
+//----------------------保存鼠标框样式----------------------------------------------
         $.ajaxSettings.async = true;//变回异步
         //确定跳转
        var qd=setInterval(function () {
@@ -2217,16 +2528,16 @@ $(function () {
             <div class="panel panel-default my-panel" >
                 <ul class="webgroup" >
                     <li class="my-heading my-panel-heading" role="tab" id="headingOne" >
-                        <div class="panel-title "  >
+                        <div class="panel-title  "  >
                             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"  >
-                                分组1
+                                三个字是是啊
                             </a>
 
                         </div>
 
                     </li>
                     <li class="my-panel-heading my-heading" role="tab" id="headingOne" >
-                        <div class="panel-title">
+                        <div class="panel-title ">
                             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse2" aria-expanded="true" aria-controls="collapseOne" >
                                 分组2
                             </a>
@@ -2235,7 +2546,7 @@ $(function () {
 
                     </li>
                     <li class="my-panel-heading my-heading" role="tab" id="headingOne" >
-                        <div class="panel-title">
+                        <div class="panel-title ">
                             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse3" aria-expanded="true" aria-controls="collapseOne" >
                                 分组3
                             </a>
@@ -2244,7 +2555,7 @@ $(function () {
 
                     </li>
                     <li class="my-panel-heading my-heading" role="tab" id="headingOne" >
-                        <div class="panel-title">
+                        <div class="panel-title ">
                             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse4" aria-expanded="true" aria-controls="collapseOne" >
                                 分组4
                             </a>
@@ -2253,7 +2564,7 @@ $(function () {
 
                     </li>
                     <li class="my-panel-heading my-heading" role="tab" id="headingOne" >
-                        <div class="panel-title">
+                        <div class="panel-title ">
                             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse3" aria-expanded="true" aria-controls="collapseOne" >
                                 分组5
                             </a>
@@ -3214,7 +3525,45 @@ $(function () {
 <!--取色器-->
 <script src="/js/colorpicker.js"></script>
 
+<!--检测ie-->
+<script>
 
-
+    function IEVersion() {
+        var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+        var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器
+        var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器
+        var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
+        if(isIE) {
+            var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+            reIE.test(userAgent);
+            var fIEVersion = parseFloat(RegExp["$1"]);
+            if(fIEVersion == 7) {
+                return 7;
+            } else if(fIEVersion == 8) {
+                return 8;
+            } else if(fIEVersion == 9) {
+                return 9;
+            } else if(fIEVersion == 10) {
+                return 10;
+            } else {
+                return 6;//IE版本<=7
+            }
+        } else if(isEdge) {
+            return 'edge';//edge
+        } else if(isIE11) {
+            return 11; //IE11
+        }else{
+            return -1;//不是ie浏览器
+        }
+    }
+    function isIE(){
+        var ieVersion=IEVersion();
+        if(ieVersion!==-1){
+            //  Swal.fire('检测到您使用的是ie浏览器内核,本站暂不兼容ie浏览器,推荐使用谷歌（Chrome）浏览器',"若仍然要使用，可能会使体验不佳！！！","error");
+            alert("检测到您使用的是ie浏览器内核,本站暂不兼容ie浏览器,推荐使用谷歌（Chrome）浏览器,若仍然要使用，可能会出现未知错误！！！");
+        }
+    }
+    isIE();
+</script>
 </body>
 </html>
