@@ -7,15 +7,15 @@ import com.jdh.pojo.MouseStyleDo;
 import com.jdh.pojo.MyUser;
 import com.jdh.utils.FileUtil;
 import com.jdh.utils.JdhResult;
+import com.jdh.utils.PageDataGridResult;
 import com.jdh.utils.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Date;
 import java.util.List;
@@ -58,6 +58,13 @@ public class MouseStyleController {
                             &&!fileType1.equals("png")&&!fileType1.equals("jpeg")&&!fileType1.equals("ico")){
                         return JdhResult.fail("文件类型错误！！！");
                     }
+                    BufferedImage bufferedImage= ImageIO.read(file1.getInputStream());
+                    int width = bufferedImage.getWidth();
+                    int height = bufferedImage.getHeight();
+                  //  System.out.println("width:"+width+"  heigth:"+height);
+                    if (width>33||height>33){
+                        return JdhResult.fail("文件宽高不符合要求！！！");
+                    }
                 }else {
                     fileName1=null;
                 }
@@ -76,6 +83,14 @@ public class MouseStyleController {
                             &&!fileType2.equals("png")&&!fileType2.equals("jpeg")&&!fileType2.equals("ico")){
                         return JdhResult.fail("文件类型错误！！！");
                     }
+
+                    BufferedImage bufferedImage= ImageIO.read(file2.getInputStream());
+                    int width = bufferedImage.getWidth();
+                    int height = bufferedImage.getHeight();
+                   // System.out.println("width:"+width+"  heigth:"+height);
+                    if (width>33||height>33){
+                        return JdhResult.fail("文件宽高不符合要求！！！");
+                    }
                 }else {
                     fileName2=null;
                 }
@@ -87,8 +102,8 @@ public class MouseStyleController {
             //指针文件不为空
             if(fileName1!=null){
                 String fileMd5=FileUtil.getFileMd5(file1.getBytes());//获取文件MD5
-                MouseImgDo mouseImgOneDoByMd5 = mouseStyleService.getMouseImgDoByMd5(fileMd5);//是否有此图
-                if(mouseImgOneDoByMd5==null){//无此图
+                List<MouseImgDo>  mouseImgOneDoByMd5 = mouseStyleService.getMouseImgDoByMd5(fileMd5);//是否有此图
+                if(mouseImgOneDoByMd5==null||mouseImgOneDoByMd5.size()<=0){//无此图
                     //D:\zp\material\img\mouse\pointer
                     String dir=FileUtil.getDir(fileName1);//目录分离
                     String savePath=materialPath+"img"+ File.separator+"mouse"+File.separator+"pointer"+dir;
@@ -117,11 +132,15 @@ public class MouseStyleController {
 
                 }else {//有此图
                     isExistFile=true;
-                    mouseStyleDo.setPmid(mouseImgOneDoByMd5.getMid());
+                    MouseImgDo mouseImgDo = mouseImgOneDoByMd5.get(0);
+                    mouseStyleDo.setPmid(mouseImgDo.getMid());
                     //更新此图标 信息
-                    mouseImgOneDoByMd5.setUseCount(mouseImgOneDoByMd5.getUseCount()+1);//使用次数加一
-                    mouseImgOneDoByMd5.setMouseType(mouseImgOneDoByMd5.getMouseType()==0?0:2);
-                    mouseStyleService.updateMouseImgDo(mouseImgOneDoByMd5);
+                    if(mouseImgDo.getMouseType()==1){
+                        mouseImgDo.setUseCount(mouseImgDo.getUseCount()+1);//使用次数加一
+                        mouseImgDo.setMouseType(2);
+                        mouseStyleService.updateMouseImgDo(mouseImgDo);
+                    }
+
 
                 }
             }
@@ -131,8 +150,8 @@ public class MouseStyleController {
             //手指不为空
             if(fileName2!=null){
                 String fileMd5=FileUtil.getFileMd5(file2.getBytes());//获取文件MD5
-                MouseImgDo mouseImgOneDoByMd5 = mouseStyleService.getMouseImgDoByMd5(fileMd5);//是否有此图
-                if(mouseImgOneDoByMd5==null){//无此图
+                List<MouseImgDo> mouseImgOneDoByMd5 = mouseStyleService.getMouseImgDoByMd5(fileMd5);//是否有此图
+                if(mouseImgOneDoByMd5==null||mouseImgOneDoByMd5.size()<=0){//无此图
                     //D:\zp\material\img\mouse\hand
                     String dir=FileUtil.getDir(fileName2);//目录分离
                     String savePath=materialPath+"img"+ File.separator+"mouse"+File.separator+"hand"+dir;
@@ -161,11 +180,16 @@ public class MouseStyleController {
 
                 }else {//有此图
                     isExistFile=true;
-                    mouseStyleDo.setHmid(mouseImgOneDoByMd5.getMid());
+                    MouseImgDo mouseImgDo = mouseImgOneDoByMd5.get(0);
+                    mouseStyleDo.setHmid(mouseImgDo.getMid());
                     //更新此图标 信息
-                    mouseImgOneDoByMd5.setUseCount(mouseImgOneDoByMd5.getUseCount()+1);//使用次数加一
-                    mouseImgOneDoByMd5.setMouseType(mouseImgOneDoByMd5.getMouseType()==1?1:2);
-                    mouseStyleService.updateMouseImgDo(mouseImgOneDoByMd5);
+                    //更新此图标 信息
+                    if(mouseImgDo.getMouseType()==0){
+                        mouseImgDo.setUseCount(mouseImgDo.getUseCount()+1);//使用次数加一
+                        mouseImgDo.setMouseType(2);
+                        mouseStyleService.updateMouseImgDo(mouseImgDo);
+                    }
+
                 }
             }
 
@@ -209,24 +233,186 @@ public class MouseStyleController {
 
     }
 
-//    /**
-//     * 保存用户鼠标样式映射
-//     * @param mouseStyleDo
-//     * @return
-//     */
-//    @PostMapping("/mouseStyle/save")
-//    public Integer saveMouseStyleDo(@RequestBody MouseStyleDo mouseStyleDo){
-//        return mouseStyleService.saveMouseStyleDo(mouseStyleDo);
-//    }
-//
-//
-//    /**
-//     * 更新用户鼠标样式
-//     * @param mouseStyleDo
-//     * @return
-//     */
-//    @PostMapping("/mouseStyle/update")
-//    public Integer updateMouseStyleDo(@RequestBody MouseStyleDo mouseStyleDo){
-//        return mouseStyleService.updateMouseStyleDo(mouseStyleDo);
-//    }
+
+    /**
+     * 查询我的上传图标
+     * @param mouseType 0 指针 1 手指 or 2都可以
+     * @return
+     */
+    @GetMapping("/mouseImg/myUpload/mouseType/{mouseType}")
+    public  PageDataGridResult<MouseImgDo>  getMouseImgDoByMyUpload(@PathVariable("mouseType") Integer mouseType, @RequestParam(required = false,name = "page") Integer page, @RequestParam(required = false,name = "size")Integer size){
+        try {
+            MyUser currUser = UserContext.getCurrUser();
+            if (page==null)page=1;
+            if (size==null)size=18;
+            PageDataGridResult<MouseImgDo> list = mouseStyleService.getMouseImgDoByMyUpload(mouseType, currUser.getId(), page, size);
+            return list;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+    /**
+     *
+     * * 查询共享图标
+     * @param mouseType 0 指针 1 手指 or 2都可以
+     *  share 是否共享 true false
+     * @param page 第几页
+     * @param size 多少条
+     * @param field 数据库表字段名
+     * @param order 排序规则 asc desc
+     * @return
+     */
+    @GetMapping("/mouseImg/share")
+    public PageDataGridResult<MouseImgDo> getMouseImgDoByPublic(@RequestParam("mouseType") Integer mouseType, @RequestParam(value = "page",required = false) Integer page,@RequestParam(value = "size",required = false) Integer size,@RequestParam(value = "field",required = false)String field, @RequestParam(value = "order",required = false)String order){
+        //两个值必须同时存在 否则不排序
+        if(isEmpty(field)||isEmpty(order)){
+            field=null;
+            order=null;
+        }else {
+            field=field.trim();
+            order=order.trim();
+
+            if((!field.equals("1")&&!field.equals("2"))||(!order.equals("1")&&!order.equals("2"))){
+                field=null;
+                order=null;
+            }else {
+                //1.根据上传时间排序 2.根据热度排序
+                if(field.equals("1"))field="up_date";
+                else field="use_count";
+
+                //1.asc 2.desc
+                if(order.equals("1"))order="asc";
+                else order="desc";
+            }
+
+
+        }
+
+        return mouseStyleService.getMouseImgDoByPublic(mouseType,true,page,size,field,order);
+    }
+
+
+
+    /**
+     * 修改用户鼠标样式
+     * @param mousePointer 鼠标指针MD5
+     * @param mouseHand 鼠标手指MD5
+     * @return
+     */
+    @PostMapping("/mouseStyle/change")
+    public JdhResult updateMouseStyleDo(@RequestParam(value = "mousePointer",required = false) String mousePointer,@RequestParam(value ="mouseHand",required = false) String mouseHand){
+        try {
+            MyUser currUser = UserContext.getCurrUser();
+
+            List<MouseImgDo> mousePointers =null;//指针
+            List<MouseImgDo> mouseHands =null;//手指
+
+          if (mousePointer!=null) mousePointers=mouseStyleService.getMouseImgDoByMd5(mousePointer);
+          if (mouseHand!=null)  mouseHands=mouseStyleService.getMouseImgDoByMd5(mouseHand);
+            if ((mousePointers==null||mousePointers.size()<=0)&&(mouseHands==null||mouseHands.size()<=0)){
+                return  JdhResult.fail("修改鼠标图标失败！图标不存在！");
+            }
+
+
+            //保存鼠标&用户映射
+            MouseStyleDo mouseStyleDo = mouseStyleService.getMouseStyleDoByUid(currUser.getId());
+            //映射存在
+            if (mouseStyleDo!=null){
+                if (mousePointers!=null&&mousePointers.size()>0){
+                    MouseImgDo mouseImgDo = mousePointers.get(0);
+                    mouseStyleDo.setPmid(mouseImgDo.getMid());
+                    mouseImgDo.setUseCount(mouseImgDo.getUseCount()==null?1:mouseImgDo.getUseCount()+1);
+                    mouseStyleService.updateMouseImgDo(mouseImgDo);
+                }
+
+                if (mouseHands!=null&&mouseHands.size()>0){
+                    MouseImgDo mouseImgDo2 = mouseHands.get(0);
+                    mouseStyleDo.setHmid(mouseImgDo2.getMid());
+                    mouseImgDo2.setUseCount(mouseImgDo2.getUseCount()==null?1:mouseImgDo2.getUseCount()+1);
+                    mouseStyleService.updateMouseImgDo(mouseImgDo2);
+                }
+
+
+                mouseStyleService.updateMouseStyleDo(mouseStyleDo);
+
+
+            }else {//映射不存在
+                mouseStyleDo=new MouseStyleDo();
+                mouseStyleDo.setUid(currUser.getId());
+                if (mousePointers!=null&&mousePointers.size()>0){
+                    MouseImgDo mouseImgDo = mousePointers.get(0);
+                    mouseStyleDo.setPmid(mouseImgDo.getMid());
+                }
+
+                if (mouseHands!=null&&mouseHands.size()>0){
+                    MouseImgDo mouseImgDo2 = mouseHands.get(0);
+                    mouseStyleDo.setHmid(mouseImgDo2.getMid());
+                }
+                mouseStyleService.saveMouseStyleDo(mouseStyleDo);
+            }
+            return JdhResult.success("鼠标图标修改成功！");
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return  JdhResult.fail("服务器错误！修改鼠标图标失败！");
+
+        }
+
+    }
+
+
+
+
+    @PostMapping("/mouseImg/del/md5/{md5}")
+    public JdhResult deleteMouseImgByMd5(@PathVariable(name = "md5") String md5){
+        try {
+            MyUser currUser = UserContext.getCurrUser();
+            if (!isEmpty(md5)){
+                List<MouseImgDo> mouseImgDoByMd5 = mouseStyleService.getMouseImgDoByMd5(md5);
+
+                if (mouseImgDoByMd5!=null&&mouseImgDoByMd5.size()>0){
+                    MouseImgDo mouseImgDo = mouseImgDoByMd5.get(0);
+                    Long mid = mouseImgDo.getMid();
+                    List<MouseStyleDo> mouseStyleList = mouseStyleService.getMouseStyleDoByMid(mid);
+                    if (mouseStyleList!=null&&mouseStyleList.size()>0){
+                        return JdhResult.fail("此图标有用户正在使用，删除失败！");
+                    }
+
+                    if (currUser.getId()==mouseImgDo.getUid()){//此用户上传的就可以删除
+                        mouseStyleService.deleteMouseImgDoByMid(mouseImgDo.getMid());//删除数据库记录
+                        String mouseUrl = mouseImgDo.getMouseUrl();
+                        mouseUrl=materialPath+mouseUrl.substring(10);
+                        FileUtil.deleteFile(mouseUrl);//删除文件
+                        return JdhResult.success("成功删除图标！！！");
+                    }else {
+                        return JdhResult.fail("此图不是你上传的，删除失败！");
+                    }
+                }else {
+                    return JdhResult.fail("无此图，删除失败！");
+                }
+            }else {
+                return JdhResult.fail("无此图，删除失败！");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return JdhResult.fail("服务器错误，删除失败！");
+        }
+
+    }
+
+
+
+
+    /**
+     * 是否为空
+     * @param str
+     * @return 是true 否 false
+     */
+    public boolean isEmpty(String str){
+        if(str==null)return true;
+        if(str.trim().length()<=0)return true;
+        return false;
+    }
 }

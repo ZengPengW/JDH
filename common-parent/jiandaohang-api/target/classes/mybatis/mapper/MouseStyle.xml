@@ -134,4 +134,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <delete id="deleteMouseImgDoByMid" parameterType="java.lang.Long" >
     DELETE FROM `mouse_img` WHERE `mid`=#{mid}
 </delete>
+
+<select id="getMouseImgDoByMyUpload" resultType="com.jdh.pojo.MouseImgDo">
+    select * from `mouse_img` where (`mouse_type`=#{mouseType} or `mouse_type`=2) and  `uid`=#{uid}
+</select>
+
+<select id="getMouseImgDoByPublic" resultType="com.jdh.pojo.MouseImgDo" parameterType="map">
+    select * from `mouse_img` where (`mouse_type`=#{mouseType} or `mouse_type`=2) and  `share`=#{share}
+    <if test="up_date != null and up_date != '' ">
+        ORDER BY `up_date` ${up_date}
+    </if>
+    <if test="use_count != null and use_count != '' ">
+        ORDER BY `use_count` ${use_count}
+    </if>
+</select>
+
+<select id="getMouseImgByMid" parameterType="long" resultType="com.jdh.pojo.MouseImgDo"  >
+    select * from `mouse_img` where `mid`=#{mid}
+</select>
+
+<select id="getMouseStyleDoByMid" parameterType="long"   resultType="com.jdh.pojo.MouseStyleDo">
+    select * from `mouse_style` where `pmid`=#{mid} or `hmid`=#{mid}
+</select>
 </mapper>

@@ -28,10 +28,10 @@
 
 <style type="text/css" th:inline="css">
 a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search-menu-info li,select{
-    cursor: url("/material/img/mouse/hand/手指.ico"),pointer;
+    cursor: /*[(${mouseImgH.mouseUrl!=null?'url("'+mouseImgH.mouseUrl+'"),pointer':'url("/img/手指.ico"),pointer'})]*/;
 }
 .shubiao,.nav-tabs>li.active>a:hover,.contextTitle {
-    cursor: url("/material/img/mouse/pointer/蓝色鼠标.ico"),default;
+    cursor:/*[(${mouseImgP.mouseUrl!=null?'url("'+mouseImgP.mouseUrl+'"),default':'url("/img/蓝色鼠标.ico"),default'})]*/;
 }
 /*html{*/
 /*    zoom: .9;*/
@@ -472,7 +472,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                                     </a>
                                 </div>
                                 <div class="col-lg-10 col-md-10 col-xs-10 ">
-                                    <input id="sousuoInput1" type="text" class="form-control sousuo" placeholder="搜索框样式编辑预览"  oninput="oninputchange(this)"  style=" text-align:center"></input>
+                                    <input id="sousuoInput1" autocomplete="off" type="text" class="form-control sousuo" placeholder="搜索框样式编辑预览"  oninput="oninputchange(this)"  style=" text-align:center"></input>
                                 </div>
 
                             </div>
@@ -488,8 +488,8 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                 <div role="tabpanel" class="tab-pane fade" id="sbys">
 
                     <ul class="nav nav-tabs" role="tablist" >
-                        <li  role="presentation" ><a href="#kxzz" aria-controls="" role="tab" data-toggle="tab">可选鼠标指针</a></li>
-                        <li  role="presentation" ><a href="#kxsz" aria-controls="" role="tab" data-toggle="tab">可选鼠标手指</a></li>
+                        <li  role="presentation"  onclick="load_kxzz(this)"><a href="#kxzz" aria-controls="" role="tab" data-toggle="tab">可选鼠标指针</a></li>
+                        <li  role="presentation"   onclick="load_kxsz(this)"><a href="#kxsz" aria-controls="" role="tab" data-toggle="tab">可选鼠标手指</a></li>
                         <li role="presentation"><a href="#scsbys" aria-controls="" role="tab" data-toggle="tab">上传鼠标样式</a></li>
                         <li role="presentation" ><a href="#wdscsb" aria-controls="" role="tab" data-toggle="tab">我的上传</a></li>
                     </ul>
@@ -498,55 +498,65 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                     <div class="tab-content" >
                         <!--可选鼠标指针-->
                         <div role="tabpanel" class="tab-pane fade" id="kxzz">
-                            <ul class="row">
-                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
-                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/hand/手指.ico"  class="img-thumbnail mouse-pointer" ></li>
-                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
-                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/hand/手指.ico"  class="img-thumbnail mouse-pointer" ></li>
-                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
-                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/hand/手指.ico"  class="img-thumbnail mouse-pointer" ></li>
-                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
-                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/hand/手指.ico"  class="img-thumbnail mouse-pointer" ></li>
-                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
-
-                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer"  style="box-shadow: 0px 0px 0px 3px #b600ff;" ></li>
-                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/hand/手指.ico"  class="img-thumbnail mouse-pointer" ></li>
-                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
-                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/hand/手指.ico"  class="img-thumbnail mouse-pointer" ></li>
-                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
-                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/hand/手指.ico"  class="img-thumbnail mouse-pointer" ></li>
-                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
-                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/hand/手指.ico"  class="img-thumbnail mouse-pointer" ></li>
-                                <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+                            <select id="kxzzOrder" class="form-control shubiao2" style="float: right;color: white;width: 15%;background-color: #252525;">
+                                <option value="0"  selected="selected">默认</option>
+                                <option  value="1" >最新</option>
+                                <option  value="2">最早</option>
+                                <option  value="3">按热度升序</option>
+                                <option  value="4">按热度降序</option>
+                            </select>
+                            <br>
+                            <ul class="row" style="margin-top: 10px;">
+                                <!--可选鼠标指针列表-->
                             </ul>
-
-
                             <!--上一页 下一页-->
                             <nav aria-label="...">
-                                <ul class="pager">
-                                    <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
+                                <ul class="pager kxzzpager">
+                                    <li class="previous" onclick="gotoPageKxMouseImgByZZ(0)"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
 
-                                    <li class="next"><a href="#">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+                                    <li class="next" onclick="gotoPageKxMouseImgByZZ(1)"><a href="#">下一页 <span aria-hidden="true">&rarr;</span></a></li>
                                 </ul>
                             </nav>
-
                             <!--第几页-->
                             <div class="pageIndexBtn row ">
-
-				<span>
-					第<input type="number"  value="1" style="width:41px ;color: black; border-radius: 4px;"/>/20页
-					<a  href="javascript:void(0)" style="text-decoration: none;" ><span class="kongjianbnt" onclick="">GO!</span></a>
-				</span>
-
+                                        <span>
+                                            第<input type="number" id="kxzzCurrPage"   value="0" style="width:41px ;color: black; border-radius: 4px;"/>
+                                            /<span id="kxzzPageTotal">0</span>页
+                                            <a  href="javascript:void(0)" style="text-decoration: none;" onclick="gotoPageKxMouseImgByZZ(2)"><span class="kongjianbnt" >GO!</span></a>
+                                        </span>
                             </div>
-
-
                         </div>
 
 
                         <!--可选鼠标手指-->
                         <div role="tabpanel" class="tab-pane fade" id="kxsz">
-                            可选鼠标手指
+                            <select id="kxszOrder" class="form-control shubiao2" style="float: right;color: white;width: 15%;background-color: #252525;">
+                                <option value="0"  selected="selected">默认</option>
+                                <option  value="1" >最新</option>
+                                <option  value="2">最早</option>
+                                <option  value="3">按热度升序</option>
+                                <option  value="4">按热度降序</option>
+                            </select>
+                            <br>
+                            <ul class="row" style="margin-top: 10px;">
+                                <!--可选鼠标指针列表-->
+                            </ul>
+                            <!--上一页 下一页-->
+                            <nav aria-label="...">
+                                <ul class="pager kxszpager">
+                                    <li class="previous" onclick="gotoPageKxMouseImgBySZ(0)"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
+
+                                    <li class="next" onclick="gotoPageKxMouseImgBySZ(1)"><a href="#">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+                                </ul>
+                            </nav>
+                            <!--第几页-->
+                            <div class="pageIndexBtn row ">
+                                        <span>
+                                            第<input type="number" id="kxszCurrPage"   value="0" style="width:41px ;color: black; border-radius: 4px;"/>
+                                            /<span id="kxszPageTotal">0</span>页
+                                            <a  href="javascript:void(0)" style="text-decoration: none;" onclick="gotoPageKxMouseImgBySZ(2)"><span class="kongjianbnt" >GO!</span></a>
+                                        </span>
+                            </div>
 
                         </div>
 
@@ -562,7 +572,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                                 <tr>
                                     <td>上传鼠标指针(可选):</td>
                                     <td >
-                                        <img id="mousePointer1-img"  src="/material/img/mouse/pointer/蓝色鼠标.ico" title="点击选择" class="img-thumbnail mouse-pointer" onclick="selectMouse(1)" />
+                                        <img id="mousePointer1-img"  src="/img/蓝色鼠标.ico" title="点击选择" class="img-thumbnail mouse-pointer" onclick="selectMouse(1)" />
                                         <input type="file" name="mousePointer1" id="mousePointer1" style="display: none;">
                                     </td>
                                 </tr>
@@ -570,11 +580,16 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                                 <tr>
                                     <td>上传鼠标手指(可选):</td>
                                     <td style="padding: 24px;">
-                                        <img  id="mousePointer2-img" src="/material/img/mouse/hand/手指.ico" title="点击选择" class="img-thumbnail mouse-pointer"  onclick="selectMouse(2)" />
+                                        <img  id="mousePointer2-img" src="/img/手指.ico" title="点击选择" class="img-thumbnail mouse-pointer"  onclick="selectMouse(2)" />
                                         <input type="file" name="mousePointer2" id="mousePointer2" style="display: none;">
                                     </td>
                                 </tr>
                                 </form>
+                                <tr>
+                                    <td colspan="2">
+                                        <a  href="javascript:void(0)" style="text-decoration: none;" ><div class="kongjianbnt" onclick="rollback_Mouse(this)">还原初始</div></a>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td>是否共享此鼠标样式：</td>
                                     <td>
@@ -591,18 +606,70 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                         <!--我的上传鼠标样式-->
                         <div role="tabpanel" class="tab-pane fade" id="wdscsb">
                             <ul class="nav nav-tabs" role="tablist" >
-                                <li  role="presentation" ><a href="#sczz" aria-controls="" role="tab" data-toggle="tab">鼠标指针</a></li>
-                                <li  role="presentation" ><a href="#scsz" aria-controls="" role="tab" data-toggle="tab">鼠标手指</a></li>
+                                <li  role="presentation" onclick="load_wdsczz(this)"><a href="#sczz" aria-controls="" role="tab" data-toggle="tab">鼠标指针</a></li>
+                                <li  role="presentation" onclick="load_wdscsz(this)"><a href="#scsz" aria-controls="" role="tab" data-toggle="tab">鼠标手指</a></li>
 
                             </ul>
+
+                            <!--我的上传鼠标指针-->
                             <div class="tab-content" >
-                                <!--我的上传鼠标指针-->
+
                                 <div role="tabpanel" class="tab-pane fade" id="sczz">
-                                    鼠标指针
+
+                                    <ul class="row" style="margin-top: 10px">
+                                        <!--图标列表-->
+                                    </ul>
+
+                                    <!--上一页 下一页-->
+                                    <nav aria-label="...">
+                                        <ul class="pager sczzpager">
+                                            <li class="previous" onclick="gotoPageMyUpLoadMouseImgByZZ(0)"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
+
+                                            <li class="next" onclick="gotoPageMyUpLoadMouseImgByZZ(1)"><a href="#">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+                                        </ul>
+                                    </nav>
+
+                                    <!--第几页-->
+                                    <div class="pageIndexBtn row ">
+
+                                        <span>
+                                            第<input type="number" id="sczzCurrPage"   value="0" style="width:41px ;color: black; border-radius: 4px;"/>
+                                            /<span id="sczzPageTotal">0</span>页
+                                            <a  href="javascript:void(0)" style="text-decoration: none;" onclick="gotoPageMyUpLoadMouseImgByZZ(2)"><span class="kongjianbnt" >GO!</span></a>
+                                        </span>
+
+                                    </div>
+
+
                                 </div>
+
+
+
                                 <!--我的上传鼠标手指-->
                                 <div role="tabpanel" class="tab-pane fade" id="scsz">
-                                    鼠标手指
+                                    <ul class="row" style="margin-top: 10px">
+                                        <!--图标列表-->
+                                    </ul>
+
+                                    <!--上一页 下一页-->
+                                    <nav aria-label="...">
+                                        <ul class="pager scszpager">
+                                            <li class="previous" onclick="gotoPageMyUpLoadMouseImgBySZ(0)"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
+
+                                            <li class="next" onclick="gotoPageMyUpLoadMouseImgBySZ(1)"><a href="#">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+                                        </ul>
+                                    </nav>
+
+                                    <!--第几页-->
+                                    <div class="pageIndexBtn row ">
+
+                                        <span>
+                                            第<input type="number" id="scszCurrPage"   value="0" style="width:41px ;color: black; border-radius: 4px;"/>
+                                            /<span id="scszPageTotal">0</span>页
+                                            <a  href="javascript:void(0)" style="text-decoration: none;" onclick="gotoPageMyUpLoadMouseImgBySZ(2)"><span class="kongjianbnt" >GO!</span></a>
+                                        </span>
+
+                                    </div>
                                 </div>
 
                             </div>
@@ -672,9 +739,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 <!--遮罩-->
 <div class="zhezhao" ></div>
 <!--背景特效-->
-<iframe id="iframe_bjtx"  src="/material/special/transparent/10000/10000.html"  name="iframe_a" frameborder="0" marginwidth="0px" scrolling="no" width="100%" height="110%" style="position: absolute; top: -10px; z-index: -999;">
-
-</iframe>
+<iframe id="iframe_bjtx"  src="/material/special/transparent/10000/10000.html"  name="iframe_a" frameborder="0" marginwidth="0px" scrolling="no" width="100%" height="110%" style="position: absolute; top: -10px; z-index: -999;"></iframe>
 
 <!--********************************************************************-->
 <!--测试尺寸-->
@@ -682,19 +747,39 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 <!--鼠标样式-->
 <script th:inline ="javascript" type="text/javascript">
     //默认样式
-    var defaultMouse1="/material/img/mouse/pointer/蓝色鼠标.ico";
-    var defaultMouse2="/material/img/mouse/hand/手指.ico";
+    var defaultMouse1=[[${mouseImgP.mouseUrl}]];
+    var defaultMouse2=[[${mouseImgH.mouseUrl}]];
+    var default_currMouseMd5=[[${mouseImgP.md5}]];//默认MD5
+    var default_currMouseHandMd5=[[${mouseImgH.md5}]];//默认MD5
 
-    //是否公开
+    var currMouseMd5=default_currMouseMd5;//当前选中鼠标指针MD5
+    var currMouseHandMd5=default_currMouseHandMd5;//当前选中鼠标手指 MD5
+    //初始化
+  // if(defaultMouse1!=null&&defaultMouse1.toString().trim().length>0) $(".shubiao,.nav-tabs>li.active>a:hover,.contextTitle").css("cursor","url('"+defaultMouse1+"'),default");
+  //  if(defaultMouse2!=null&&defaultMouse2.toString().trim().length>0) $("a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search-menu-info li,select").css("cursor","url('"+defaultMouse2+"'),pointer");
+
+    // 是否公开
     var isPublicMouse=false;
-    $("#isPublicMouse").click(function(){
+ $("#isPublicMouse").click(function(){
         isPublicMouse=!isPublicMouse;
     });
 
-    /*文件上传过滤*/
+/*还原*/
+function rollback_Mouse(obj) {
+    threeBtn(obj);
+    $("#mousePointer1,#mousePointer2").val("");
+    $("#mousePointer1-img").prop("src","/img/蓝色鼠标.ico");
+    $("#mousePointer2-img").prop("src","/img/手指.ico");
+    $(".shubiao,.nav-tabs>li.active>a:hover,.contextTitle").css("cursor","url('"+defaultMouse1+"'),default");
+    $("a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search-menu-info li,select").css("cursor","url('"+defaultMouse2+"'),pointer");
+    currMouseMd5=null;
+    currMouseHandMd5=null;
+    Swal.fire('已成功清除所以有关鼠标样式的修改操作！',"","success");
 
-    //点击选择上传文件
-    function selectMouse(obj){
+
+}
+//点击选择上传文件
+function selectMouse(obj){
 //	console.log(obj);
         if(obj===1){
             $('#mousePointer1').click();
@@ -706,9 +791,9 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
         }
     }
 
-    //文件改变事件
-    $(function(){
-//初始值反正重复点击
+//文件改变事件
+$(function(){
+//初始值防止重复点击
 
         $("#mousePointer1,#mousePointer2").change(function(){
 
@@ -736,14 +821,16 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                     pic_real_height = this.height; // work for in memory images.
 
                     console.log("width:"+$("#mousePointer1-test").width()+"  height:"+$("#mousePointer1-test").height());
-                    if($("#mousePointer1-test").width()>33&&$("#mousePointer1-test").height()>33){
+                    if($("#mousePointer1-test").width()>33||$("#mousePointer1-test").height()>33){
                         Swal.fire("鼠标宽高必须小于等于 32*32","当前选中的图片宽高为:"+$("#mousePointer1-test").width()+"*"+$("#mousePointer1-test").height(),"error");
                         $("#"+currid).val("");
                         if(currid=="mousePointer1"){
-                            $("#"+currid+"-img").prop("src","/material/img/mouse/pointer/蓝色鼠标.ico");
+                            currMouseMd5=null;//选择置空
+                            $("#"+currid+"-img").prop("src","/img/蓝色鼠标.ico");
                             $(".shubiao,.nav-tabs>li.active>a:hover,.contextTitle").css("cursor","url('"+defaultMouse1+"'),default");
                         }else{
-                            $("#"+currid+"-img").prop("src","/material/img/mouse/hand/手指.ico");
+                            currMouseHandMd5=null;//选择置空
+                            $("#"+currid+"-img").prop("src","/img/手指.ico");
                             $("a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search-menu-info li,select").css("cursor","url('"+defaultMouse2+"'),pointer");
 
                         }
@@ -751,9 +838,15 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                     }else{
 
                         if(currid=="mousePointer1"){
+                            currMouseMd5=null;//选择置空
+                            $("#kxzz,#sczz").removeClass("mouse-img-active");
+
                             $("#mousePointer1-img").prop("src",src);
                             $(".shubiao,.nav-tabs>li.active>a:hover,.contextTitle").css("cursor","url('"+src+"'),default");
                         }else{
+                            currMouseHandMd5=null;//选择置空
+                            $("#kxsz,#scsz").removeClass("mouse-img-active");
+
                             $("#mousePointer2-img").prop("src",src);
                             $("a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search-menu-info li,select").css("cursor","url('"+src+"'),pointer");
                         }
@@ -769,29 +862,677 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
             }
         });
 
+
+    });
+
+//我的上传鼠标右键
+function wdscMouseImgRightKey() {
+        class2context('wdsc-mouse-img', "菜单",
+            [
+                [
+                    "<img src='/material/img/rightMenu/个性化.png' width='25px' /> 删除此图", "deleteMyUpLoadMouseImg()"
+                ]
+            ]);
+    }
+
+//记录鼠标右键
+var curRightMyUpLoadMouseImg=null;
+$("#sczz,#scsz ").on("mousedown",".wdsc-mouse-img",function(event){
+        if(event.button===2){//右键
+            curRightMyUpLoadMouseImg=$(this).attr("md5");
+        }
+    });
+//删除此上传图片
+function deleteMyUpLoadMouseImg() {
+        if((curRightMyUpLoadMouseImg!=null&&curRightMyUpLoadMouseImg==currMouseMd5)||(curRightMyUpLoadMouseImg!=null&&curRightMyUpLoadMouseImg==currMouseHandMd5)){
+
+            Swal.fire({
+                title: "无法删除当前已预设为鼠标的图标",
+                text: "",
+                type: "error",
+                confirmButtonColor:"#ad1d11",
+                allowOutsideClick: false,
+                confirmButtonText: "确定"
+            });
+            return;
+        }
+
+        //ajax请求删除
+        if(curRightMyUpLoadMouseImg!==null){
+
+
+            Swal.fire({
+                title: "是否删除此上传图标",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText:"<span class='shubiao2'>点错了</span>",
+                confirmButtonText: "确认删除!"
+            }).then((isConfirm) => {
+                if(isConfirm.value){
+                //Swal.fire({text:"点了确定",title:"das", type:'success'});
+                $.post("/mouseImg/del/md5/"+curRightMyUpLoadMouseImg,function (data) {
+                    if (data.status===1){
+                        Swal.fire({
+                            title: data.msg,
+                            text: "",
+                            type: "success",
+                            confirmButtonColor:"#1aad19",
+                            allowOutsideClick: false,
+                            confirmButtonText: "确定"
+                        }).then((isConfirm) => {
+                            $("#sczz .wdsc-mouse-img[md5='"+curRightMyUpLoadMouseImg+"']").remove();
+                            $("#scsz .wdsc-mouse-img[md5='"+curRightMyUpLoadMouseImg+"']").remove();
+                        curRightMyUpLoadMouseImg=null;//置空
+                    });
+
+                    }else if(data.status===2){
+                        Swal.fire({
+                            title: data.msg,
+                            text: "",
+                            type: "error",
+                            confirmButtonColor:"#ad1d11",
+                            allowOutsideClick: false,
+                            confirmButtonText: "确定"
+                        });
+                    }
+                },"json");
+
+            }
+
+
+        });
+
+
+        }
+
+
+
+    }
+
+
+/*可选指针*/
+var kxzzPageNumb=1;
+var kxzzTotalPage=0;
+function load_kxzz(obj) {
+    var aTab= $(obj).children("a");
+    var aHref=$(aTab).attr("href");
+    var imgul=$(aHref).children("ul");
+    var liList=$(imgul).children("li");
+    //  console.log(liList.length);
+    if(liList.length===0){
+        $.get("/mouseImg/share?mouseType=0",function(data){
+            kxzzPageNumb=data.page;//获取当前页码
+            $("#kxzzCurrPage").val(kxzzPageNumb);
+
+            kxzzTotalPage=Math.ceil(data.total/18);//总页数
+            $("#kxzzPageTotal").text(kxzzTotalPage);
+            if(!data.hasNextPage){
+                $(".kxzzpager .next").hide();
+            }else {
+                $(".kxzzpager .next").show();
+            }
+            if(!data.hasPreviousPage){
+                $(".kxzzpager .previous").hide();
+            }else {
+                $(".kxzzpager .previous").show();
+            }
+            //  <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+
+            $.each(data.rows, function(index,c) {
+                if(currMouseMd5!=null&&currMouseMd5==c.md5){
+                    $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.mouseUrl+"' class='img-thumbnail mouse-pointer  mouse-img-active' ></li>");
+                }else
+                    $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.mouseUrl+"' class='img-thumbnail mouse-pointer ' ></li>");
+            });
+        },"json");
+
+    }
+
+}
+
+function gotoPageKxMouseImgByZZ(obj) {
+    if(obj===0){
+        if(kxzzPageNumb-1>0)
+            kxzzPageNumb=kxzzPageNumb-1;
+        else return ;
+    }else if (obj===1){
+        if(kxzzPageNumb+1<=kxzzTotalPage)
+            kxzzPageNumb=kxzzPageNumb+1;
+        else return ;
+    }else if (obj===2){
+        var page=$("#kxzzCurrPage").val();
+        page=Math.floor(page);
+        if(page===kxzzPageNumb||page<1||page>kxzzTotalPage)return;
+        kxzzPageNumb=page;
+    }else {
+        return;
+    }
+//排序规则
+    var kxzzOrder=$("#kxzzOrder").val();
+    var requestPath="/mouseImg/share?mouseType=0&";
+    if(kxzzOrder==="1"){
+        requestPath=requestPath+"field=1&order=2&";
+    }else if(kxzzOrder==="2"){
+        requestPath=requestPath+"field=1&order=1&";
+    }else if(kxzzOrder==="3"){
+        requestPath=requestPath+"field=2&order=1&";
+    }else if(kxzzOrder==="4"){
+        requestPath=requestPath+"field=2&order=2&";
+    }
+
+    $.get(requestPath+"page="+kxzzPageNumb,function(data){
+        kxzzPageNumb=data.page;//获取当前页码
+        $("#kxzzCurrPage").val(kxzzPageNumb);
+
+        kxzzTotalPage=Math.ceil(data.total/18);//总页数
+        $("#kxzzPageTotal").text(kxzzTotalPage);
+        if(!data.hasNextPage){
+            $(".kxzzpager .next").hide();
+        }else {
+            $(".kxzzpager .next").show();
+        }
+        if(!data.hasPreviousPage){
+            $(".kxzzpager .previous").hide();
+        }else {
+            $(".kxzzpager .previous").show();
+        }
+        //  <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+        var imgul=$("#kxzz").children("ul");
+        $(imgul).children("li").remove();
+        $.each(data.rows, function(index,c) {
+            if(currMouseMd5!=null&&currMouseMd5==c.md5){
+                $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.mouseUrl+"' class='img-thumbnail mouse-pointer  mouse-img-active' ></li>");
+            }else
+                $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.mouseUrl+"' class='img-thumbnail mouse-pointer ' ></li>");
+        });
+
+    },"json");
+}
+
+    //排序加载
+$("#kxzzOrder").change(function () {
+    //排序规则
+    var kxzzOrder=$("#kxzzOrder").val();
+    var requestPath="/mouseImg/share?mouseType=0&";
+    if(kxzzOrder==="1"){
+        requestPath=requestPath+"field=1&order=2&";
+    }else if(kxzzOrder==="2"){
+        requestPath=requestPath+"field=1&order=1&";
+    }else if(kxzzOrder==="3"){
+        requestPath=requestPath+"field=2&order=1&";
+    }else if(kxzzOrder==="4"){
+        requestPath=requestPath+"field=2&order=2&";
+    }
+
+    $.get(requestPath+"page=1",function(data){
+        kxzzPageNumb=data.page;//获取当前页码
+        $("#kxzzCurrPage").val(kxzzPageNumb);
+
+        kxzzTotalPage=Math.ceil(data.total/18);//总页数
+        $("#kxzzPageTotal").text(kxzzTotalPage);
+        if(!data.hasNextPage){
+            $(".kxzzpager .next").hide();
+        }else {
+            $(".kxzzpager .next").show();
+        }
+        if(!data.hasPreviousPage){
+            $(".kxzzpager .previous").hide();
+        }else {
+            $(".kxzzpager .previous").show();
+        }
+        //  <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+        var imgul=$("#kxzz").children("ul");
+        $(imgul).children("li").remove();
+        $.each(data.rows, function(index,c) {
+            if(currMouseMd5!=null&&currMouseMd5==c.md5){
+                $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.mouseUrl+"' class='img-thumbnail mouse-pointer  mouse-img-active' ></li>");
+            }else
+                $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.mouseUrl+"' class='img-thumbnail mouse-pointer ' ></li>");
+        });
+
+    },"json");
+
     });
 
 
+/*可选手指*/
+var kxszPageNumb=1;
+var kxszTotalPage=0;
+function load_kxsz(obj) {
+        var aTab= $(obj).children("a");
+        var aHref=$(aTab).attr("href");
+        var imgul=$(aHref).children("ul");
+        var liList=$(imgul).children("li");
+        //  console.log(liList.length);
+        if(liList.length===0){
+            $.get("/mouseImg/share?mouseType=1",function(data){
+                kxszPageNumb=data.page;//获取当前页码
+                $("#kxszCurrPage").val(kxszPageNumb);
+
+                kxszTotalPage=Math.ceil(data.total/18);//总页数
+                $("#kxszPageTotal").text(kxszTotalPage);
+                if(!data.hasNextPage){
+                    $(".kxszpager .next").hide();
+                }else {
+                    $(".kxszpager .next").show();
+                }
+                if(!data.hasPreviousPage){
+                    $(".kxszpager .previous").hide();
+                }else {
+                    $(".kxszpager .previous").show();
+                }
+                //  <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+
+                $.each(data.rows, function(index,c) {
+                    if(currMouseHandMd5!=null&&currMouseHandMd5==c.md5){
+                        $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.mouseUrl+"' class='img-thumbnail mouse-pointer  mouse-img-active' ></li>");
+                    }else
+                        $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.mouseUrl+"' class='img-thumbnail mouse-pointer ' ></li>");
+                });
+            },"json");
+
+        }
+
+    }
+
+function gotoPageKxMouseImgBySZ(obj) {
+        if(obj===0){
+            if(kxszPageNumb-1>0)
+                kxszPageNumb=kxszPageNumb-1;
+            else return ;
+        }else if (obj===1){
+            if(kxszPageNumb+1<=kxszTotalPage)
+                kxszPageNumb=kxszPageNumb+1;
+            else return ;
+        }else if (obj===2){
+            var page=$("#kxszCurrPage").val();
+            page=Math.floor(page);
+            if(page===kxszPageNumb||page<1||page>kxszTotalPage)return;
+            kxszPageNumb=page;
+        }else {
+            return;
+        }
+//排序规则
+        var kxszOrder=$("#kxszOrder").val();
+        var requestPath="/mouseImg/share?mouseType=1&";
+        if(kxszOrder==="1"){
+            requestPath=requestPath+"field=1&order=2&";
+        }else if(kxszOrder==="2"){
+            requestPath=requestPath+"field=1&order=1&";
+        }else if(kxszOrder==="3"){
+            requestPath=requestPath+"field=2&order=1&";
+        }else if(kxszOrder==="4"){
+            requestPath=requestPath+"field=2&order=2&";
+        }
+
+        $.get(requestPath+"page="+kxszPageNumb,function(data){
+            kxszPageNumb=data.page;//获取当前页码
+            $("#kxszCurrPage").val(kxszPageNumb);
+
+            kxszTotalPage=Math.ceil(data.total/18);//总页数
+            $("#kxszPageTotal").text(kxszTotalPage);
+            if(!data.hasNextPage){
+                $(".kxszpager .next").hide();
+            }else {
+                $(".kxszpager .next").show();
+            }
+            if(!data.hasPreviousPage){
+                $(".kxszpager .previous").hide();
+            }else {
+                $(".kxszpager .previous").show();
+            }
+            //  <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+            var imgul=$("#kxsz").children("ul");
+            $(imgul).children("li").remove();
+            $.each(data.rows, function(index,c) {
+                if(currMouseHandMd5!=null&&currMouseHandMd5==c.md5){
+                    $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.mouseUrl+"' class='img-thumbnail mouse-pointer  mouse-img-active' ></li>");
+                }else
+                    $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.mouseUrl+"' class='img-thumbnail mouse-pointer ' ></li>");
+            });
+
+        },"json");
+    }
+//排序加载
+$("#kxszOrder").change(function () {
+    var kxszOrder=$("#kxszOrder").val();
+    var requestPath="/mouseImg/share?mouseType=1&";
+    if(kxszOrder==="1"){
+        requestPath=requestPath+"field=1&order=2&";
+    }else if(kxszOrder==="2"){
+        requestPath=requestPath+"field=1&order=1&";
+    }else if(kxszOrder==="3"){
+        requestPath=requestPath+"field=2&order=1&";
+    }else if(kxszOrder==="4"){
+        requestPath=requestPath+"field=2&order=2&";
+    }
+
+    $.get(requestPath+"page=1",function(data){
+        kxszPageNumb=data.page;//获取当前页码
+        $("#kxszCurrPage").val(kxszPageNumb);
+
+        kxszTotalPage=Math.ceil(data.total/18);//总页数
+        $("#kxszPageTotal").text(kxszTotalPage);
+        if(!data.hasNextPage){
+            $(".kxszpager .next").hide();
+        }else {
+            $(".kxszpager .next").show();
+        }
+        if(!data.hasPreviousPage){
+            $(".kxszpager .previous").hide();
+        }else {
+            $(".kxszpager .previous").show();
+        }
+        //  <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+        var imgul=$("#kxsz").children("ul");
+        $(imgul).children("li").remove();
+        $.each(data.rows, function(index,c) {
+            if(currMouseHandMd5!=null&&currMouseHandMd5==c.md5){
+                $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.mouseUrl+"' class='img-thumbnail mouse-pointer  mouse-img-active' ></li>");
+            }else
+                $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.mouseUrl+"' class='img-thumbnail mouse-pointer ' ></li>");
+        });
+
+    },"json");
+
+    });
+
+/*我的上传指针*/
+var wdsczzPageNumb=1;//我的上传指针页码
+var wdsczzTotalPage=0;//我的上传指针总页码
+
+function load_wdsczz(obj){
+    var aTab= $(obj).children("a");
+    var aHref=$(aTab).attr("href");
+    var imgul=$(aHref).children("ul");
+    var liList=$(imgul).children("li");
+    //  console.log(liList.length);
+    if(liList.length===0){
+        $.get("/mouseImg/myUpload/mouseType/0",function(data){
+            wdsczzPageNumb=data.page;//获取当前页码
+            $("#sczzCurrPage").val(wdsczzPageNumb);
+
+            wdsczzTotalPage=Math.ceil(data.total/18);//总页数
+            $("#sczzPageTotal").text(wdsczzTotalPage);
+            if(!data.hasNextPage){
+                $(".sczzpager .next").hide();
+            }else {
+                $(".sczzpager .next").show();
+            }
+            if(!data.hasPreviousPage){
+                $(".sczzpager .previous").hide();
+            }else {
+                $(".sczzpager .previous").show();
+            }
+            //  <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+
+            $.each(data.rows, function(index,c) {
+                if(currMouseMd5!=null&&currMouseMd5==c.md5){
+                    $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.mouseUrl+"' class='img-thumbnail mouse-pointer wdsc-mouse-img mouse-img-active' ></li>");
+                }else
+                    $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.mouseUrl+"' class='img-thumbnail mouse-pointer wdsc-mouse-img' ></li>");
+            });
+
+           wdscMouseImgRightKey();//添加右键删除菜单
+        },"json");
 
 
-    /*文件上传过滤*/
+    }
+
+
+}
+
+function gotoPageMyUpLoadMouseImgByZZ(obj){
+        if(obj===0){
+            if(wdsczzPageNumb-1>0)
+                wdsczzPageNumb=wdsczzPageNumb-1;
+            else return ;
+        }else if (obj===1){
+            if(wdsczzPageNumb+1<=wdsczzTotalPage)
+                wdsczzPageNumb=wdsczzPageNumb+1;
+            else return ;
+        }else if (obj===2){
+            var page=$("#sczzCurrPage").val();
+            page=Math.floor(page);
+            if(page===wdsczzPageNumb||page<1||page>wdsczzTotalPage)return;
+            wdsczzPageNumb=page;
+        }else {
+            return;
+        }
+
+        $.get("/mouseImg/myUpload/mouseType/0?page="+wdsczzPageNumb,function(data){
+            wdsczzPageNumb=data.page;//获取当前页码
+            $("#sczzCurrPage").val(wdsczzPageNumb);
+
+            wdsczzTotalPage=Math.ceil(data.total/18);//总页数
+            $("#sczzPageTotal").text(wdsczzTotalPage);
+            if(!data.hasNextPage){
+                $(".sczzpager .next").hide();
+            }else {
+                $(".sczzpager .next").show();
+            }
+            if(!data.hasPreviousPage){
+                $(".sczzpager .previous").hide();
+            }else {
+                $(".sczzpager .previous").show();
+            }
+            //  <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+            var imgul=$("#sczz").children("ul");
+            $(imgul).children("li").remove();
+            $.each(data.rows, function(index,c) {
+                if(currMouseMd5!=null&&currMouseMd5==c.md5){
+                    $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.mouseUrl+"' class='img-thumbnail mouse-pointer wdsc-mouse-img mouse-img-active' ></li>");
+                }else
+                    $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.mouseUrl+"' class='img-thumbnail mouse-pointer wdsc-mouse-img' ></li>");
+            });
+
+            wdscMouseImgRightKey();//添加右键删除菜单
+        },"json");
+
+    }
+
+
+
+/************我的上传手指******************************/
+    var wdscszPageNumb=1;//我的上传手指页码
+    var wdscszTotalPage=0;//我的上传手指总页码
+
+function load_wdscsz(obj){
+    var aTab= $(obj).children("a");
+    var aHref=$(aTab).attr("href");
+    var imgul=$(aHref).children("ul");
+    var liList=$(imgul).children("li");
+    //  console.log(liList.length);
+    if(liList.length===0){
+        $.get("/mouseImg/myUpload/mouseType/1",function(data){
+            wdscszPageNumb=data.page;//获取当前页码
+            $("#scszCurrPage").val(wdscszPageNumb);
+
+            wdscszTotalPage=Math.ceil(data.total/18);//总页数
+            $("#scszPageTotal").text(wdscszTotalPage);
+            if(!data.hasNextPage){
+                $(".scszpager .next").hide();
+            }else {
+                $(".scszpager .next").show();
+            }
+            if(!data.hasPreviousPage){
+                $(".scszpager .previous").hide();
+            }else {
+                $(".scszpager .previous").show();
+            }
+            //  <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+
+            $.each(data.rows, function(index,c) {
+                if(currMouseHandMd5!=null&&currMouseHandMd5==c.md5){
+                    $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.mouseUrl+"' class='img-thumbnail mouse-pointer wdsc-mouse-img mouse-img-active' ></li>");
+                }else
+                    $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.mouseUrl+"' class='img-thumbnail mouse-pointer wdsc-mouse-img' ></li>");
+            });
+
+            wdscMouseImgRightKey();//添加右键删除菜单
+        },"json");
+
+
+    }
+}
+
+function gotoPageMyUpLoadMouseImgBySZ(obj){
+        if(obj===0){
+            if(wdscszPageNumb-1>0)
+                wdscszPageNumb=wdscszPageNumb-1;
+            else return ;
+        }else if (obj===1){
+            if(wdscszPageNumb+1<=wdscszTotalPage)
+                wdscszPageNumb=wdscszPageNumb+1;
+            else return ;
+        }else if (obj===2){
+            var page=$("#scszCurrPage").val();
+            page=Math.floor(page);
+            if(page===wdscszPageNumb||page<1||page>wdscszTotalPage)return;
+            wdscszPageNumb=page;
+        }else {
+            return;
+        }
+
+
+        $.get("/mouseImg/myUpload/mouseType/1?page="+wdscszPageNumb,function(data){
+            wdscszPageNumb=data.page;//获取当前页码
+            $("#scszCurrPage").val(wdscszPageNumb);
+
+            wdscszTotalPage=Math.ceil(data.total/18);//总页数
+            $("#scszPageTotal").text(wdscszTotalPage);
+            if(!data.hasNextPage){
+                $(".scszpager .next").hide();
+            }else {
+                $(".scszpager .next").show();
+            }
+            if(!data.hasPreviousPage){
+                $(".scszpager .previous").hide();
+            }else {
+                $(".scszpager .previous").show();
+            }
+            //  <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+            var imgul=$("#scsz").children("ul");
+            $(imgul).children("li").remove();
+            $.each(data.rows, function(index,c) {
+                if(currMouseHandMd5!=null&&currMouseHandMd5==c.md5){
+                    $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.mouseUrl+"' class='img-thumbnail mouse-pointer wdsc-mouse-img mouse-img-active' ></li>");
+                }else
+                    $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.mouseUrl+"' class='img-thumbnail mouse-pointer wdsc-mouse-img' ></li>");
+            });
+
+            wdscMouseImgRightKey();//添加右键删除菜单
+        },"json");
+
+    }
 
 
 
 
-
-
-
+//选择特效
+$("#kxzzCurrPage,#kxszCurrPage,#sczzCurrPage,#scszCurrPage,#gxbjCurrPage,#wdscCurrPage,#tmbjtxCurrPage,#btmbjtxCurrPage").change(function () {
+    var total= $(this).next().text();
+    total=parseInt(total);
+    if ($(this).val()<=0){
+        $(this).val(1);
+    }else if ($(this).val()>total){
+        $(this).val(total);
+    }
+});
     //鼠标移入
-    $("#kxzz").on("mouseenter",".img-thumbnail",function(){
-        $(this).css("box-shadow","0px 0px 0px 3px #b600ff");
+    $("#kxzz ,#sczz,#scsz,#kxsz").on("mouseenter",".img-thumbnail",function(){
+        $(this).addClass("mouse-img-active");
     });
+
     //鼠标移出
-    $("#kxzz").on("mouseleave",".img-thumbnail",function(){
+    $("#kxzz,#sczz").on("mouseleave",".img-thumbnail",function(){
+        if($(this).attr("md5")!=currMouseMd5)
+            $(this).removeClass("mouse-img-active");
+    });
+    $("#kxsz,#scsz").on("mouseleave",".img-thumbnail",function(){
+        if($(this).attr("md5")!=currMouseHandMd5)
+            $(this).removeClass("mouse-img-active");
+    });
+    //鼠标点击指针
+    $("#kxzz,#sczz").on("click",".img-thumbnail",function(){
+        //上传置空
+        $("#mousePointer1").val("");
+        $("#mousePointer1-img").prop("src","/img/蓝色鼠标.ico");
 
-        $(this).css("box-shadow","");
+
+        if($(this).attr("md5")==currMouseMd5){//二次点击置空
+            currMouseMd5=null;
+            $("#sczz .img-thumbnail,#kxzz .img-thumbnail").removeClass("mouse-img-active");
+            $(".shubiao,.nav-tabs>li.active>a:hover,.contextTitle").css("cursor","url('"+defaultMouse1+"'),default");
+
+            return;
+        }
+        currMouseMd5=$(this).attr("md5");
+
+        $("#sczz .img-thumbnail,#kxzz .img-thumbnail").removeClass("mouse-img-active");
+        //把共享背景的选中更新
+        var sczzimg= $("#sczz .img-thumbnail");
+        if(sczzimg.length>0){
+            $.each(sczzimg,function (index,c) {
+                if($(c).attr("md5")===currMouseMd5){
+                    $(c).addClass("mouse-img-active");
+                }
+            });
+        }
+        var kxzzimg= $("#kxzz .img-thumbnail");
+        if(kxzzimg.length>0){
+            $.each(kxzzimg,function (index,c) {
+                if($(c).attr("md5")===currMouseMd5){
+                    $(c).addClass("mouse-img-active");
+                }
+            });
+        }
+
+        $(".shubiao,.nav-tabs>li.active>a:hover,.contextTitle").css("cursor","url('"+$(this).attr("src")+"'),default");
+
     });
 
+    $("#kxsz,#scsz").on("click",".img-thumbnail",function(){
+
+        //上传置空
+        $("#mousePointer2").val("");
+        $("#mousePointer2-img").prop("src","/img/手指.ico");
+
+        if($(this).attr("md5")==currMouseHandMd5){//二次点击置空
+            currMouseHandMd5=null;
+            $("#scsz .img-thumbnail,#kxsz .img-thumbnail").removeClass("mouse-img-active");
+            $("a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search-menu-info li,select").css("cursor","url('"+defaultMouse2+"'),pointer");
+
+            return;
+        }
+
+        currMouseHandMd5=$(this).attr("md5");
+
+        $("#scsz .img-thumbnail,#kxsz .img-thumbnail").removeClass("mouse-img-active");
+        //把共享背景的选中更新
+        var scszimg= $("#scsz .img-thumbnail");
+        if(scszimg.length>0){
+            $.each(scszimg,function (index,c) {
+                if($(c).attr("md5")===currMouseHandMd5){
+                    $(c).addClass("mouse-img-active");
+                }
+            });
+        }
+        var kxszimg= $("#kxsz .img-thumbnail");
+        if(kxszimg.length>0){
+            $.each(kxszimg,function (index,c) {
+                if($(c).attr("md5")===currMouseHandMd5){
+                    $(c).addClass("mouse-img-active");
+                }
+            });
+        }
+
+        $("a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search-menu-info li,select").css("cursor","url('"+$(this).attr("src")+"'),pointer");
+
+    });
 </script>
 
 <!--搜索框样式-->
@@ -840,7 +1581,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
             color: defaultsousuobgcolor,
             onShow: function (colpkr) {
                 $(colpkr).fadeIn(500);
-                $('#sousuobgcolor div').css('backgroundColor',defaultsousuobgcolor );
+               // $('#sousuobgcolor div').css('backgroundColor',defaultsousuobgcolor );
                 return false;
             },
             onHide: function (colpkr) {
@@ -903,7 +1644,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 
 <!--背景图片-->
 <script th:inline ="javascript" type="text/javascript" >
-    var bgpath=[[${bgImg}]]; //背景图片
+    var bgpath=[[${bgImg.pic}]]; //背景图片
     // console.log(bgpath!=null);
     var bgtxpath=[[${bgSpe.special}]]; //背景特效
     var isTransparent=[[${bgSpe.transparent}]];
@@ -920,7 +1661,8 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
     }
 
     var default_background=$("body").css("background-image");//初始背景图
-    var currBgImg=null;//当前背景图md5
+    var currBgImg=[[${bgImg.md5}]];//当前背景图md5
+    var  default_currBgImg=[[${bgImg.md5}]];
 </script>
 
 <!--我的背景上传分页-->
@@ -1020,7 +1762,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
     });
     //鼠标移出
     $("#wdsc").on("mouseleave",".wdsc-min-img",function(){
-       if(currBgImg==null||currBgImg!==$(this).attr("md5"))
+       if(currBgImg==null||currBgImg!=$(this).attr("md5"))
            $(this).removeClass("min-img-active");
     });
     //*********************************************************************************
@@ -1056,6 +1798,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                         $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img min-img-active' ></li>");
                     }else
                         $(imgul).append("<li class=' col-sm-3 col-xs-4 min-img-li'><img md5='"+c.md5+"'  src='"+c.thumbnail+"' class='img-thumbnail min-img' ></li>");
+
                 });
 
                 wdscRightKey();//添加右键删除菜单
@@ -1445,7 +2188,7 @@ $(function () {
         });
         //鼠标移出
         $("#gxbj").on("mouseleave",".min-img",function(){
-            if(currBgImg==null||currBgImg!==$(this).attr("md5"))
+            if(currBgImg==null||currBgImg!=$(this).attr("md5"))
                 $(this).removeClass("min-img-active");
         });
 
@@ -1545,7 +2288,8 @@ $(function () {
 
    // if(bgtxpath!==null&&bgtxpath.trim() !== "") $("#iframe_bjtx").attr("src",bgtxpath);
     var default_backgroundSpe=$("#iframe_bjtx").attr("src");//初始背景图
-    var currBgSpe=null;//当前特效id
+    var currBgSpe=[[${bgSpe.sid}]];//当前特效id
+    var default_currBgSpe=[[${bgSpe.sid}]];
     var tmbjtxCurrPage=-1; //透明特效页码
     var tmbjtxPageTotal=-1;//透明特效总页数
 
@@ -2036,7 +2780,7 @@ $(function () {
     });
     //鼠标移出
     $("#bjtx_tm,#bjtx_btm").on("mouseleave",".min-img",function(){
-        if(currBgSpe==null||currBgSpe!==$(this).attr("sid"))
+        if(currBgSpe==null||currBgSpe!=$(this).attr("sid"))
             $(this).removeClass("min-img-active");
     });
 
@@ -2163,7 +2907,7 @@ $(function () {
                 }
             });
             $("#picFileUp").val("");//置空防止重复提交
-        }else if(currBgImg!=null){
+        }else if(currBgImg!=null&&currBgImg!=default_currBgImg){
             if(taskCount===null)taskCount=1;
             else taskCount+=1;
             //没打开就打开
@@ -2200,7 +2944,7 @@ $(function () {
 //----------------------保存背景图片----------------------------------------------
 
 //----------------------保存背景特效----------------------------------------------
-        if(currBgSpe!==null){
+        if(currBgSpe!==null&&default_currBgSpe!=currBgSpe){
             if(taskCount===null)taskCount=1;
             else taskCount+=1;
 
@@ -2308,7 +3052,7 @@ $(function () {
             if(taskCount===null)taskCount=1;
             else taskCount+=1;
 
-            $("#saveContent").append(" <tr><td><strong style='font-size: 20px'>保存鼠标图标:</strong></td><td> <span id='saveMessage4'><img src='/img/加载.svg'></span></td></tr>");
+            $("#saveContent").append(" <tr><td><strong style='font-size: 20px'>上传鼠标图标:</strong></td><td> <span id='saveMessage4'><img src='/img/加载.svg'></span></td></tr>");
 
             var mouseImgUpForm = new FormData(document.getElementById("mouseImgUpForm"));
             mouseImgUpForm.append("isPublicMouse",isPublicMouse);
@@ -2349,11 +3093,63 @@ $(function () {
             });
             $("#mousePointer1,#mousePointer2").val("");//置空防止重复提交
 
-
-
-
         }
 
+        var mouseImgChange =null;
+
+        if(currMouseMd5!=null&&currMouseMd5!=default_currMouseMd5){
+            mouseImgChange=new FormData();
+            mouseImgChange.append("mousePointer",currMouseMd5);
+        }
+        if(currMouseHandMd5!=null&&currMouseHandMd5!=default_currMouseHandMd5){
+            if(mouseImgChange==null)mouseImgChange=new FormData();
+            mouseImgChange.append("mouseHand",currMouseHandMd5);
+        }
+        if(mouseImgChange!=null){
+            if(taskCount===null)taskCount=1;
+            else taskCount+=1;
+
+            $("#saveContent").append(" <tr><td><strong style='font-size: 20px'>修改鼠标图标:</strong></td><td> <span id='saveMessage5'><img src='/img/加载.svg'></span></td></tr>");
+
+            $.ajax({
+                url: "/mouseStyle/change",
+                type: "post",
+                data: mouseImgChange,
+                cache:false,
+                async:false,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    if (data.status===1){
+                        setTimeout(function () {
+                            $("#saveMessage5").addClass("label label-success");
+                            $("#saveMessage5").text(data.msg);
+                            taskCount-=1;
+                        },1500);
+                    }else if(data.status===2) {
+                        setTimeout(function () {
+                            $("#saveMessage5").addClass("label label-danger");
+                            $("#saveMessage5").text(data.msg);
+                            taskCount-=1;
+                        },1500);
+                    }
+
+                    // console.log(data);
+                },
+                error: function(e) {
+                    //  swal("保存失败","服务器错误","error");
+                    setTimeout(function () {
+                        $("#saveMessage5").addClass("label label-danger");
+                        $("#saveMessage5").text("服务器错误保存失败！！！");
+                        taskCount-=1;
+                    },1500);
+                    //   console.log(e);
+                }
+            });
+            currMouseMd5=null;
+            currMouseHandMd5=null;
+
+        }
 
 
 //----------------------保存鼠标框样式----------------------------------------------
@@ -2459,7 +3255,7 @@ $(function () {
                     </a>
                 </div>
                 <div class="col-lg-10 col-md-10 col-xs-10 ">
-                    <input  type="text"  class="form-control sousuo" placeholder="输入要搜索的内容" id="Jsosuo" oninput="oninputchange(this)"  style=" text-align:center" />
+                    <input  type="text" autocomplete="off"  class="form-control sousuo" placeholder="输入要搜索的内容" id="Jsosuo" oninput="oninputchange(this)"  style=" text-align:center" />
                 </div>
                 <div class="col-lg-1 col-md-1 col-xs-1 ">
                     <a href="javascript:void(0)" style="width: 40px; height: 40px; " >
@@ -3564,6 +4360,7 @@ $(function () {
         }
     }
     isIE();
+
 </script>
 </body>
 </html>

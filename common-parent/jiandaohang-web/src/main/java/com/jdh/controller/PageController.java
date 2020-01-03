@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jdh.feign.BackgroundService;
 import com.jdh.feign.BackgroundSpeService;
+import com.jdh.feign.MouseStyleService;
 import com.jdh.feign.SearchBoxService;
 import com.jdh.pojo.*;
 import com.jdh.utils.*;
@@ -43,6 +44,9 @@ public class PageController {
     @Autowired
     private BingBgImgBean bingBgImgBean;
 
+    @Autowired
+    private MouseStyleService mouseStyleService;
+
     @RequestMapping(value = {"/index", "/"})
     public String openIndex(Model model, HttpServletRequest request, HttpServletResponse response) {
 
@@ -66,10 +70,12 @@ public class PageController {
             //如果用户无背景图 就调用bing背景图
             if (bgImg == null||bgImg.getPic()==null||bgImg.getPic().trim().length()==0) {
 
-                model.addAttribute("bgImg", bingBgImgBean.getImgPath());
+                bgImg=new BackgroundImgDo();
+                bgImg.setPic(bingBgImgBean.getImgPath());
+                model.addAttribute("bgImg", bgImg);
 
             } else {
-                model.addAttribute("bgImg", bgImg.getPic());
+                model.addAttribute("bgImg", bgImg);
             }
 
             //****************************背景图片******************************************************
@@ -86,7 +92,7 @@ public class PageController {
                 bgSpe=new BackgroundSpeDo();//空参数的背景特效
                 model.addAttribute("bgSpe", bgSpe);
             }
-            //****************************背景特效******************************************************
+//****************************背景特效******************************************************
 
 //****************************搜索框样式******************************************************
             SearchBoxDo searchBox = searchBoxService.getSearchBoxByUid(userDetails.getId());
@@ -99,19 +105,54 @@ public class PageController {
 
 //****************************搜索框样式******************************************************
 
+//****************************鼠标图标******************************************************
+            MouseStyleDo mouseStyleDo = mouseStyleService.getMouseStyleDoByUid(userDetails.getId());
+            MouseImgDo  mouseImgP=null;//指针
+            MouseImgDo  mouseImgH=null;//图标
 
-        } else { //不存在用户 用bing图片
+            if (mouseStyleDo!=null){
+              if(mouseStyleDo.getPmid()!=null)  mouseImgP = mouseStyleService.getMouseImgByMid(mouseStyleDo.getPmid());
+              if(mouseStyleDo.getHmid()!=null)   mouseImgH= mouseStyleService.getMouseImgByMid(mouseStyleDo.getHmid());
+                if (mouseImgP!=null){
+                    model.addAttribute("mouseImgP",mouseImgP);
+                }else {
+                    model.addAttribute("mouseImgP",new MouseImgDo());
+                }
+
+                if (mouseImgH!=null){
+                    model.addAttribute("mouseImgH",mouseImgH);
+                }else {
+                    model.addAttribute("mouseImgH",new MouseImgDo());
+                }
+
+            }else {
+                model.addAttribute("mouseImgP",new MouseImgDo());
+                model.addAttribute("mouseImgH",new MouseImgDo());
+            }
+
+
+//****************************鼠标图标******************************************************
+
+
+        } else { //不存在用户
+            // 用bing图片
             MyUser userDetails=new MyUser();
             BackgroundSpeDo   bgSpe=new BackgroundSpeDo();//空参数的背景特效
             model.addAttribute("bgSpe", bgSpe);
             //用户
             model.addAttribute("user", userDetails);
             //背景图
-            model.addAttribute("bgImg", bingBgImgBean.getImgPath());
+            BackgroundImgDo bgImg=new BackgroundImgDo();
+             bgImg.setPic(bingBgImgBean.getImgPath());
+            model.addAttribute("bgImg", bgImg);
 
             //搜索框
             SearchBoxDo searchBox=new SearchBoxDo();
             model.addAttribute("searchBox", searchBox);
+
+            //鼠标
+            model.addAttribute("mouseImgP",new MouseImgDo());
+            model.addAttribute("mouseImgH",new MouseImgDo());
         }
 
 

@@ -3,6 +3,10 @@ package com.jdh.mapper;
 import com.jdh.pojo.MouseImgDo;
 import com.jdh.pojo.MouseStyleDo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * 鼠标样式 mapper
@@ -37,7 +41,7 @@ public interface MouseStyleMapper {
      * @param md5
      * @return
      */
-    public MouseImgDo getMouseImgDoByMd5(String md5);
+    public List<MouseImgDo> getMouseImgDoByMd5(String md5);
 
 
     /**
@@ -60,4 +64,38 @@ public interface MouseStyleMapper {
      * @return
      */
     public Integer deleteMouseImgDoByMid(Long mid);
+
+    /**
+     * 查询我的上传图标
+     * @param mouseType 0 指针 1 手指 or 2都可以
+     * @param uid 用户id
+     * @return
+     */
+    public List<MouseImgDo> getMouseImgDoByMyUpload(@Param("mouseType") Integer mouseType,@Param("uid") Integer uid);
+
+    /**
+     * map
+     * 查询共享图标
+     *  mouseType 0 指针 1 手指 or 2都可以
+     *  share 是否共享 true false
+     *  (field,order) 字段名 排序规则
+     * @return
+     */
+    public List<MouseImgDo> getMouseImgDoByPublic(Map map);
+
+    /**
+     * 根据mid 获取图标
+     * @param mid
+     * @return
+     */
+    public MouseImgDo getMouseImgByMid(Long mid);
+
+    /**
+     * 根据mid 获取鼠标映射表
+     * @param mid
+     * @return
+     */
+    public List<MouseStyleDo> getMouseStyleDoByMid(Long mid);
+
+
 }

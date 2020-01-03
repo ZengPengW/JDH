@@ -139,7 +139,7 @@ public class BackgroundController {
         if (size == null) size = 8;
         if (page == null || page == 0) page = 1;
         //if (ispublic == null) ispublic = true;
-        ispublic = true;
+        ispublic = true;//锁定只能公开图
         return backgroundService.getBackgroundImgByIsPublic(ispublic, page, size,field,order);
     }
 }
