@@ -59,6 +59,7 @@ public class MouseStyleServiceImpl implements MouseStyleService {
     }
 
     @Override
+    @Transactional(isolation= Isolation.READ_COMMITTED,propagation = Propagation.REQUIRED)
     public Integer deleteMouseImgDoByMid(Long mid) {
         return mouseStyleMapper.deleteMouseImgDoByMid(mid);
     }

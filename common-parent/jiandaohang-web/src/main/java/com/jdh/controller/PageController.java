@@ -2,10 +2,7 @@ package com.jdh.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.jdh.feign.BackgroundService;
-import com.jdh.feign.BackgroundSpeService;
-import com.jdh.feign.MouseStyleService;
-import com.jdh.feign.SearchBoxService;
+import com.jdh.feign.*;
 import com.jdh.pojo.*;
 import com.jdh.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -46,6 +44,13 @@ public class PageController {
 
     @Autowired
     private MouseStyleService mouseStyleService;
+
+    @Autowired
+    private FloaterService floaterService;
+
+
+    @Autowired
+    private PlayerService playerService;
 
     @RequestMapping(value = {"/index", "/"})
     public String openIndex(Model model, HttpServletRequest request, HttpServletResponse response) {
@@ -132,6 +137,40 @@ public class PageController {
 
 
 //****************************鼠标图标******************************************************
+//****************************漂浮物******************************************************
+            FloaterStyleDo floaterStyleDo = floaterService.getFloaterStyleDoByUid(userDetails.getId());
+            if (floaterStyleDo!=null){
+                FloaterImgDo floaterImgDo = floaterService.getFloaterImgDoByFid(floaterStyleDo.getFid());
+                model.addAttribute("floaterImg",floaterImgDo);
+            }else {
+                FloaterImgDo floaterImgDo = new FloaterImgDo();
+                model.addAttribute("floaterImg",floaterImgDo);
+            }
+//****************************漂浮物******************************************************
+
+//****************************播放器样式&歌曲******************************************************
+            PlayerStyleDo playerStyle = playerService.getPlayerStyleDoByUid(userDetails.getId());
+            if (playerStyle!=null){
+                List<PlayerImgDo> playerImgList = playerService.getPlayerImgDoByPid(playerStyle.getPid());
+                if (playerImgList!=null&&playerImgList.size()>0){
+                    model.addAttribute("playerImg",playerImgList.get(0));
+                }else {
+                    model.addAttribute("playerImg",new PlayerImgDo());
+                }
+
+            }else {
+                model.addAttribute("playerImg",new PlayerImgDo());
+            }
+
+            List<PlayerMusicDo> playerMusicDoByUid = playerService.getPlayerMusicDoByUid(userDetails.getId());
+            if (playerMusicDoByUid!=null&&playerMusicDoByUid.size()>0){
+                PlayerMusicDo playerMusicDo = playerMusicDoByUid.get(0);
+                model.addAttribute("playerMusic",playerMusicDo);
+            }else {
+                model.addAttribute("playerMusic",new PlayerMusicDo());
+
+            }
+//****************************漂播放器样式&歌曲******************************************************
 
 
         } else { //不存在用户
@@ -153,6 +192,16 @@ public class PageController {
             //鼠标
             model.addAttribute("mouseImgP",new MouseImgDo());
             model.addAttribute("mouseImgH",new MouseImgDo());
+
+            //漂浮物
+            FloaterImgDo floaterImgDo = new FloaterImgDo();
+            model.addAttribute("floaterImg",floaterImgDo);
+
+            //播放器图标
+            model.addAttribute("playerImg",new PlayerImgDo());
+            //背景音乐
+            model.addAttribute("playerMusic",new PlayerMusicDo());
+
         }
 
 
@@ -178,6 +227,12 @@ public class PageController {
     public void imgCode(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         checkImgServlet.getImg(request, response);
     }
+
+    @RequestMapping("/getmusicstudy")
+    public String getmusicstudy(){
+        return "page/getmusicstudy";
+    }
+
 
 
 }

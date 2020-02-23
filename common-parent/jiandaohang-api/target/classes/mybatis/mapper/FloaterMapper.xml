@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jdh.mapper.FloaterMapper">
+
+<select id="getFloaterImgDoAll" resultType="com.jdh.pojo.FloaterImgDo" parameterType="map">
+    select * from `floater_img`
+    <if test="up_date != null and up_date != '' ">
+        ORDER BY `up_date` ${up_date}
+    </if>
+    <if test="use_count != null and use_count != '' ">
+        ORDER BY `use_count` ${use_count}
+    </if>
+</select>
+
+<select id="getFloaterStyleDoByUid" resultType="com.jdh.pojo.FloaterStyleDo" parameterType="integer">
+    select * from `floater_style` where `uid`=#{uid}
+</select>
+
+<insert id="addFloaterStyleDo"  parameterType="com.jdh.pojo.FloaterStyleDo">
+    insert into `floater_style`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="uid != null">
+            `uid`,
+        </if>
+        <if test="fid != null">
+            `fid`,
+        </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="uid != null">
+            #{uid,jdbcType=INTEGER},
+        </if>
+        <if test="fid != null">
+            #{fid,jdbcType=BIGINT},
+        </if>
+    </trim>
+</insert>
+
+<update id="updateFloaterStyleDo" parameterType="com.jdh.pojo.FloaterStyleDo" >
+    UPDATE `floater_style`
+    <set>
+        <if test="fid != null">
+            `fid`=#{fid},
+        </if>
+    </set>
+    where `uid`=#{uid}
+</update>
+
+<select id="getFloaterImgDoByFid" parameterType="long"  resultType="com.jdh.pojo.FloaterImgDo">
+    select * from `floater_img` where `fid`=#{fid}
+</select>
+</mapper>

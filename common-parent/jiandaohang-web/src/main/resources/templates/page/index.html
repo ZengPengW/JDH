@@ -44,7 +44,7 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 
 <!-- 弹窗 -->
 <a  id="userinfo" class="md-trigger" th:attr="data-modal=${user.username==null?'modal-13':'null'}" data-modal="modal-13" style="text-decoration: none;    background-color: white;
-    border-radius: 20px;"><img src="/material/img/head/登录.png" /><span th:text="${user.username==null?'登陆':''}"></span></a>
+    border-radius: 20px;"><img src="/img/登录.png" /><span th:text="${user.username==null?'登陆':''}"></span></a>
 
 
 
@@ -229,8 +229,8 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
                 <li role="presentation"><a href="#bjtx" aria-controls="" role="tab" data-toggle="tab">背景特效</a></li>
                 <li role="presentation"><a href="#sskys" aria-controls="" role="tab" data-toggle="tab">搜索框样式</a></li>
                 <li role="presentation"><a href="#sbys" aria-controls="" role="tab" data-toggle="tab">鼠标样式</a></li>
-                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">漂浮物样式</a></li>
-                <li role="presentation"><a href="#settings" aria-controls="" role="tab" data-toggle="tab">播放器样式</a></li>
+                <li role="presentation" onclick="load_pfwys(this)"><a href="#pfwys" aria-controls="" role="tab" data-toggle="tab">漂浮物样式</a></li>
+                <li role="presentation"><a href="#bfqys" aria-controls="" role="tab" data-toggle="tab">播放器样式</a></li>
             </ul>
 
             <!-- Tab panes -->
@@ -240,9 +240,8 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 
                     <ul class="nav nav-tabs" role="tablist" >
                         <li  role="presentation" onclick="load_gxbj(this)" ><a  href="#gxbj" aria-controls="" role="tab" data-toggle="tab">共享图片</a></li>
-                        <li role="presentation"><a href="#sctp" aria-controls="" role="tab" data-toggle="tab">上传图片</a></li>
                         <li role="presentation" onclick="load_wdsc(this)"><a href="#wdsc" aria-controls="" role="tab" data-toggle="tab">我的上传</a></li>
-
+                        <li role="presentation"><a href="#sctp" aria-controls="" role="tab" data-toggle="tab">上传图片</a></li>
                     </ul>
 
                     <div class="tab-content"  >
@@ -682,21 +681,191 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 
                 </div>
 
+                <!--漂浮物样式-->
+                <div role="tabpanel" class="tab-pane fade" id="pfwys">
+                    <span class="label label-warning">注:漂浮物盗自qq空间,侵删，勿告！</span>
+                    <select id="pfwysOrder" class="form-control shubiao2" style="float: right;color: white;width: 15%;background-color: #252525;">
+                        <option value="0"  selected="selected">默认</option>
+                        <option  value="1" >最新</option>
+                        <option  value="2">最早</option>
+                        <option  value="3">按热度升序</option>
+                        <option  value="4">按热度降序</option>
+                    </select>
+
+                    <br>
+                    <ul class="row" style="margin-top: 10px">
+                      <!--  <li class=' col-sm-3 col-xs-4 '><img md5=""  src='/material/img/float/10000/view.gif' class='img-thumbnail min-img ' ></li> -->
+                    </ul>
+
+                    <!--上一页 下一页-->
+                    <nav aria-label="...">
+                        <ul class="pager pfwyspager">
+                            <li class="previous" onclick="gotoPagePfwys(0)"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
+
+                            <li class="next" onclick="gotoPagePfwys(1)"><a href="#">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+                        </ul>
+                    </nav>
+
+                    <!--第几页-->
+                    <div class="pageIndexBtn row ">
+
+                            <span>
+                                第<input type="number" id="pfwysCurrPage"  value="0" style="width:41px ;color: black; border-radius: 4px;"/>
+                                /<span id="pfwysPageTotal">0</span>页
+                                <a  href="javascript:void(0)" style="text-decoration: none;" onclick="gotoPagePfwys(2)"><span class="kongjianbnt" >GO!</span></a>
+                            </span>
+
+                    </div>
+                </div>
+
+
+                <!--播放器样式-->
+                <div role="tabpanel" class="tab-pane fade" id="bfqys">
+                    <ul class="nav nav-tabs" role="tablist" >
+                        <li  role="presentation"   onclick="loda_bfq_kxys(this)"><a href="#kxbfq" aria-controls="" role="tab" data-toggle="tab">可选样式</a></li>
+                        <li  role="presentation"   onclick="loda_bfq_wdsc(this)"><a href="#kxscbfq" aria-controls="" role="tab" data-toggle="tab">我的上传</a></li>
+                        <li role="presentation"><a href="#wdscbfq" aria-controls="" role="tab" data-toggle="tab">自定义上传</a></li>
+                        <li role="presentation"><a href="#setmusic" aria-controls="" role="tab" data-toggle="tab">设置背景音乐</a></li>
+
+                    </ul>
+                    <div class="tab-content" >
+                        <!--可选播放器-->
+                        <div role="tabpanel" class="tab-pane fade" id="kxbfq">
+                            <select id="kxbfqOrder" class="form-control shubiao2" style="float: right;color: white;width: 15%;background-color: #252525;">
+                                <option value="0"  selected="selected">默认</option>
+                                <option  value="1" >最新</option>
+                                <option  value="2">最早</option>
+                                <option  value="3">按热度升序</option>
+                                <option  value="4">按热度降序</option>
+                            </select>
+                            <br>
+                            <ul class="row" style="margin-top: 10px;">
+                                <!--可选列表-->
+                            </ul>
+                            <!--上一页 下一页-->
+                            <nav aria-label="...">
+                                <ul class="pager kxbfqpager">
+                                    <li class="previous" onclick="gotoPageKxBfqImg(0)"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
+
+                                    <li class="next" onclick="gotoPageKxBfqImg(1)"><a href="#">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+                                </ul>
+                            </nav>
+                            <!--第几页-->
+                            <div class="pageIndexBtn row ">
+                                        <span>
+                                            第<input type="number" id="kxbfqCurrPage"   value="0" style="width:41px ;color: black; border-radius: 4px;"/>
+                                            /<span id="kxbfqPageTotal">0</span>页
+                                            <a  href="javascript:void(0)" style="text-decoration: none;" onclick="gotoPageKxBfqImg(2)"><span class="kongjianbnt" >GO!</span></a>
+                                        </span>
+                            </div>
+                        </div>
+
+                        <!--我的上传-->
+                        <div role="tabpanel" class="tab-pane fade" id="kxscbfq">
+                            <span class="label label-warning">注:鼠标右键可删除自己上传的图标！</span>
+
+                            <br>
+                            <ul class="row" style="margin-top: 10px;">
+                                <!--可选列表-->
+                            </ul>
+                            <!--上一页 下一页-->
+                            <nav aria-label="...">
+                                <ul class="pager kxscbfqpager">
+                                    <li class="previous" onclick="gotoPageScBfqImg(0)"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
+
+                                    <li class="next" onclick="gotoPageScBfqImg(1)"><a href="#">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+                                </ul>
+                            </nav>
+                            <!--第几页-->
+                            <div class="pageIndexBtn row ">
+                                        <span>
+                                            第<input type="number" id="kxscbfqCurrPage"   value="0" style="width:41px ;color: black; border-radius: 4px;"/>
+                                            /<span id="kxscbfqPageTotal">0</span>页
+                                            <a  href="javascript:void(0)" style="text-decoration: none;" onclick="gotoPageScBfqImg(2)"><span class="kongjianbnt" >GO!</span></a>
+                                        </span>
+                            </div>
+
+                        </div>
+
+                        <!--上传播放器样式-->
+                        <div role="tabpanel" class="tab-pane fade" id="wdscbfq">
+                            <span class="label label-info">注:选择图片后,保存后才能生效！图片尺寸最佳为32*32</span>
+
+                            <table style="margin-top: 3%; text-align: center;">
+                                <form id="BfqImgUpForm" method="post" >
+                                    <tr style="text-align: left;">
+                                        <td>上传播放器样式:</td>
+                                        <td >
+                                            <img id="BfqImgUp"  src="/img/音乐.png" title="点击选择" class="img-thumbnail mouse-pointer"  />
+                                            <input type="file" name="BfqImgUpInput" id="BfqImgUpInput" style="display: none;">
+                                        </td>
+                                    </tr>
+
+
+                                </form>
+                                <tr>
+                                    <td colspan="2">
+                                        <a  href="javascript:void(0)" style="text-decoration: none;" ><div class="kongjianbnt" style="width: 100px;" onclick="rollback_BFQ(this)">清空已选上传</div></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>是否共享此播放器样式：</td>
+                                    <td>
+                                        <input type="checkbox" id="simple-3">
+                                        <label for="simple-3" class="green"  id="isPublicBfq" ></label>
+                                    </td>
+                                </tr>
+                            </table>
 
 
 
 
-                <div role="tabpanel" class="tab-pane fade" id="settings">
-                    adssssssssssssssssss<br />
-                    adssssssssssssssssss<br />
-                    adssssssssssssssssss<br />
-                    adssssssssssssssssss<br />
-                    adssssssssssssssssss<br />
-                    adssssssssssssssssss<br />
-                    adssssssssssssssssss<br />
-                    adssssssssssssssssss<br />
-                    adssssssssssssssssss<br />
-                    adssssssssssssssssss<br />
+
+                        </div>
+
+                        <!--设置背景音乐-->
+                        <div role="tabpanel" class="tab-pane fade" id="setmusic">
+                            <span class="label label-danger">注:添加的音乐均为外链网络音乐，本站不做任何方式存储！</span>
+                            <span class="label label-danger">注:网络歌曲存在不稳定因素，请添加完整链接！</span>
+                            <br>
+                            <span class="label label-danger">注:背景音乐只支持一首,新添加的会覆盖原先添加的！</span>
+                            <span class="label label-info"> <a href="/getmusicstudy" target="_blank">获取网易云音乐外链的方法</a></span>
+                            <br>
+                            <table style="margin-top: 1%;text-align: center;border-collapse:separate; border-spacing:0px 10px;  ">
+                                <tr >
+                                    <td>歌曲链接：</td>
+                                    <td><input type="text" class="bg-music-input" name="bg-music-url" id="bg-music-url"></td>
+                                    <td><span style="color:red;"> * </span></td>
+                                </tr>
+                                <tr >
+                                    <td>歌曲名称：</td>
+                                    <td><input type="text" class="bg-music-input" name="bg-music-name" id="bg-music-name"></td>
+                                    <td><span style="color:red;"> * </span></td>
+                                </tr>
+                                <tr >
+                                    <td>歌手名称：</td>
+                                    <td><input type="text" class="bg-music-input" name="bg-music-author" id="bg-music-author"></td>
+                                    <td><span style="color:red;"> * </span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <a  href="javascript:void(0)" style="text-decoration: none;" ><div class="kongjianbnt" style="width: 100px;" onclick="setBackgroundMusic(this)">设置此背景音乐</div></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <a  href="javascript:void(0)" style="text-decoration: none;" ><div class="kongjianbnt"  style="width: 100px;background:red;" onclick="deleteBackgroundMusic(this)">清除背景音乐</div></a>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+
+                        </div>
+
+
+                    </div>
+
                 </div>
             </div>
 
@@ -744,11 +913,628 @@ a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search
 <!--********************************************************************-->
 <!--测试尺寸-->
 <img id="mousePointer1-test" style="display: none;" src=""/>
+<!--播放器-->
+<script th:inline ="javascript" type="text/javascript" >
+
+    var currBfqImgMd5=null; //当前选中的id
+    var defaultBfqImgMd5=[[${playerImg.md5}]];//默认的id
+    currBfqImgMd5=defaultBfqImgMd5;
+    var defaultBfqImgPath=[[${playerImg.playerUrl}]];//默认的地址 "/img/音乐.png"
+    if (defaultBfqImgPath==null){
+        defaultBfqImgPath="/img/音乐.png";
+    }
+
+
+    // 是否公开
+    var isPublicBfq=false;
+    $("#isPublicBfq").click(function(){
+        isPublicBfq=!isPublicBfq;
+    });
+
+    //清空上传表单
+    function rollback_BFQ(obj){
+        threeBtn(obj);
+        $("#BfqImgUpInput").val("");
+        $("#BfqImgUp").prop("src",defaultBfqImgPath);
+        if (currBfqImgMd5==null){
+            $("#playerMusic").prop("src",defaultBfqImgPath);
+            $("#kxscbfq .img-thumbnail,#kxbfq .img-thumbnail").removeClass("bfq-img-active");
+            $("#kxscbfq ul li img[md5='"+defaultBfqImgMd5+"']").addClass("bfq-img-active");
+            $("#kxbfq ul li img[md5='"+defaultBfqImgMd5+"']").addClass("bfq-img-active");
+        }
+        Swal.fire('已成功清除已选上传内容！',"","success");
+    }
+    //文件改变事件
+    $(function(){
+
+        $("#BfqImgUp").click(function () {
+            $("#BfqImgUpInput").click();
+        });
+
+        $("#BfqImgUpInput").change(function(){
+
+            if($(this).val()!==""&&$(this).val().trim()!==""){
+
+                //验证格式
+                var filePath = $(this).val();
+                var fileformat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
+                if(!fileformat.match(/\.(png|jpg|jpeg|gif|ico)$/)) {
+                    Swal.fire('上传错误,文件格式必须为：png/jpg/jpeg/gif/ico',"","error");
+                    $(this).val("");
+                    $("#BfqImgUp").prop("src",defaultBfqImgPath);
+                    return;
+                }
+
+                //验证尺寸
+                var src = window.URL.createObjectURL(this.files[0]);
+                var index=0;//防止load重复加载多次
+                var currid=$(this).prop("id");
+                $("#mousePointer1-test").prop("src", src) .load(function() {
+
+                    if(index>0)return;
+                    index+=1;
+                    pic_real_width = this.width;   // Note: $(this).width() will not
+
+                    pic_real_height = this.height; // work for in memory images.
+
+                    console.log("width:"+$("#mousePointer1-test").width()+"  height:"+$("#mousePointer1-test").height());
+                    if($("#mousePointer1-test").width()>33||$("#mousePointer1-test").height()>33){
+                        Swal.fire("播放器宽高必须小于等于 32*32","当前选中的图片宽高为:"+$("#mousePointer1-test").width()+"*"+$("#mousePointer1-test").height(),"error");
+                        $("#"+currid).val("");
+                        $("#BfqImgUp").prop("src",defaultBfqImgPath);
+                    }else{
+                        currBfqImgMd5=null;//选择置空
+                        //选择选中置空
+                        $("#kxscbfq .img-thumbnail,#kxbfq .img-thumbnail").removeClass("bfq-img-active");
+
+                        $("#playerMusic").prop("src",src);
+                        $("#BfqImgUp").prop("src",src);
+                    }
+                });
+
+
+
+
+
+
+
+            }
+        });
+
+
+    });
+
+    /*可选指针*/
+    var wdscBfqPageNumb=1;
+    var wdscBfqTotalPage=0;
+function loda_bfq_wdsc(obj) {
+        var aTab= $(obj).children("a");
+        var aHref=$(aTab).attr("href");
+        var imgul=$(aHref).children("ul");
+        var liList=$(imgul).children("li");
+        //  console.log(liList.length);
+        if(liList.length===0){
+            $.get("/player/img/myUpload",function(data){
+                wdscBfqPageNumb=data.page;//获取当前页码
+                $("#kxscbfqCurrPage").val(wdscBfqPageNumb);
+
+                wdscBfqTotalPage=Math.ceil(data.total/18);//总页数
+                $("#kxscbfqPageTotal").text(wdscBfqTotalPage);
+                if(!data.hasNextPage){
+                    $(".kxscbfqpager .next").hide();
+                }else {
+                    $(".kxscbfqpager .next").show();
+                }
+                if(!data.hasPreviousPage){
+                    $(".kxscbfqpager .previous").hide();
+                }else {
+                    $(".kxscbfqpager .previous").show();
+                }
+
+                $.each(data.rows, function(index,c) {
+                    if(currBfqImgMd5!=null&&currBfqImgMd5==c.md5){
+                        $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.playerUrl+"' class='img-thumbnail bfq-img  bfq-img-active wdsc-bfq-img' ></li>");
+                    }else
+                        $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.playerUrl+"' class='img-thumbnail bfq-img wdsc-bfq-img' ></li>");
+                });
+                wdscBfqImgRightKey();
+            },"json");
+
+        }
+
+    }
+function gotoPageScBfqImg(obj) {
+    if(obj===0){
+        if(wdscBfqPageNumb-1>0)
+            wdscBfqPageNumb=wdscBfqPageNumb-1;
+        else return ;
+    }else if (obj===1){
+        if(wdscBfqPageNumb+1<=wdscBfqTotalPage)
+            wdscBfqPageNumb=wdscBfqPageNumb+1;
+        else return ;
+    }else if (obj===2){
+        var page=$("#kxscbfqCurrPage").val();
+        page=Math.floor(page);
+        if(page===wdscBfqPageNumb||page<1||page>wdscBfqTotalPage)return;
+        wdscBfqPageNumb=page;
+    }else {
+        return;
+    }
+//排序规则
+
+    var requestPath="/player/img/myUpload?";
+
+    $.get(requestPath+"page="+wdscBfqPageNumb,function(data){
+        wdscBfqPageNumb=data.page;//获取当前页码
+        $("#kxscbfqCurrPage").val(wdscBfqPageNumb);
+
+        wdscBfqTotalPage=Math.ceil(data.total/18);//总页数
+        $("#kxscbfqPageTotal").text(wdscBfqTotalPage);
+        if(!data.hasNextPage){
+            $(".kxscbfqpager .next").hide();
+        }else {
+            $(".kxscbfqpager .next").show();
+        }
+        if(!data.hasPreviousPage){
+            $(".kxscbfqpager .previous").hide();
+        }else {
+            $(".kxscbfqpager .previous").show();
+        }
+        //  <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+        var imgul=$("#kxscbfq").children("ul");
+        $(imgul).children("li").remove();
+        $.each(data.rows, function(index,c) {
+            if(currBfqImgMd5!=null&&currBfqImgMd5==c.md5){
+                $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.playerUrl+"' class='img-thumbnail bfq-img  bfq-img-active wdsc-bfq-img' ></li>");
+            }else
+                $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.playerUrl+"' class='img-thumbnail bfq-img wdsc-bfq-img' ></li>");
+        });
+
+        wdscBfqImgRightKey();
+    },"json");
+}
+
+//加载共享
+    var kxysBfqPageNumb=1;
+    var kxysBfqTotalPage=0;
+    function loda_bfq_kxys(obj) {
+        var aTab= $(obj).children("a");
+        var aHref=$(aTab).attr("href");
+        var imgul=$(aHref).children("ul");
+        var liList=$(imgul).children("li");
+        //  console.log(liList.length);
+        if(liList.length===0){
+            $.get("/player/share",function(data){
+                kxysBfqPageNumb=data.page;//获取当前页码
+                $("#kxbfqCurrPage").val(wdscBfqPageNumb);
+
+                kxysBfqTotalPage=Math.ceil(data.total/18);//总页数
+                $("#kxbfqPageTotal").text(kxysBfqTotalPage);
+                if(!data.hasNextPage){
+                    $(".kxbfqpager .next").hide();
+                }else {
+                    $(".kxbfqpager .next").show();
+                }
+                if(!data.hasPreviousPage){
+                    $(".kxbfqpager .previous").hide();
+                }else {
+                    $(".kxbfqpager .previous").show();
+                }
+
+                $.each(data.rows, function(index,c) {
+                    if(currBfqImgMd5!=null&&currBfqImgMd5==c.md5){
+                        $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.playerUrl+"' class='img-thumbnail bfq-img  bfq-img-active wdsc-bfq-img' ></li>");
+                    }else
+                        $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.playerUrl+"' class='img-thumbnail bfq-img wdsc-bfq-img' ></li>");
+                });
+            },"json");
+
+        }
+
+    }
+    function gotoPageKxBfqImg(obj) {
+        if(obj===0){
+            if(kxysBfqPageNumb-1>0)
+                kxysBfqPageNumb=kxysBfqPageNumb-1;
+            else return ;
+        }else if (obj===1){
+            if(kxysBfqPageNumb+1<=kxysBfqTotalPage)
+                kxysBfqPageNumb=kxysBfqPageNumb+1;
+            else return ;
+        }else if (obj===2){
+            var page=$("#kxbfqCurrPage").val();
+            page=Math.floor(page);
+            if(page===kxysBfqPageNumb||page<1||page>kxysBfqTotalPage)return;
+            kxysBfqPageNumb=page;
+        }else {
+            return;
+        }
+//排序规则
+        var kxbfqOrder=$("#kxbfqOrder").val();
+        var requestPath="/player/share?";
+        if(kxbfqOrder==="1"){
+            requestPath=requestPath+"field=1&order=2&";
+        }else if(kxbfqOrder==="2"){
+            requestPath=requestPath+"field=1&order=1&";
+        }else if(kxbfqOrder==="3"){
+            requestPath=requestPath+"field=2&order=1&";
+        }else if(kxbfqOrder==="4"){
+            requestPath=requestPath+"field=2&order=2&";
+        }
+
+        $.get(requestPath+"page="+kxysBfqPageNumb,function(data){
+            kxysBfqPageNumb=data.page;//获取当前页码
+            $("#kxbfqCurrPage").val(kxysBfqPageNumb);
+
+            kxysBfqTotalPage=Math.ceil(data.total/18);//总页数
+            $("#kxbfqPageTotal").text(kxysBfqTotalPage);
+            if(!data.hasNextPage){
+                $(".kxbfqpager .next").hide();
+            }else {
+                $(".kxbfqpager .next").show();
+            }
+            if(!data.hasPreviousPage){
+                $(".kxbfqpager .previous").hide();
+            }else {
+                $(".kxbfqpager .previous").show();
+            }
+            //  <li class=" col-xs-2 " style=" margin-top: 29px;"><img  src="/material/img/mouse/pointer/蓝色鼠标.ico"  class="img-thumbnail mouse-pointer" ></li>
+            var imgul=$("#kxbfq").children("ul");
+            $(imgul).children("li").remove();
+            $.each(data.rows, function(index,c) {
+                if(currBfqImgMd5!=null&&currBfqImgMd5==c.md5){
+                    $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.playerUrl+"' class='img-thumbnail bfq-img  bfq-img-active wdsc-bfq-img' ></li>");
+                }else
+                    $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.playerUrl+"' class='img-thumbnail bfq-img wdsc-bfq-img' ></li>");
+            });
+        },"json");
+    }
+
+    $("#kxbfqOrder").change(function () {
+        var kxbfqOrder=$("#kxbfqOrder").val();
+        var requestPath="/player/share?";
+        if(kxbfqOrder==="1"){
+            requestPath=requestPath+"field=1&order=2&";
+        }else if(kxbfqOrder==="2"){
+            requestPath=requestPath+"field=1&order=1&";
+        }else if(kxbfqOrder==="3"){
+            requestPath=requestPath+"field=2&order=1&";
+        }else if(kxbfqOrder==="4"){
+            requestPath=requestPath+"field=2&order=2&";
+        }
+
+        $.get(requestPath+"page=1",function(data){
+            kxysBfqPageNumb=data.page;//获取当前页码
+            $("#kxbfqCurrPage").val(kxysBfqPageNumb);
+
+            kxysBfqTotalPage=Math.ceil(data.total/18);//总页数
+            $("#kxbfqPageTotal").text(kxysBfqTotalPage);
+            if(!data.hasNextPage){
+                $(".kxbfqpager .next").hide();
+            }else {
+                $(".kxbfqpager .next").show();
+            }
+            if(!data.hasPreviousPage){
+                $(".kxbfqpager .previous").hide();
+            }else {
+                $(".kxbfqpager .previous").show();
+            }
+            var imgul=$("#kxbfq").children("ul");
+            $(imgul).children("li").remove();
+            $.each(data.rows, function(index,c) {
+                if(currBfqImgMd5!=null&&currBfqImgMd5==c.md5){
+                    $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.playerUrl+"' class='img-thumbnail bfq-img  bfq-img-active wdsc-bfq-img' ></li>");
+                }else
+                    $(imgul).append("<li class='col-xs-2' style=' margin-top: 29px;'><img md5='"+c.md5+"'  src='"+c.playerUrl+"' class='img-thumbnail bfq-img wdsc-bfq-img' ></li>");
+            });
+        },"json");
+    });
+
+    //我的上传鼠标右键
+    function wdscBfqImgRightKey() {
+        class2context('wdsc-bfq-img', "菜单",
+            [
+                [
+                    "<img src='/material/img/rightMenu/个性化.png' width='25px' /> 删除此图标", "deleteMyUpLoadBfqImg()"
+                ]
+            ]);
+    }
+
+    //记录鼠标右键
+    var curRightMyUpLoadBfqImg=null;
+    $("#kxscbfq").on("mousedown",".wdsc-bfq-img",function(event){
+        if(event.button===2){//右键
+            curRightMyUpLoadBfqImg=$(this).attr("md5");
+        }
+    });
+    //删除此上传图片
+    function deleteMyUpLoadBfqImg() {
+        if((curRightMyUpLoadBfqImg!=null&&curRightMyUpLoadBfqImg==currBfqImgMd5)||(curRightMyUpLoadBfqImg!=null&&curRightMyUpLoadBfqImg==defaultBfqImgMd5)){
+
+            Swal.fire({
+                title: "无法删除当前已预设为播放器样式的图标",
+                text: "",
+                type: "error",
+                confirmButtonColor:"#ad1d11",
+                allowOutsideClick: false,
+                confirmButtonText: "确定"
+            });
+            return;
+        }
+
+        //ajax请求删除
+        if(curRightMyUpLoadBfqImg!==null){
+
+
+            Swal.fire({
+                title: "是否删除此上传图标",
+                text: "",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                cancelButtonText:"<span class='shubiao2'>点错了</span>",
+                confirmButtonText: "确认删除!"
+            }).then((isConfirm) => {
+                if(isConfirm.value){
+                //Swal.fire({text:"点了确定",title:"das", type:'success'});
+                $.post("/player/img/del/md5/"+curRightMyUpLoadBfqImg,function (data) {
+                    if (data.status===1){
+                        Swal.fire({
+                            title: data.msg,
+                            text: "",
+                            type: "success",
+                            confirmButtonColor:"#1aad19",
+                            allowOutsideClick: false,
+                            confirmButtonText: "确定"
+                        }).then((isConfirm) => {
+                        $("#kxscbfq .bfq-img[md5='"+curRightMyUpLoadBfqImg+"']").remove();
+                        $("#kxbfq .bfq-img[md5='"+curRightMyUpLoadBfqImg+"']").remove();
+                        curRightMyUpLoadBfqImg=null;//置空
+                    });
+
+                    }else if(data.status===2){
+                        Swal.fire({
+                            title: data.msg,
+                            text: "",
+                            type: "error",
+                            confirmButtonColor:"#ad1d11",
+                            allowOutsideClick: false,
+                            confirmButtonText: "确定"
+                        });
+                    }
+                },"json");
+
+            }
+
+
+        });
+
+
+        }
+
+
+
+    }
+
+
+    //鼠标移入
+    $("#kxscbfq,#kxbfq").on("mouseenter",".img-thumbnail",function(){
+        $(this).addClass("bfq-img-active");
+    });
+
+    //鼠标移出
+    $("#kxscbfq,#kxbfq").on("mouseleave",".img-thumbnail",function(){
+        if($(this).attr("md5")!=currBfqImgMd5)
+            $(this).removeClass("bfq-img-active");
+    });
+    //鼠标点击
+    $("#kxscbfq,#kxbfq").on("click",".img-thumbnail",function(){
+
+        //二次点击置空
+        if($(this).attr("md5")==currBfqImgMd5&&$(this).attr("md5")==defaultBfqImgMd5)return;
+        if($(this).attr("md5")==currBfqImgMd5&&$(this).attr("md5")!=defaultBfqImgMd5){
+            currBfqImgMd5=defaultBfqImgMd5;
+            $("#kxscbfq .img-thumbnail,#kxbfq .img-thumbnail").removeClass("bfq-img-active");
+            $("#kxscbfq ul li img[md5='"+defaultBfqImgMd5+"']").addClass("bfq-img-active");
+            $("#kxbfq ul li img[md5='"+defaultBfqImgMd5+"']").addClass("bfq-img-active");
+            $("#playerMusic").prop("src",defaultBfqImgPath);
+            return;
+        }
+
+
+        currBfqImgMd5=$(this).attr("md5");
+        $("#playerMusic").prop("src",$(this).prop("src"));
+
+        $("#kxscbfq .img-thumbnail,#kxbfq .img-thumbnail").removeClass("bfq-img-active");
+        $("#kxscbfq ul li img[md5='"+currBfqImgMd5+"']").addClass("bfq-img-active");
+        $("#kxbfq ul li img[md5='"+currBfqImgMd5+"']").addClass("bfq-img-active");
+
+        //清空上传
+        $("#BfqImgUpInput").val("");
+        $("#BfqImgUp").prop("src",defaultBfqImgPath);
+    });
+
+
+    //验证链接
+    function isValidURL(url){
+        var urlRegExp=/^((https|http|ftp|rtsp|mms)?:\/\/)+[A-Za-z0-9]+\.[A-Za-z0-9]+[\/=\?%\-&_~`@[\]\':+!]*([^<>\"\"])*$/;
+        if(urlRegExp.test(url)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    function setBackgroundMusic(obj) {
+        threeBtn(obj);
+        //bg-music-url bg-music-name bg-music-author
+        if ($("#bg-music-url").val()==null||$("#bg-music-url").val().toString().trim().length<=0){
+        Swal.fire({
+            title: "歌曲链接不能为空！",
+            text: "",
+            type: "error",
+            confirmButtonColor:"#ad1d11",
+            allowOutsideClick: false,
+            confirmButtonText: "确定"
+        });
+        return;
+    }
+        if ($("#bg-music-name").val()==null||$("#bg-music-name").val().toString().trim().length<=0){
+            Swal.fire({
+                title: "歌曲名称不能为空！",
+                text: "",
+                type: "error",
+                confirmButtonColor:"#ad1d11",
+                allowOutsideClick: false,
+                confirmButtonText: "确定"
+            });
+            return;
+        }
+        if ($("#bg-music-author").val()==null||$("#bg-music-author").val().toString().trim().length<=0){
+            Swal.fire({
+                title: "歌手名称不能为空！",
+                text: "",
+                type: "error",
+                confirmButtonColor:"#ad1d11",
+                allowOutsideClick: false,
+                confirmButtonText: "确定"
+            });
+            return;
+        }
+
+        var musicUrl = $("#bg-music-url").val();
+        if(!isValidURL(musicUrl)){
+            Swal.fire({
+                title: "歌曲链接错误！",
+                text: "链接格式错误或链接包含非法符号，请输入正确的链接！！！",
+                type: "error",
+                confirmButtonColor:"#ad1d11",
+                allowOutsideClick: false,
+                confirmButtonText: "确定"
+            });
+            $("#bg-music-url").val("");
+            return;
+        }
+        //验证格式
+        //输入的内容中请不要使用+,@,&,#,%,",=,\,<,>等特殊字符！
+        var fileformat = musicUrl.substring(musicUrl.lastIndexOf(".")).toLowerCase();
+        if(!fileformat.match(/\.(mp3|wma)$/)) {
+            Swal.fire('请输入合法的链接，只接受mp3和wma。',"","error");
+            $("#bg-music-url").val("");
+            return;
+        }
+
+       //符合条件
+        var bgMusicName = $("#bg-music-name").val();
+        var bgMusicUrl = $("#bg-music-url").val();
+        var bgMusicAuthor = $("#bg-music-author").val();
+        Swal.fire({
+            title: "是否确认设置此音乐为背景音乐",
+            text: "",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText:"<span class='shubiao2'>再想想</span>",
+            confirmButtonText: "确认!"
+        }).then((isConfirm) => {
+            if(isConfirm.value){
+            //Swal.fire({text:"点了确定",title:"das", type:'success'});
+            $.post("/player/music/add",{
+                bgMusicName:bgMusicName,
+                bgMusicUrl:bgMusicUrl,
+                bgMusicAuthor:bgMusicAuthor
+            },function (data) {
+                if (data.status===1){
+                    Swal.fire({
+                        title: data.msg,
+                        text: "",
+                        type: "success",
+                        confirmButtonColor:"#1aad19",
+                        allowOutsideClick: false,
+                        confirmButtonText: "确定"
+                    }).then((isConfirm) => {
+                        $("#bg-music-name").val("");
+                    $("#bg-music-url").val("");
+                    $("#bg-music-author").val("");
+                });
+
+                }else if(data.status===2){
+                    Swal.fire({
+                        title: data.msg,
+                        text: "",
+                        type: "error",
+                        confirmButtonColor:"#ad1d11",
+                        allowOutsideClick: false,
+                        confirmButtonText: "确定"
+                    });
+                }
+            },"json");
+
+        }
+    });
+
+
+
+
+    }
+
+    function deleteBackgroundMusic(obj){
+        threeBtn(obj);
+        Swal.fire({
+            title: "是否删除已设置的背景音乐",
+            html: "<span style='color: red'>如果存在背景音乐则删除，不存在就此操作无效!</span>",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText:"<span class='shubiao2'>点错了</span>",
+            confirmButtonText: "确认!"
+        }).then((isConfirm) => {
+            if(isConfirm.value){
+            //Swal.fire({text:"点了确定",title:"das", type:'success'});
+            $.post("/player/music/delete",function (data) {
+                if (data.status===1){
+                    Swal.fire({
+                        title: data.msg,
+                        text: "",
+                        type: "success",
+                        confirmButtonColor:"#1aad19",
+                        allowOutsideClick: false,
+                        confirmButtonText: "确定"
+                    }).then((isConfirm) => {
+
+                });
+
+                }else if(data.status===2){
+                    Swal.fire({
+                        title: data.msg,
+                        text: "",
+                        type: "error",
+                        confirmButtonColor:"#ad1d11",
+                        allowOutsideClick: false,
+                        confirmButtonText: "确定"
+                    });
+                }
+            },"json");
+
+        }
+
+
+    });
+    }
+
+</script>
 <!--鼠标样式-->
 <script th:inline ="javascript" type="text/javascript">
     //默认样式
     var defaultMouse1=[[${mouseImgP.mouseUrl}]];
     var defaultMouse2=[[${mouseImgH.mouseUrl}]];
+
+    if (defaultMouse1==null)defaultMouse1="/img/蓝色鼠标.ico";
+    if(defaultMouse2==null)defaultMouse2="/img/手指.ico";
+
     var default_currMouseMd5=[[${mouseImgP.md5}]];//默认MD5
     var default_currMouseHandMd5=[[${mouseImgH.md5}]];//默认MD5
 
@@ -802,7 +1588,7 @@ $(function(){
                 //验证格式
                 var filePath = $(this).val();
                 var fileformat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
-                if(!fileformat.match(/.png|.jpg|jpeg|.gif|.ico/)) {
+                if(!fileformat.match(/\.(png|jpg|jpeg|gif|ico)$/)) {
                     Swal.fire('上传错误,文件格式必须为：png/jpg/jpeg/gif/ico',"","error");
                     $(this).val("");
                     return;
@@ -810,7 +1596,7 @@ $(function(){
 
                 //验证尺寸
                 var src = window.URL.createObjectURL(this.files[0]);
-                var index=0;
+                var index=0;//防止load重复加载多次
                 var currid=$(this).prop("id");
                 $("#mousePointer1-test").prop("src", src) .load(function() {
 
@@ -1433,7 +2219,7 @@ function gotoPageMyUpLoadMouseImgBySZ(obj){
 
 
 //选择特效
-$("#kxzzCurrPage,#kxszCurrPage,#sczzCurrPage,#scszCurrPage,#gxbjCurrPage,#wdscCurrPage,#tmbjtxCurrPage,#btmbjtxCurrPage").change(function () {
+$("#kxzzCurrPage,#kxszCurrPage,#sczzCurrPage,#scszCurrPage,#gxbjCurrPage,#wdscCurrPage,#tmbjtxCurrPage,#btmbjtxCurrPage,#pfwysCurrPage,#kxbfqCurrPage,#kxscbfqCurrPage").change(function () {
     var total= $(this).next().text();
     total=parseInt(total);
     if ($(this).val()<=0){
@@ -1462,10 +2248,14 @@ $("#kxzzCurrPage,#kxszCurrPage,#sczzCurrPage,#scszCurrPage,#gxbjCurrPage,#wdscCu
         $("#mousePointer1").val("");
         $("#mousePointer1-img").prop("src","/img/蓝色鼠标.ico");
 
-
-        if($(this).attr("md5")==currMouseMd5){//二次点击置空
-            currMouseMd5=null;
+//二次点击置空
+        if($(this).attr("md5")==currMouseMd5&&$(this).attr("md5")==default_currMouseMd5)return;
+        if($(this).attr("md5")==currMouseMd5&&$(this).attr("md5")!=default_currMouseMd5){
+            currMouseMd5=default_currMouseMd5;
             $("#sczz .img-thumbnail,#kxzz .img-thumbnail").removeClass("mouse-img-active");
+            $("#sczz ul li img[md5='"+default_currMouseMd5+"']").addClass("mouse-img-active");
+            $("#kxzz ul li img[md5='"+default_currMouseMd5+"']").addClass("mouse-img-active");
+
             $(".shubiao,.nav-tabs>li.active>a:hover,.contextTitle").css("cursor","url('"+defaultMouse1+"'),default");
 
             return;
@@ -1500,10 +2290,15 @@ $("#kxzzCurrPage,#kxszCurrPage,#sczzCurrPage,#scszCurrPage,#gxbjCurrPage,#wdscCu
         //上传置空
         $("#mousePointer2").val("");
         $("#mousePointer2-img").prop("src","/img/手指.ico");
-
-        if($(this).attr("md5")==currMouseHandMd5){//二次点击置空
-            currMouseHandMd5=null;
+//二次点击置空
+        if($(this).attr("md5")==currMouseMd5&&$(this).attr("md5")==default_currMouseMd5)return;
+        if($(this).attr("md5")==currMouseHandMd5&&default_currMouseHandMd5!=$(this).attr("md5")){
+            currMouseHandMd5=default_currMouseHandMd5;
             $("#scsz .img-thumbnail,#kxsz .img-thumbnail").removeClass("mouse-img-active");
+
+            $("#scsz ul li img[md5='"+default_currMouseHandMd5+"']").addClass("mouse-img-active");
+            $("#kxsz ul li img[md5='"+default_currMouseHandMd5+"']").addClass("mouse-img-active");
+
             $("a,.shubiao2,.music-player,label,.hamburger,.img-thumbnail,.panel-title a,.search-menu-info li,select").css("cursor","url('"+defaultMouse2+"'),pointer");
 
             return;
@@ -1660,7 +2455,7 @@ $("#kxzzCurrPage,#kxszCurrPage,#sczzCurrPage,#scszCurrPage,#gxbjCurrPage,#wdscCu
         },2000);
     }
 
-    var default_background=$("body").css("background-image");//初始背景图
+    var default_background=bgpath;//初始背景图
     var currBgImg=[[${bgImg.md5}]];//当前背景图md5
     var  default_currBgImg=[[${bgImg.md5}]];
 </script>
@@ -1905,12 +2700,23 @@ $("#kxzzCurrPage,#kxszCurrPage,#sczzCurrPage,#scszCurrPage,#gxbjCurrPage,#wdscCu
 $(function () {
 
     $("#wdsc").on("click",".min-img",function (event) {
-        var min_reg = new RegExp("min_","g");
-        $("#wdsc .min-img").removeClass("min-img-active");
-        $(this).addClass("min-img-active");
-        currBgImg=$(this).attr("md5");//获取选中的md5
-        var path=$(this).prop("src").replace(min_reg,"");
-        $("body").css("background-image","url('"+path+"')");
+
+        //二次点击
+        if($(this).attr("md5")==currBgImg&&$(this).attr("md5")==default_currBgImg)return;
+        $("#gxbj .min-img,#wdsc .min-img").removeClass("min-img-active");
+        if($(this).attr("md5")==currBgImg&&$(this).attr("md5")!=default_currBgImg){
+            currBgImg=default_currBgImg;
+            $("body").css("background-image","url('"+default_background+"')");
+        }else {
+            var min_reg = new RegExp("min_","g");
+            currBgImg=$(this).attr("md5");//获取选中的md5
+            var path=$(this).prop("src").replace(min_reg,"");
+            $("body").css("background-image","url('"+path+"')");
+        }
+
+        //把我的上传的选中更新
+        $("#gxbj .min-img[md5='"+currBgImg+"']").addClass("min-img-active");
+        $("#wdsc .min-img[md5='"+currBgImg+"']").addClass("min-img-active");
 
         //清空上传背景图表单
        if ($("#picFileUp").val().trim()!==""){
@@ -1918,16 +2724,7 @@ $(function () {
            $("#picUp").prop("src", "img/上传图片.png");
        }
 
-        //把共享背景的选中更新
-        $("#gxbj .min-img").removeClass("min-img-active");
-        var gxbjMinImg= $("#gxbj .min-img");
-        if(gxbjMinImg.length>0){
-            $.each(gxbjMinImg,function (index,c) {
-                if($(c).attr("md5")===currBgImg){
-                    $(c).addClass("min-img-active");
-                }
-            });
-        }
+
 
     });
 
@@ -2154,30 +2951,27 @@ $(function () {
     //选中缩略图
     $(function () {
         $("#gxbj").on("click",".min-img",function (event) {
-            var min_reg = new RegExp("min_","g");
-            $("#gxbj .min-img").removeClass("min-img-active");
-            $(this).addClass("min-img-active");
-            currBgImg=$(this).attr("md5");//获取选中的md5
-            var path=$(this).prop("src").replace(min_reg,"");
-            $("body").css("background-image","url('"+path+"')");
 
+            //二次点击
+            if($(this).attr("md5")==currBgImg&&$(this).attr("md5")==default_currBgImg)return;
+            $("#gxbj .min-img,#wdsc .min-img").removeClass("min-img-active");
+            if($(this).attr("md5")==currBgImg&&$(this).attr("md5")!=default_currBgImg){
+                currBgImg=default_currBgImg;
+                $("body").css("background-image","url('"+default_background+"')");
+            }else {
+                var min_reg = new RegExp("min_","g");
+                currBgImg=$(this).attr("md5");//获取选中的md5
+                var path=$(this).prop("src").replace(min_reg,"");
+                $("body").css("background-image","url('"+path+"')");
+            }
+            //把我的上传的选中更新
+            $("#gxbj .min-img[md5='"+currBgImg+"']").addClass("min-img-active");
+            $("#wdsc .min-img[md5='"+currBgImg+"']").addClass("min-img-active");
             //清空上传背景图表单
             if ($("#picFileUp").val().trim()!==""){
                 $("#picFileUp").val("");
                 $("#picUp").prop("src", "img/上传图片.png");
             }
-
-            //把我的上传的选中更新
-            $("#wdsc .min-img").removeClass("min-img-active");
-            var wdscMinImg= $("#wdsc .min-img");
-            if(wdscMinImg.length>0){
-                $.each(wdscMinImg,function (index,c) {
-                   if($(c).attr("md5")===currBgImg){
-                       $(c).addClass("min-img-active");
-                   }
-                });
-            }
-
 
         });
 
@@ -2216,7 +3010,7 @@ $(function () {
 
             var filePath = $(this).val();
             var fileformat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase();
-            if(!fileformat.match(/.png|.jpg|jpeg|.gif/)) {
+            if(!fileformat.match(/\.(png|jpg|jpeg|gif|ico)$/)) {
                 Swal.fire("图片格式错误",'文件格式必须为：png/jpg/jpeg/gif',"error");
                 $(this).val("");
                 return;
@@ -2277,6 +3071,291 @@ $(function () {
         });
         threeBtn(obj);
     }
+
+</script>
+
+<!--*****************漂浮物******************************-->
+<div id="floatImg" style="display: none">
+    <img src="" style="position: absolute; top: 100.5px; left: 308.6px;">
+    <img src="" style="position: absolute; top: 100.5px; left: 308.6px;">
+    <img src="" style="position: absolute; top: 100.5px; left: 308.6px;">
+    <img src="" style="position: absolute; top: 100.5px; left: 308.6px;">
+    <img src="" style="position: absolute; top: 100.5px; left: 308.6px;">
+    <img src="" style="position: absolute; top: 100.5px; left: 308.6px;">
+    <img src="" style="position: absolute; top: 100.5px; left: 308.6px;">
+    <img src="" style="position: absolute; top: 100.5px; left: 308.6px;">
+
+</div>
+<script type="text/javascript" th:inline ="javascript">
+
+    var default_floater_one=[[${floaterImg.pathOne}]];
+    var default_floater_tow=[[${floaterImg.pathTow}]];
+    var default_floater_three=[[${floaterImg.pathThree}]];
+
+
+
+    var winH=$(window).height();
+    var winW=$(window).width();
+
+    $(window).resize(function() {
+        winH=$(window).height();
+        winW=$(window).width();
+    });
+
+    var floatimgs=$("#floatImg").children("img");
+
+
+    if (default_floater_one!=null){
+        $.each(floatimgs,function(index,im){
+            if (index<=2)$(im).attr("src",default_floater_one);
+            else if (index<=5)$(im).attr("src",default_floater_tow);
+            else  $(im).attr("src",default_floater_three);
+        });
+    }
+    //初始化随机排序
+    function randomRanking(){
+        $.each(floatimgs,function(index,im){
+            var randomH=Math.random() * winH;
+            $(im).css("top",randomH+"px");
+            var randomW=Math.random() * winW;
+            $(im).css("left",randomW+"px");
+        });
+        $("#floatImg").show();
+    }
+    randomRanking();//调用初始
+    //漂浮
+    function floatImg(){
+
+        var imgTop,imgLeft,randomW,randomH;
+        var isChangeW;//是否改变宽
+        $.each(floatimgs,function(index,im){
+            //console.log($(im).attr("src"))
+            randomW=0;//随机宽
+            randomH=Math.random();//随机高
+            isChangeW=Math.round(Math.random());//是否改变宽
+            if(isChangeW==0){//0改变 1不改变
+                randomW=Math.random();//随机宽
+            }
+            isChangeW=Math.random();//60%向左 40%向右
+            if(isChangeW<0.6){
+                imgLeft=parseFloat($(im).css("left").replace("px",""))-randomW;
+            }else{
+                imgLeft=parseFloat($(im).css("left").replace("px",""))+randomW;
+            }
+
+            imgTop =parseFloat($(im).css("top").replace("px",""))+randomH;
+            //console.log($(im).css("top").replace("px","")+" and "+imgTop);
+
+            $(im).css("top",imgTop+"px");
+            $(im).css("left",imgLeft+"px");
+            if(imgLeft<=0||imgTop>winH||imgLeft>winW-32){
+                $(im).css("top","-1px");
+                randomW=Math.random() * winW;
+                $(im).css("left",randomW+"px");
+            }
+            //console.log(imgTop+" and "+imgLeft);
+            //console.log($(window).height()+" and "+$(window).width());
+        });
+    }
+
+   var MyfloatImg=setInterval(floatImg,60);
+</script>
+<!--漂浮物样式-->
+<script type="text/javascript" th:inline ="javascript" >
+    var default_floater_FID=[[${floaterImg.fid}]];//默认漂浮物id
+    var curr_floater_FID=default_floater_FID;
+
+    var pfwysPageNumb=1;//第几页
+    var pfwysTotalPage=0;//共
+
+
+
+    function load_pfwys(obj) {
+        var aTab= $(obj).children("a");
+        var aHref=$(aTab).attr("href");
+        var imgul=$(aHref).children("ul");
+        var liList=$(imgul).children("li");
+        //  console.log(liList.length);
+        if(liList.length===0){
+            $.get("/floater/list",function(data){
+                pfwysPageNumb=data.page;//获取当前页码
+                $("#pfwysCurrPage").val(pfwysPageNumb);
+
+                pfwysTotalPage=Math.ceil(data.total/8);//总页数
+                $("#pfwysPageTotal").text(pfwysTotalPage);
+                if(!data.hasNextPage){
+                    $(".pfwyspager .next").hide();
+                }else {
+                    $(".pfwyspager .next").show();
+                }
+                if(!data.hasPreviousPage){
+                    $(".pfwyspager .previous").hide();
+                }else {
+                    $(".pfwyspager .previous").show();
+                }
+
+                $.each(data.rows, function(index,c) {
+                    if(curr_floater_FID!=null&&curr_floater_FID==c.fid){
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 '><img fid='"+c.fid+"'  src='"+c.view+"' class='img-thumbnail min-img min-img-active' ></li>");
+                    }else
+                        $(imgul).append("<li class=' col-sm-3 col-xs-4 '><img fid='"+c.fid+"'  src='"+c.view+"' class='img-thumbnail min-img ' ></li>");
+                });
+            },"json");
+
+        }
+
+    }
+
+    function gotoPagePfwys(obj) {
+        if(obj===0){
+            if(pfwysPageNumb-1>0)
+                pfwysPageNumb=pfwysPageNumb-1;
+            else return ;
+        }else if (obj===1){
+            if(pfwysPageNumb+1<=pfwysTotalPage)
+                pfwysPageNumb=pfwysPageNumb+1;
+            else return ;
+        }else if (obj===2){
+            var page=$("#pfwysCurrPage").val();
+            page=Math.floor(page);
+            if(page===pfwysPageNumb||page<1||page>pfwysTotalPage)return;
+            pfwysPageNumb=page;
+        }else {
+            return;
+        }
+//排序规则
+        var pfwysOrder=$("#pfwysOrder").val();
+        var requestPath="/floater/list?mouseType=0&";
+        if(pfwysOrder==="1"){
+            requestPath=requestPath+"field=1&order=2&";
+        }else if(pfwysOrder==="2"){
+            requestPath=requestPath+"field=1&order=1&";
+        }else if(pfwysOrder==="3"){
+            requestPath=requestPath+"field=2&order=1&";
+        }else if(pfwysOrder==="4"){
+            requestPath=requestPath+"field=2&order=2&";
+        }
+
+        $.get(requestPath+"page="+pfwysPageNumb,function(data){
+            pfwysPageNumb=data.page;//获取当前页码
+            $("#pfwysCurrPage").val(pfwysPageNumb);
+
+            pfwysTotalPage=Math.ceil(data.total/8);//总页数
+            $("#pfwysPageTotal").text(pfwysTotalPage);
+            if(!data.hasNextPage){
+                $(".pfwyspager .next").hide();
+            }else {
+                $(".pfwyspager .next").show();
+            }
+            if(!data.hasPreviousPage){
+                $(".pfwyspager .previous").hide();
+            }else {
+                $(".pfwyspager .previous").show();
+            }
+            var imgul=$("#pfwys").children("ul");
+            $(imgul).children("li").remove();
+            $.each(data.rows, function(index,c) {
+                if(curr_floater_FID!=null&&curr_floater_FID==c.fid){
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4 '><img fid='"+c.fid+"'  src='"+c.view+"' class='img-thumbnail min-img min-img-active' ></li>");
+                }else
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4 '><img fid='"+c.fid+"'  src='"+c.view+"' class='img-thumbnail min-img ' ></li>");
+            });
+
+        },"json");
+    }
+
+    //排序加载
+    $("#pfwysOrder").change(function () {
+        //排序规则
+        var pfwysOrder=$("#pfwysOrder").val();
+        var requestPath="/floater/list?mouseType=0&";
+        if(pfwysOrder==="1"){
+            requestPath=requestPath+"field=1&order=2&";
+        }else if(pfwysOrder==="2"){
+            requestPath=requestPath+"field=1&order=1&";
+        }else if(pfwysOrder==="3"){
+            requestPath=requestPath+"field=2&order=1&";
+        }else if(pfwysOrder==="4"){
+            requestPath=requestPath+"field=2&order=2&";
+        }
+        $.get(requestPath+"page=1",function(data){
+            pfwysPageNumb=data.page;//获取当前页码
+            $("#pfwysCurrPage").val(pfwysPageNumb);
+
+            pfwysTotalPage=Math.ceil(data.total/8);//总页数
+            $("#pfwysPageTotal").text(pfwysTotalPage);
+            if(!data.hasNextPage){
+                $(".pfwyspager .next").hide();
+            }else {
+                $(".pfwyspager .next").show();
+            }
+            if(!data.hasPreviousPage){
+                $(".pfwyspager .previous").hide();
+            }else {
+                $(".pfwyspager .previous").show();
+            }
+            var imgul=$("#pfwys").children("ul");
+            $(imgul).children("li").remove();
+            $.each(data.rows, function(index,c) {
+                if(curr_floater_FID!=null&&curr_floater_FID==c.fid){
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4 '><img fid='"+c.fid+"'  src='"+c.view+"' class='img-thumbnail min-img min-img-active' ></li>");
+                }else
+                    $(imgul).append("<li class=' col-sm-3 col-xs-4 '><img fid='"+c.fid+"'  src='"+c.view+"' class='img-thumbnail min-img ' ></li>");
+            });
+
+        },"json");
+
+
+
+    });
+
+    //鼠标移入
+    $("#pfwys").on("mouseenter",".min-img",function(){
+        $(this).addClass("min-img-active");
+    });
+    //鼠标移出
+    $("#pfwys").on("mouseleave",".min-img",function(){
+        if(curr_floater_FID==null||curr_floater_FID!=$(this).attr("fid"))
+            $(this).removeClass("min-img-active");
+    });
+
+    $("#pfwys").on("click",".min-img",function (event) {
+
+        if($(this).attr("fid")==curr_floater_FID&&$(this).attr("fid")==default_floater_FID)return;
+        $("#pfwys .min-img").removeClass("min-img-active");
+
+        if($(this).attr("fid")==curr_floater_FID&&$(this).attr("fid")!=default_floater_FID){
+            curr_floater_FID=default_floater_FID;
+            $("#pfwys .min-img[fid='"+curr_floater_FID+"']").addClass("min-img-active");
+            $.each(floatimgs,function(index,im){
+                if (index<=2)$(im).attr("src",default_floater_one);
+                else if (index<=5)$(im).attr("src",default_floater_tow);
+                else  $(im).attr("src",default_floater_three);
+            });
+        }else {
+
+            curr_floater_FID=$(this).attr("fid");//获取选中的fid
+            $(this).addClass("min-img-active");
+
+            // /material/img/float/10000/view.gif
+             var viewPath= $(this).attr("src");
+             viewPath=viewPath.substr(0,viewPath.lastIndexOf("/")+1);
+
+            $.each(floatimgs,function(index,im){
+                if (index<=2)$(im).attr("src",viewPath+"1.gif");
+                else if (index<=5)$(im).attr("src",viewPath+"2.gif");
+                else  $(im).attr("src",viewPath+"3.gif");
+            });
+
+
+
+        }
+
+
+
+
+
+    });
 
 </script>
 
@@ -2785,42 +3864,44 @@ $(function () {
     });
 
     $("#bjtx_tm").on("click",".min-img",function (event) {
-        $("#bjtx_tm .min-img").removeClass("min-img-active");
-        $(this).addClass("min-img-active");
-        currBgSpe=$(this).attr("sid");//获取选中的sid
-        var path=$(this).attr("special");
-        $("#iframe_bjtx").attr("src",path);
 
-        //把不透明的选中更新
-        $("#bjtx_btm .min-img").removeClass("min-img-active");
-        var btmMinImg= $("#bjtx_btm .min-img");
-        if(btmMinImg.length>0){
-            $.each(btmMinImg,function (index,c) {
-                if($(c).attr("sid")===currBgSpe){
-                    $(c).addClass("min-img-active");
-                }
-            });
+        //二次点击
+        if($(this).attr("sid")==currBgSpe&&$(this).attr("sid")==default_currBgSpe)return;
+        $("#bjtx_btm .min-img,#bjtx_tm .min-img").removeClass("min-img-active");
+        if($(this).attr("sid")==currBgSpe&&$(this).attr("sid")!=default_currBgSpe){
+           currBgSpe=default_currBgSpe;
+           if (default_backgroundSpe!=null&&default_backgroundSpe.trim().length>0) $("#iframe_bjtx").attr("src",default_backgroundSpe);
+
+        }else {
+            currBgSpe=$(this).attr("sid");//获取选中的sid
+            var path=$(this).attr("special");
+            $("#iframe_bjtx").attr("src",path);
         }
+
+        $("#bjtx_btm .min-img[sid='"+currBgSpe+"']").addClass("min-img-active");
+        $("#bjtx_tm .min-img[sid='"+currBgSpe+"']").addClass("min-img-active");
+
+
     });
 
     $("#bjtx_btm").on("click",".min-img",function (event) {
-        $("#bjtx_btm .min-img").removeClass("min-img-active");
-        $(this).addClass("min-img-active");
-        currBgSpe=$(this).attr("sid");//获取选中的sid
-        var path=$(this).attr("special");
-        $("#iframe_bjtx").attr("src",path);
 
+        //二次点击
+        if($(this).attr("sid")==currBgSpe&&$(this).attr("sid")==default_currBgSpe)return;
+        $("#bjtx_btm .min-img,#bjtx_tm .min-img").removeClass("min-img-active");
+        if($(this).attr("sid")==currBgSpe&&$(this).attr("sid")!=default_currBgSpe){
+            currBgSpe=default_currBgSpe;
+            if (default_backgroundSpe!=null&&default_backgroundSpe.trim().length>0) $("#iframe_bjtx").attr("src",default_backgroundSpe);
 
-        //把透明的选中更新
-        $("#bjtx_tm .min-img").removeClass("min-img-active");
-        var tmMinImg= $("#bjtx_tm .min-img");
-        if(tmMinImg.length>0){
-            $.each(tmMinImg,function (index,c) {
-                if($(c).attr("sid")===currBgSpe){
-                    $(c).addClass("min-img-active");
-                }
-            });
+        }else {
+            currBgSpe=$(this).attr("sid");//获取选中的sid
+            var path=$(this).attr("special");
+            $("#iframe_bjtx").attr("src",path);
         }
+
+        $("#bjtx_btm .min-img[sid='"+currBgSpe+"']").addClass("min-img-active");
+        $("#bjtx_tm .min-img[sid='"+currBgSpe+"']").addClass("min-img-active");
+
     });
 </script>
 
@@ -3153,6 +4234,121 @@ $(function () {
 
 
 //----------------------保存鼠标框样式----------------------------------------------
+
+//----------------------保存漂浮物样式-----------------------------------------------
+        if(curr_floater_FID!=null&&curr_floater_FID!=default_floater_FID){
+            if(taskCount===null)taskCount=1;
+            else taskCount+=1;
+
+            $("#saveContent").append(" <tr><td><strong style='font-size: 20px'>保存漂浮物样式:</strong></td><td> <span id='saveMessage6'><img src='/img/加载.svg'></span></td></tr>");
+
+            $.post("/floaterStyle/save/fid/"+curr_floater_FID,function (data) {
+                if (data.status===1){
+                    setTimeout(function () {
+                        $("#saveMessage6").addClass("label label-success");
+                        $("#saveMessage6").text(data.msg);
+                        taskCount-=1;
+                    },1500);
+                }else if(data.status===2) {
+                    setTimeout(function () {
+                        $("#saveMessage6").addClass("label label-danger");
+                        $("#saveMessage6").text(data.msg);
+                        taskCount-=1;
+                    },1500);
+                }
+            },"json").error(function () {
+                setTimeout(function () {
+                    $("#saveMessage6").addClass("label label-danger");
+                    $("#saveMessage6").text("服务器错误保存失败！！！");
+                    taskCount-=1;
+                },1500);
+            });
+
+            curr_floater_FID=null;
+
+        }
+//----------------------保存漂浮物样式--------------------------------------------------
+
+//-----------------------保存播放器样式-------------------------------------------------
+        if($("#BfqImgUpInput").val().trim()!==""){
+            if(taskCount===null)taskCount=1;
+            else taskCount+=1;
+
+            $("#saveContent").append(" <tr><td><strong style='font-size: 20px'>保存播放器样式:</strong></td><td> <span id='saveMessage7'><img src='/img/加载.svg'></span></td></tr>");
+
+            var bfqForm = new FormData(document.getElementById("BfqImgUpForm"));
+            bfqForm.append("isPublic",isPublicBfq);
+            $.ajax({
+                url: "/bfqStyle/add",
+                type: "post",
+                data: bfqForm,
+                cache:false,
+                async:false,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    if (data.status===1){
+                        setTimeout(function () {
+                            $("#saveMessage7").addClass("label label-success");
+                            $("#saveMessage7").text(data.msg);
+                            taskCount-=1;
+                        },1500);
+                    }else if(data.status===2) {
+                        setTimeout(function () {
+                            $("#saveMessage7").addClass("label label-danger");
+                            $("#saveMessage7").text(data.msg);
+                            taskCount-=1;
+                        },1500);
+                    }
+
+                    // console.log(data);
+                },
+                error: function(e) {
+                    //  swal("保存失败","服务器错误","error");
+                    setTimeout(function () {
+                        $("#saveMessage7").addClass("label label-danger");
+                        $("#saveMessage7").text("服务器错误保存失败！！！");
+                        taskCount-=1;
+                    },1500);
+                    //   console.log(e);
+                }
+            });
+
+           currBfqImgMd5=null;
+            $("#BfqImgUpInput").val("");
+        }else if(currBfqImgMd5!=null&&currBfqImgMd5!=defaultBfqImgMd5){
+            if(taskCount===null)taskCount=1;
+            else taskCount+=1;
+
+            $("#saveContent").append(" <tr><td><strong style='font-size: 20px'>保存播放器样式:</strong></td><td> <span id='saveMessage7'><img src='/img/加载.svg'></span></td></tr>");
+
+            $.post("/bfqStyle/change/md5/"+currBfqImgMd5,function (data) {
+                if (data.status===1){
+                    setTimeout(function () {
+                        $("#saveMessage7").addClass("label label-success");
+                        $("#saveMessage7").text(data.msg);
+                        taskCount-=1;
+                    },1500);
+                }else if(data.status===2) {
+                    setTimeout(function () {
+                        $("#saveMessage7").addClass("label label-danger");
+                        $("#saveMessage7").text(data.msg);
+                        taskCount-=1;
+                    },1500);
+                }
+            },"json").error(function () {
+                setTimeout(function () {
+                    $("#saveMessage7").addClass("label label-danger");
+                    $("#saveMessage7").text("服务器错误保存失败！！！");
+                    taskCount-=1;
+                },1500);
+            });
+
+            currBfqImgMd5=null;
+
+        }
+
+//------------------------保存播放器样式------------------------------------------------
         $.ajaxSettings.async = true;//变回异步
         //确定跳转
        var qd=setInterval(function () {
@@ -3230,7 +4426,7 @@ $(function () {
 <a id="tishi" tabindex="0" class=" music-player" role="button"
    data-toggle="popover" data-placement="left" data-trigger="focus" title="提示"
    data-content="点我播放背景音乐" >
-    <img src="/material/img/music/音乐.png"  class=""/>
+    <img id="playerMusic" src="/material/img/music/音乐.png"  class=""/>
 
 </a>
 <marquee behavior="scroll" direction="right" style="position: fixed; right: 10px; top: 56px;overflow: hidden;
@@ -3492,6 +4688,7 @@ $(function () {
 
 
 </div>
+<!--********************部分内容初始化**************************************-->
 
 <!--*****************鼠标点击分组特效******************************-->
 <script type="text/javascript" th:inline ="javascript" >
@@ -3573,9 +4770,14 @@ $(function () {
 
     }
     /*****************音乐播放器***************************/
-    var musicUrl="http://music.163.com/song/media/outer/url?id=1338355334.mp3"; //地址
-    var musicName="狂おしいほど僕には"; //名称
-    var author="majiko"; //作者
+    var musicUrl=[[${playerMusic.music}]]; //地址
+    var musicName=[[${playerMusic.musicName}]]; //名称
+    var author=[[${playerMusic.author}]]; //作者
+
+    if(musicUrl==null||musicUrl=="null"){
+        musicName="未设置背景音乐！";
+        author="未设置背景音乐！";
+    }
     var angle = 0;//旋转角度初始化
     //歌曲名
     $("#musicName").text(musicName+"--"+author);
@@ -3873,76 +5075,12 @@ $(function () {
 
 </script>
 
-<!--*****************漂浮物******************************-->
-<div id="floatImg" style="display: none">
-    <img src="/material/img/float/10000/pfw.gif" style="position: absolute; top: 100.5px; left: 308.6px;">
-    <img src="/material/img/float/10000/pfw3.gif" style="position: absolute; top: 100.5px; left: 308.6px;">
-    <img src="/material/img/float/10000/pfw.gif" style="position: absolute; top: 166.5px; left: 208.6px;">
-    <img src="/material/img/float/10000/pfw2.gif" style="position: absolute; top: 146.5px; left: 508.6px;">
-    <img src="/material/img/float/10000/pfw.gif" style="position: absolute; top: 160.5px; left: 408.6px;">
-    <img src="/material/img/float/10000/pfw3.gif" style="position: absolute; top: 168.5px; left: 708.6px;">
-    <img src="/material/img/float/10000/pfw.gif" style="position: absolute; top: 160.5px; left: 408.6px;">
-    <img src="/material/img/float/10000/pfw2.gif" style="position: absolute; top: 168.5px; left: 708.6px;">
-</div>
-<script type="text/javascript" th:inline ="javascript">
-
-    var winH=$(window).height();
-    var winW=$(window).width();
-
-    $(window).resize(function() {
-        winH=$(window).height();
-        winW=$(window).width();
-    });
-
-    var imgs=$("#floatImg").children("img");
-    //初始化随机排序
-    function randomRanking(){
-        $.each(imgs,function(index,im){
-            var randomH=Math.random() * winH;
-            $(im).css("top",randomH+"px");
-            var randomW=Math.random() * winW;
-            $(im).css("left",randomW+"px");
-        });
-        $("#floatImg").show();
-    }
-    randomRanking();//调用初始
-    //漂浮
-    function floatImg(){
-
-        var imgTop,imgLeft,randomW,randomH;
-        var isChangeW;//是否改变宽
-        $.each(imgs,function(index,im){
-            //console.log($(im).attr("src"))
-            randomW=0;//随机宽
-            randomH=Math.random();//随机高
-            isChangeW=Math.round(Math.random());//是否改变宽
-            if(isChangeW==0){//0改变 1不改变
-                randomW=Math.random();//随机宽
-            }
-            isChangeW=Math.random();//60%向左 40%向右
-            if(isChangeW<0.6){
-                imgLeft=parseFloat($(im).css("left").replace("px",""))-randomW;
-            }else{
-                imgLeft=parseFloat($(im).css("left").replace("px",""))+randomW;
-            }
-
-            imgTop =parseFloat($(im).css("top").replace("px",""))+randomH;
-            //console.log($(im).css("top").replace("px","")+" and "+imgTop);
-
-            $(im).css("top",imgTop+"px");
-            $(im).css("left",imgLeft+"px");
-            if(imgLeft<=0||imgTop>winH||imgLeft>winW-32){
-                $(im).css("top","-1px");
-                randomW=Math.random() * winW;
-                $(im).css("left",randomW+"px");
-            }
-            //console.log(imgTop+" and "+imgLeft);
-            //console.log($(window).height()+" and "+$(window).width());
-        });
-    }
-
-    var MyfloatImg=setInterval(floatImg,60);
+<!---播放器样式初始化--->
+<script  type="text/javascript" th:inline ="javascript">
+    //初始化
+    $("#playerMusic").prop("src",defaultBfqImgPath);
 </script>
+
 <!--****************右键菜单******************************-->
 <div id='contextMenus1'></div>
 

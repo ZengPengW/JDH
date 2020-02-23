@@ -15,7 +15,10 @@ public class StaticFileFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
        // System.out.println(request.getRequestURI()+" :请求地址缓存");
         String url=request.getRequestURI();
-        if (url.lastIndexOf(".js")!=-1
+        if (url.contains("/player/")){
+            filterChain.doFilter(request,response);
+            return;
+        }else if (url.lastIndexOf(".js")!=-1
             ||url.lastIndexOf(".css")!=-1
             || url.contains("material")||url.contains("/img/")){
             response.setHeader("cache-control","public, max-age=31536000, s-maxage=31536000, immutable");

@@ -694,6 +694,7 @@ hr {
 .min-img-active{
     background-color: red;
     border:1px solid #cfec14;
+    box-shadow: 0 0px 9px 3px #ffe500;
 }
 
 /*上传者样式*/
@@ -709,11 +710,25 @@ hr {
 #sousuobgcolor div,#sousuofontcolor div{position:absolute;top:3px;left:3px;width:30px;height:30px;background:url(/img/images/select.png) center;}
 
 /*鼠标指针大小*/
-.mouse-pointer{
+.mouse-pointer,.bfq-img{
     width: 51px;
     height: 51px;
 }
 /*鼠标选择状态*/
-.mouse-img-active{
+.mouse-img-active,.bfq-img-active{
     box-shadow:0px 0px 11px 3px #00ff82;
+    border: 4px #8eea24 solid;
+}
+/*播放器大小*/
+#playerMusic{
+    width: 32px;
+    height: 32px;
+}
+
+/*添加背景音乐input长度*/
+.bg-music-input{
+    width: 306px;
+    height: 39px;
+    border: 1px solid #000;
+    background-color: transparent;
 }

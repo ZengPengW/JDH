@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jdh.mapper.PlayerMapper">
+
+<select id="getPlayerImgDoByMd5" parameterType="java.lang.String" resultType="com.jdh.pojo.PlayerImgDo">
+    select * from `player_img` where  `md5`=#{md5};
+</select>
+
+<update id="changePlayerStyle" parameterType="com.jdh.pojo.PlayerStyleDo">
+    UPDATE `player_style`
+    <set>
+        <if test="pid != null">
+            `pid`=#{pid},
+        </if>
+    </set>
+    where `uid`=#{uid}
+</update>
+
+<insert id="addPlayerStyle" parameterType="com.jdh.pojo.PlayerStyleDo">
+        insert into `player_style`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                `uid`,
+            </if>
+            <if test="pid != null">
+                `pid`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="pid != null">
+                #{pid,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+
+
+<insert id="addPlayerImgDo" parameterType="com.jdh.pojo.PlayerImgDo" useGeneratedKeys="true" keyProperty="pid" keyColumn="pid" >
+        insert into `player_img`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                `uid`,
+            </if>
+            <if test="pid != null">
+                `pid`,
+            </if>
+            <if test="playerUrl != null">
+                `player_url`,
+            </if>
+            <if test="md5 != null">
+                `md5`,
+            </if>
+            <if test="useCount != null">
+                `use_count`,
+            </if>
+            <if test="upDate != null">
+                `up_date`,
+            </if>
+            <if test="share != null">
+                `share`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=INTEGER},
+            </if>
+            <if test="pid != null">
+                #{pid,jdbcType=BIGINT},
+            </if>
+            <if test="playerUrl != null">
+                #{playerUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="md5 != null">
+                #{md5,jdbcType=VARCHAR},
+            </if>
+            <if test="useCount != null">
+                #{useCount,jdbcType=BIGINT},
+            </if>
+            <if test="upDate != null">
+                #{upDate,jdbcType=DATE},
+            </if>
+            <if test="share != null">
+                #{share,jdbcType=BOOLEAN},
+            </if>
+        </trim>
+    </insert>
+
+<select id="getPlayerStyleDoByUid" parameterType="java.lang.Integer" resultType="com.jdh.pojo.PlayerStyleDo"  >
+    select * from `player_style` where `uid`=#{uid};
+</select>
+
+<update id="updatePlayerImgDo" parameterType="com.jdh.pojo.PlayerImgDo"  >
+    UPDATE `player_img`
+    <set>
+        <if test="uid != null">
+           `uid`=#{uid,jdbcType=INTEGER},
+        </if>
+        <if test="pid != null">
+           `pid`= #{pid,jdbcType=BIGINT},
+        </if>
+        <if test="playerUrl != null">
+            `player_url`=#{playerUrl,jdbcType=VARCHAR},
+        </if>
+        <if test="md5 != null">
+            `md5`=#{md5,jdbcType=VARCHAR},
+        </if>
+        <if test="useCount != null">
+           `use_count`=#{useCount,jdbcType=BIGINT},
+        </if>
+        <if test="upDate != null">
+            `up_date`=#{upDate,jdbcType=DATE},
+        </if>
+        <if test="share != null">
+            `share`=#{share,jdbcType=BOOLEAN},
+        </if>
+    </set>
+    where `pid`=#{pid}
+</update>
+
+<select id="getPlayerImgDoByUid" parameterType="java.lang.Integer" resultType="com.jdh.pojo.PlayerImgDo">
+     select * from `player_img` where  `uid`=#{uid}
+</select>
+
+<delete id="deletePlayerImgDoByMd5" parameterType="java.lang.String" >
+        DELETE FROM `player_img` WHERE `md5`=#{md5}
+</delete>
+
+<select id="getPlayerStyleDoByPid" parameterType="java.lang.Long" resultType="com.jdh.pojo.PlayerStyleDo">
+    select * from `player_style` where `pid`=#{pid}
+</select>
+
+<select id="getPlayerImgDoAll" parameterType="map" resultType="com.jdh.pojo.PlayerImgDo">
+    select * from `player_img` where  `share`=#{share}
+    <if test="up_date != null and up_date != '' ">
+        ORDER BY `up_date` ${up_date}
+    </if>
+    <if test="use_count != null and use_count != '' ">
+        ORDER BY `use_count` ${use_count}
+    </if>
+</select>
+
+<select id="getPlayerImgDoByPid" parameterType="java.lang.Long" resultType="com.jdh.pojo.PlayerImgDo">
+    select * from `player_img` where  `pid`=#{pid}
+</select>
+
+
+<select id="getPlayerMusicDoByUid" parameterType="java.lang.Integer" resultType="com.jdh.pojo.PlayerMusicDo">
+    select  * from `player_music` where `uid`=#{uid}
+</select>
+
+<insert id="addPlayerMusicDo" parameterType="com.jdh.pojo.PlayerMusicDo" >
+    insert into `player_music`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+        <if test="uid != null">
+            `uid`,
+        </if>
+        <if test="mid != null">
+            `mid`,
+        </if>
+        <if test="music != null">
+            `music`,
+        </if>
+        <if test="author != null">
+            `author`,
+        </if>
+        <if test="musicName != null">
+            `music_name`,
+        </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="uid != null">
+            #{uid,jdbcType=INTEGER},
+        </if>
+        <if test="mid != null">
+            #{mid,jdbcType=BIGINT},
+        </if>
+        <if test="music != null">
+            #{music,jdbcType=VARCHAR},
+        </if>
+        <if test="author != null">
+            #{author,jdbcType=VARCHAR},
+        </if>
+        <if test="musicName != null">
+            #{musicName,jdbcType=VARCHAR},
+        </if>
+
+    </trim>
+</insert>
+
+<update id="changePlayerMusicDo" parameterType="com.jdh.pojo.PlayerMusicDo" >
+    UPDATE `player_music`
+    <set>
+        <if test="music != null">
+            `music`=#{music,jdbcType=VARCHAR},
+        </if>
+        <if test="author != null">
+            `author`=#{author,jdbcType=VARCHAR},
+        </if>
+        <if test="musicName != null">
+            `music_name`=#{musicName,jdbcType=VARCHAR},
+        </if>
+    </set>
+    where `mid`=#{mid,jdbcType=BIGINT}
+</update>
+
+<delete id="deletePlayerMusicDoByUid" parameterType="java.lang.Integer">
+     DELETE FROM `player_music` WHERE `uid`=#{uid}
+</delete>
+</mapper>
