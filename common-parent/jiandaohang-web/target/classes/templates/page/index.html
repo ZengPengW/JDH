@@ -1365,7 +1365,7 @@ function gotoPageScBfqImg(obj) {
             return false;
         }
     }
-
+   // "名称中的内容中请不要使用+,@,&,#,%,\",=,\\,<,>,(,)等特殊字符！"
     function setBackgroundMusic(obj) {
         threeBtn(obj);
         //bg-music-url bg-music-name bg-music-author
@@ -1402,6 +1402,24 @@ function gotoPageScBfqImg(obj) {
             });
             return;
         }
+
+        var str=$("#bg-music-name").val()+$("#bg-music-author").val();
+        if (str.match(/(\+|@|&|#|%|"|=|\\|<|>|\(|\))/)){
+            Swal.fire({
+                title: '歌曲|歌手，名称中请不要使用+,@,&,#,%,", =,\\,<,>,(,)等特殊字符！',
+                text: "",
+                type: "error",
+                confirmButtonColor:"#ad1d11",
+                allowOutsideClick: false,
+                confirmButtonText: "确定"
+            });
+            return;
+        }
+
+        $("#bg-music-url").val($("#bg-music-url").val().trim());
+        $("#bg-music-name").val($("#bg-music-name").val().trim());
+        $("#bg-music-author").val($("#bg-music-author").val().trim());
+
 
         var musicUrl = $("#bg-music-url").val();
         if(!isValidURL(musicUrl)){

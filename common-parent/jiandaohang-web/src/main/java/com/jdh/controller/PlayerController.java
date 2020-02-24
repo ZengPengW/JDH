@@ -2,10 +2,7 @@ package com.jdh.controller;
 
 import com.jdh.feign.PlayerService;
 import com.jdh.pojo.*;
-import com.jdh.utils.FileUtil;
-import com.jdh.utils.JdhResult;
-import com.jdh.utils.PageDataGridResult;
-import com.jdh.utils.UserContext;
+import com.jdh.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -273,6 +270,18 @@ public class PlayerController {
                 return JdhResult.fail("格式错误，歌手名称存在空值，设置失败！");
             }
 
+            if (XssEncode.isIllegalString(bgMusicName)||XssEncode.isIllegalString(bgMusicAuthor)){
+                return JdhResult.fail("名称中的内容中请不要使用+,@,&,#,%,\",=,\\,<,>,(,)等特殊字符！");
+            }
+
+            if (!isURL(bgMusicUrl)){
+                return   JdhResult.fail("歌曲链接格式错误，设置失败，请重新检查后输入！");
+
+            }
+            bgMusicUrl=bgMusicUrl.trim();
+            bgMusicName=bgMusicName.trim();
+            bgMusicAuthor=bgMusicAuthor.trim();
+
             String fileType1 = bgMusicUrl.substring(bgMusicUrl.lastIndexOf(".") + 1);//文件类型
             fileType1 = fileType1.toLowerCase();
             //验证文件类型.png|.jpg|jpeg|.gif
@@ -355,5 +364,21 @@ public class PlayerController {
         if(str==null)return true;
         if(str.trim().length()<=0)return true;
         return false;
+    }
+
+    public  boolean isURL(String str){
+        //转换为小写
+        str = str.toLowerCase();
+        String regex = "^((https|http|ftp|rtsp|mms)?://)"  //https、http、ftp、rtsp、mms
+                + "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?" //ftp的user@
+                + "(([0-9]{1,3}\\.){3}[0-9]{1,3}" // IP形式的URL- 例如：199.194.52.184
+                + "|" // 允许IP和DOMAIN（域名）
+                + "([0-9a-z_!~*'()-]+\\.)*" // 域名- www.
+                + "([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\\." // 二级域名
+                + "[a-z]{2,6})" // first level domain- .com or .museum
+                + "(:[0-9]{1,5})?" // 端口号最大为65535,5位数
+                + "((/?)|" // a slash isn't required if there is no file name
+                + "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)$";
+        return  str.matches(regex);
     }
 }
